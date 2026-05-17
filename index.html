@@ -10,75 +10,58 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --green:#1e8049;
-  --green-dark:#196640;
-  --green-light:#e8f5ed;
-  --text:#1a2833;
-  --muted:#6b8090;
-  --radius:16px;
-  --shadow:0 2px 16px rgba(0,0,0,0.08);
+  --green:#1e8049;--green-dark:#196640;--green-light:#e8f5ed;
+  --text:#1a2833;--radius:16px;--shadow:0 2px 16px rgba(0,0,0,.08);
 }
 body{font-family:'Nunito',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;color:var(--text);background:#fff;overflow-x:hidden}
 
-/* ─── NAVBAR ─── */
-.navbar{
-  position:fixed;top:12px;left:50%;transform:translateX(-50%);
-  width:calc(100% - 40px);max-width:1300px;
-  background:var(--green);border-radius:16px;
-  padding:10px 22px;display:flex;align-items:center;
-  z-index:1000;box-shadow:0 4px 24px rgba(0,0,0,0.18);
-  gap:8px;
-}
+/* NAV */
+.navbar{position:fixed;top:12px;left:50%;transform:translateX(-50%);width:calc(100% - 40px);max-width:1300px;background:var(--green);border-radius:16px;padding:10px 22px;display:flex;align-items:center;z-index:1000;box-shadow:0 4px 24px rgba(0,0,0,.18);gap:8px}
 .nav-logo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:800;font-size:18px;flex-shrink:0;cursor:pointer}
-.nav-logo-icon{
-  width:38px;height:38px;background:rgba(255,255,255,0.15);
-  border-radius:8px;display:flex;align-items:center;justify-content:center;
-  font-size:17px;font-weight:900;border:1.5px solid rgba(255,255,255,0.28);
-  letter-spacing:-1px;flex-direction:column;line-height:1;color:#fff;
-}
+.nav-logo-icon{width:38px;height:38px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.28);color:#fff}
 .nav-logo-icon svg{width:26px;height:26px}
-.nav-links{display:flex;align-items:center;gap:24px;margin-left:32px;flex:1}
-.nav-link{color:#fff;text-decoration:none;font-size:14.5px;font-weight:600;cursor:pointer;position:relative;padding-bottom:2px;transition:opacity .2s;white-space:nowrap}
+.nav-links{display:flex;align-items:center;gap:22px;margin-left:28px;flex:1}
+.nav-link{color:#fff;text-decoration:none;font-size:14px;font-weight:600;cursor:pointer;position:relative;padding-bottom:2px;transition:opacity .2s;white-space:nowrap}
 .nav-link:hover{opacity:.8}
 .nav-link.active::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:#fff;border-radius:1px}
-.nav-lang{
-  display:flex;align-items:center;gap:7px;
-  background:rgba(0,0,0,0.22);border-radius:10px;
-  padding:6px 12px;cursor:pointer;color:#fff;
-  font-size:13.5px;font-weight:700;margin-left:auto;
-  border:none;font-family:inherit;flex-shrink:0;
-}
-.flag-mn{width:20px;height:13px;display:flex;border-radius:2px;overflow:hidden}
-.flag-mn s:nth-child(1){flex:1;background:#c82400;text-decoration:none;display:block}
-.flag-mn s:nth-child(2){flex:1;background:#004fa0;text-decoration:none;display:block}
-.flag-mn s:nth-child(3){flex:1;background:#c82400;text-decoration:none;display:block}
-.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;margin-left:10px}
+
+/* Language dropdown */
+.lang-wrap{position:relative;margin-left:auto;flex-shrink:0}
+.nav-lang{display:flex;align-items:center;gap:7px;background:rgba(0,0,0,.22);border-radius:10px;padding:6px 12px;cursor:pointer;color:#fff;font-size:13.5px;font-weight:700;border:none;font-family:inherit;transition:background .2s}
+.nav-lang:hover{background:rgba(0,0,0,.32)}
+.lang-chev{font-size:10px;opacity:.8;transition:transform .2s}
+.lang-wrap.open .lang-chev{transform:rotate(180deg)}
+.lang-dd{display:none;position:absolute;top:calc(100% + 8px);right:0;background:#fff;border-radius:12px;box-shadow:0 8px 30px rgba(0,0,0,.18);overflow:hidden;min-width:148px;z-index:1002}
+.lang-wrap.open .lang-dd{display:block}
+.lang-opt{display:flex;align-items:center;gap:10px;padding:11px 16px;cursor:pointer;font-size:13.5px;font-weight:600;color:var(--text);transition:background .15s}
+.lang-opt:hover{background:#f0faf4}
+.lang-opt.sel{background:#e8f5ed;color:var(--green)}
+
+/* Hamburger */
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;margin-left:8px}
 .hamburger span{display:block;width:22px;height:2.5px;background:#fff;border-radius:2px;transition:all .3s}
 .hamburger.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
 .hamburger.open span:nth-child(2){opacity:0}
 .hamburger.open span:nth-child(3){transform:rotate(-45deg) translate(5px,-5px)}
-.mobile-menu{
-  display:none;position:fixed;top:68px;left:20px;right:20px;
-  background:var(--green);border-radius:14px;padding:12px;
-  z-index:999;box-shadow:0 8px 32px rgba(0,0,0,0.22);flex-direction:column;gap:2px;
-}
+.mobile-menu{display:none;position:fixed;top:68px;left:20px;right:20px;background:var(--green);border-radius:14px;padding:12px;z-index:999;box-shadow:0 8px 32px rgba(0,0,0,.22);flex-direction:column;gap:2px}
 .mobile-menu.open{display:flex}
 .mobile-menu .nav-link{padding:10px 14px;border-radius:8px}
-.mobile-menu .nav-link:hover{background:rgba(255,255,255,0.1)}
+.mobile-menu .nav-link:hover{background:rgba(255,255,255,.1)}
+.mob-lang{display:flex;gap:8px;padding:8px 14px 4px}
+.mob-lb{flex:1;background:rgba(255,255,255,.15);border:none;border-radius:8px;color:#fff;font-family:inherit;font-size:13px;font-weight:700;padding:8px 4px;cursor:pointer;transition:background .2s}
+.mob-lb.sel{background:rgba(255,255,255,.35)}
+.mob-lb:hover{background:rgba(255,255,255,.25)}
 
-/* ─── MAIN ─── */
+/* Layout */
 main{padding-top:78px}
 .page{display:none}
 .page.active{display:block}
 
-/* ─── HERO ─── */
-.hero{
-  max-width:1300px;margin:0 auto;padding:44px 44px 36px;
-  display:flex;align-items:center;gap:36px;min-height:500px;position:relative;overflow:hidden;
-}
+/* Hero */
+.hero{max-width:1300px;margin:0 auto;padding:44px 44px 36px;display:flex;align-items:center;gap:36px;min-height:500px;position:relative;overflow:hidden}
 .hero-circles{position:absolute;left:-80px;top:10px;pointer-events:none}
-.hero-circle1{width:340px;height:340px;border:2px solid #c4edd6;border-radius:50%;position:absolute}
-.hero-circle2{width:220px;height:220px;border:2px solid #d4f0e0;border-radius:50%;position:absolute;top:60px;left:60px}
+.hero-c1{width:340px;height:340px;border:2px solid #c4edd6;border-radius:50%;position:absolute}
+.hero-c2{width:220px;height:220px;border:2px solid #d4f0e0;border-radius:50%;position:absolute;top:60px;left:60px}
 .hero-content{flex:1;position:relative;z-index:1}
 .hero-title{font-size:clamp(28px,3.8vw,52px);font-weight:900;color:#111f28;line-height:1.15;margin-bottom:14px}
 .hero-sub{font-size:18px;font-weight:700;color:#3a5060;margin-bottom:6px}
@@ -88,24 +71,22 @@ main{padding-top:78px}
 .btn-g:hover{background:var(--green-dark);transform:translateY(-1px)}
 .btn-o{background:transparent;color:var(--text);border:2px solid #ccc;padding:12px 26px;border-radius:30px;font-size:15px;font-weight:700;cursor:pointer;transition:border-color .2s,color .2s,transform .15s;font-family:inherit}
 .btn-o:hover{border-color:var(--green);color:var(--green);transform:translateY(-1px)}
-.hero-img-wrap{flex-shrink:0;width:460px;height:450px;position:relative}
+.hero-iw{flex-shrink:0;width:460px;height:450px;position:relative}
 .hero-img{width:440px;height:440px;border-radius:50%;overflow:hidden;position:absolute;right:0;top:0}
-/* Bedroom gradient — warm beige/tan tones matching screenshot */
 .img-bedroom{background:linear-gradient(135deg,#d4b896 0%,#c4a07a 20%,#e0c8a4 40%,#8c6040 60%,#c09068 80%,#d8c0a0 100%)}
-/* Scene overlays using SVG patterns for visual richness */
 .img-bedroom::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 40%,rgba(200,160,100,.3) 0%,transparent 60%)}
 
-/* ─── TYPE CARDS ─── */
+/* Type cards */
 .type-cards{max-width:1300px;margin:0 auto;padding:16px 44px 36px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
 .type-card{border-radius:var(--radius);overflow:hidden;position:relative;height:400px;cursor:pointer;transition:transform .2s}
 .type-card:hover{transform:translateY(-3px)}
-.type-card-label{position:absolute;bottom:22px;left:22px;color:#fff;font-size:22px;font-weight:800;text-shadow:0 2px 10px rgba(0,0,0,.45)}
+.tc-lbl{position:absolute;bottom:22px;left:22px;color:#fff;font-size:22px;font-weight:800;text-shadow:0 2px 10px rgba(0,0,0,.45)}
 .tc-gh{background:linear-gradient(170deg,#9dd4c0 0%,#6db898 20%,#7ab89a 40%,#5a9070 60%,#3a7050 80%,#4a8862 100%)}
 .tc-gh::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Cellipse cx='300' cy='100' rx='120' ry='160' fill='rgba(0,0,0,.08)'/%3E%3Crect x='60' y='120' width='180' height='150' rx='4' fill='rgba(255,255,255,.06)'/%3E%3Crect x='80' y='80' width='120' height='100' rx='4' fill='rgba(255,255,255,.05)'/%3E%3C/svg%3E") center/cover no-repeat}
 .tc-ap{background:linear-gradient(170deg,#c0cfd8 0%,#a0b8c8 30%,#8098a8 60%,#607888 100%)}
 .tc-ap::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect x='30' y='40' width='160' height='250' rx='3' fill='rgba(255,255,255,.07)'/%3E%3Crect x='210' y='80' width='160' height='210' rx='3' fill='rgba(255,255,255,.05)'/%3E%3Crect x='240' y='40' width='100' height='130' rx='3' fill='rgba(255,255,255,.04)'/%3E%3C/svg%3E") center/cover no-repeat}
 
-/* ─── LISTING SECTIONS ─── */
+/* Listings */
 .ls{max-width:1300px;margin:0 auto;padding:12px 44px 20px}
 .ls-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
 .ls-title{font-size:22px;font-weight:800}
@@ -124,7 +105,6 @@ main{padding-top:78px}
 .card-book{display:flex;justify-content:flex-end}
 .book-lnk{color:var(--green);font-size:14px;font-weight:700;cursor:pointer;text-decoration:none}
 .book-lnk:hover{text-decoration:underline}
-/* Image gradients */
 .img-gh-ext{background:linear-gradient(170deg,#8dd4c4 0%,#6aaa8a 25%,#5a9878 50%,#3a7858 75%,#507a6a 100%)}
 .img-gh-ext::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='200'%3E%3Cellipse cx='240' cy='60' rx='80' ry='120' fill='rgba(0,0,0,.15)'/%3E%3Crect x='20' y='80' width='140' height='120' rx='3' fill='rgba(255,255,255,.08)'/%3E%3C/svg%3E") center/cover no-repeat}
 .img-room-bl{background:linear-gradient(145deg,#c0d8f0 0%,#d0e4f8 30%,#b8cce8 60%,#e0eefc 100%)}
@@ -133,13 +113,13 @@ main{padding-top:78px}
 .img-apt3{background:linear-gradient(155deg,#806888 0%,#987898 40%,#705878 70%,#887090 100%)}
 .img-apt4{background:linear-gradient(145deg,#c8a860 0%,#b09050 30%,#d4b870 60%,#a89060 100%)}
 
-/* ─── REVIEWS ─── */
-.rv-section{background:var(--green-light);padding:58px 44px;margin-top:36px}
-.rv-inner{max-width:1300px;margin:0 auto}
+/* Reviews */
+.rv-sec{background:var(--green-light);padding:58px 44px;margin-top:36px}
+.rv-in{max-width:1300px;margin:0 auto}
 .rv-title{font-size:28px;font-weight:900;text-align:center;margin-bottom:8px}
 .rv-sub{text-align:center;color:#6a8070;font-size:14.5px;margin-bottom:34px}
 .rv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.rv-card{background:#fff;border-radius:var(--radius);padding:20px;border:1.5px solid transparent;transition:border-color .2s}
+.rv-card{background:#fff;border-radius:var(--radius);padding:20px;border:1.5px solid transparent}
 .rv-card.feat{border-color:var(--green)}
 .rv-hd{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .rv-av{width:42px;height:42px;background:#dceee5;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:#2a5a40;flex-shrink:0}
@@ -149,7 +129,7 @@ main{padding-top:78px}
 .rv-txt{font-size:14px;color:#4a5a64;margin-bottom:12px;line-height:1.55}
 .rv-stars{display:flex;gap:3px;color:var(--green);font-size:16px}
 
-/* ─── FAQ ─── */
+/* FAQ */
 .faq-pg{max-width:1060px;margin:0 auto;padding:48px 44px}
 .pg-title{font-size:32px;font-weight:900;margin-bottom:8px}
 .pg-sub{color:#7a8c98;font-size:15px;margin-bottom:36px}
@@ -164,7 +144,7 @@ main{padding-top:78px}
 .faq-ans-in{background:#f4faf6;border-radius:8px;padding:15px;font-size:15px;color:#4a5a64;line-height:1.6}
 .faq-item.open .faq-ans{display:block}
 
-/* ─── CONTACT ─── */
+/* Contact */
 .ct-pg{max-width:880px;margin:0 auto;padding:48px 44px}
 .ct-pg .pg-title{text-align:center}
 .ct-pg .pg-sub{text-align:center;margin-bottom:40px}
@@ -180,16 +160,16 @@ main{padding-top:78px}
 .ct-addr-lbl{font-weight:800;margin-bottom:5px;font-size:14.5px}
 .ct-addr-txt{font-size:14px;color:#4a5a64}
 
-/* ─── MAP ─── */
+/* Map */
 .map-pg{max-width:1080px;margin:0 auto;padding:48px 44px}
 #map-container{height:520px;border-radius:var(--radius);overflow:hidden;border:1px solid #d8e8e0}
 
-/* ─── FULL LISTING PAGES ─── */
+/* Full listing pages */
 .full-pg{max-width:1300px;margin:0 auto;padding:48px 44px}
 
-/* ─── FOOTER ─── */
+/* Footer */
 footer{background:var(--green-dark);color:#fff;padding:32px 44px;margin-top:56px}
-.ft-inner{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.ft-in{max-width:1300px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
 .ft-left strong{font-size:15px}
 .ft-left p{font-size:13.5px;opacity:.75;margin-top:3px}
 .ft-links{display:flex;gap:10px;flex-wrap:wrap}
@@ -197,46 +177,43 @@ footer{background:var(--green-dark);color:#fff;padding:32px 44px;margin-top:56px
 .ft-lnk:hover{background:rgba(255,255,255,.24)}
 .ft-copy{max-width:1300px;margin:16px auto 0;font-size:12.5px;opacity:.55;border-top:1px solid rgba(255,255,255,.14);padding-top:16px}
 
-/* ─── MOBILE ─── */
-@media(max-width:900px){
-  .rv-grid{grid-template-columns:1fr 1fr}
-}
+/* Responsive */
+@media(max-width:900px){.rv-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:768px){
   .nav-links{display:none}
   .hamburger{display:flex}
   .hero{flex-direction:column;padding:28px 20px;min-height:auto;text-align:center}
   .hero-circles{display:none}
   .hero-btns{justify-content:center}
-  .hero-img-wrap{width:100%;height:260px;display:flex;justify-content:center}
+  .hero-iw{width:100%;height:260px;display:flex;justify-content:center}
   .hero-img{width:260px;height:260px;position:relative;right:auto}
   .type-cards{grid-template-columns:1fr;padding:12px 20px 28px}
   .type-card{height:200px}
   .ls{padding:12px 20px 16px}
   .lg-2{grid-template-columns:1fr;max-width:100%}
-  .rv-section{padding:36px 20px}
+  .rv-sec{padding:36px 20px}
   .rv-grid{grid-template-columns:1fr;gap:14px}
   .faq-pg,.ct-pg,.map-pg,.full-pg{padding:32px 20px}
   #map-container{height:340px}
   .ct-methods{flex-direction:column}
   .ct-m{min-width:unset}
   footer{padding:28px 20px}
-  .ft-inner{flex-direction:column;align-items:flex-start}
+  .ft-in{flex-direction:column;align-items:flex-start}
 }
 @media(max-width:480px){
   .navbar{padding:10px 14px;width:calc(100% - 24px)}
   .nav-logo{font-size:16px}
   .nav-logo-icon{width:34px;height:34px}
   .hero-title{font-size:26px}
-  .rv-title{font-size:22px}
-  .pg-title{font-size:26px}
+  .rv-title,.pg-title{font-size:24px}
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- NAVBAR -->
 <nav class="navbar">
-  <div class="nav-logo" onclick="showPage('home')">
+  <div class="nav-logo" onclick="showPage('home',0)">
     <div class="nav-logo-icon">
       <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="2" y="2" width="22" height="22" rx="3" stroke="white" stroke-width="1.5" fill="none"/>
@@ -245,325 +222,279 @@ footer{background:var(--green-dark);color:#fff;padding:32px 44px;margin-top:56px
     </div>
     Etuga
   </div>
+
   <div class="nav-links">
-    <a class="nav-link active" onclick="showPage('home',0)">Нүүр</a>
-    <a class="nav-link" onclick="showPage('guesthouse',1)">Гэстхаус</a>
-    <a class="nav-link" onclick="showPage('apartment',2)">Апартмент</a>
-    <a class="nav-link" onclick="showPage('faq',3)">Асуулт хариулт</a>
-    <a class="nav-link" onclick="showPage('contact',4)">Холбоо барих</a>
-    <a class="nav-link" onclick="showPage('mappage',5)">Байршил</a>
+    <a class="nav-link active" onclick="showPage('home',0)"       data-i18n="nav_home"></a>
+    <a class="nav-link"        onclick="showPage('guesthouse',1)" data-i18n="nav_gh"></a>
+    <a class="nav-link"        onclick="showPage('apartment',2)"  data-i18n="nav_apt"></a>
+    <a class="nav-link"        onclick="showPage('faq',3)"        data-i18n="nav_faq"></a>
+    <a class="nav-link"        onclick="showPage('contact',4)"    data-i18n="nav_contact"></a>
+    <a class="nav-link"        onclick="showPage('mappage',5)"    data-i18n="nav_map"></a>
   </div>
-  <button class="nav-lang">
-    <div class="flag-mn"><s></s><s></s><s></s></div>
-    MN ▾
-  </button>
-  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+
+  <!-- Language picker -->
+  <div class="lang-wrap" id="langWrap">
+    <button class="nav-lang" onclick="toggleLangDD(event)">
+      <span id="currFlag">🇲🇳</span>
+      <span id="currCode">MN</span>
+      <span class="lang-chev">▾</span>
+    </button>
+    <div class="lang-dd" id="langDD">
+      <div class="lang-opt sel" onclick="setLang('mn')">🇲🇳&nbsp; Монгол</div>
+      <div class="lang-opt"     onclick="setLang('en')">🇬🇧&nbsp; English</div>
+      <div class="lang-opt"     onclick="setLang('ru')">🇷🇺&nbsp; Русский</div>
+    </div>
+  </div>
+
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()">
     <span></span><span></span><span></span>
   </button>
 </nav>
 
 <!-- MOBILE MENU -->
 <div class="mobile-menu" id="mobileMenu">
-  <a class="nav-link" onclick="showPage('home',0);closeMenu()">Нүүр</a>
-  <a class="nav-link" onclick="showPage('guesthouse',1);closeMenu()">Гэстхаус</a>
-  <a class="nav-link" onclick="showPage('apartment',2);closeMenu()">Апартмент</a>
-  <a class="nav-link" onclick="showPage('faq',3);closeMenu()">Асуулт хариулт</a>
-  <a class="nav-link" onclick="showPage('contact',4);closeMenu()">Холбоо барих</a>
-  <a class="nav-link" onclick="showPage('mappage',5);closeMenu()">Байршил</a>
+  <a class="nav-link" onclick="showPage('home',0);closeMenu()"       data-i18n="nav_home"></a>
+  <a class="nav-link" onclick="showPage('guesthouse',1);closeMenu()" data-i18n="nav_gh"></a>
+  <a class="nav-link" onclick="showPage('apartment',2);closeMenu()"  data-i18n="nav_apt"></a>
+  <a class="nav-link" onclick="showPage('faq',3);closeMenu()"        data-i18n="nav_faq"></a>
+  <a class="nav-link" onclick="showPage('contact',4);closeMenu()"    data-i18n="nav_contact"></a>
+  <a class="nav-link" onclick="showPage('mappage',5);closeMenu()"    data-i18n="nav_map"></a>
+  <div class="mob-lang">
+    <button class="mob-lb sel" id="mBtn_mn" onclick="setLang('mn')">🇲🇳 MN</button>
+    <button class="mob-lb"     id="mBtn_en" onclick="setLang('en')">🇬🇧 EN</button>
+    <button class="mob-lb"     id="mBtn_ru" onclick="setLang('ru')">🇷🇺 RU</button>
+  </div>
 </div>
 
 <main>
 
-<!-- ─── HOME ─── -->
+<!-- HOME -->
 <section id="home" class="page active">
-  <!-- HERO -->
   <div class="hero">
-    <div class="hero-circles">
-      <div class="hero-circle1"></div>
-      <div class="hero-circle2"></div>
-    </div>
+    <div class="hero-circles"><div class="hero-c1"></div><div class="hero-c2"></div></div>
     <div class="hero-content">
-      <h1 class="hero-title">Этүга гэстхаус, байр<br>түрээс</h1>
-      <p class="hero-sub">Гэстхаус, Апартмент</p>
-      <p class="hero-tag">Хотын төвтэй ойр &bull; Тав тухтай үйлчилгээ</p>
+      <h1 class="hero-title"  data-i18n="hero_title"></h1>
+      <p  class="hero-sub"    data-i18n="hero_sub"></p>
+      <p  class="hero-tag"    data-i18n="hero_tag"></p>
       <div class="hero-btns">
-        <button class="btn-g" onclick="showPage('guesthouse',1)">Гэстхаус</button>
-        <button class="btn-o" onclick="showPage('apartment',2)">Апартментууд</button>
+        <button class="btn-g" onclick="showPage('guesthouse',1)" data-i18n="btn_gh"></button>
+        <button class="btn-o" onclick="showPage('apartment',2)"  data-i18n="btn_apt"></button>
       </div>
     </div>
-    <div class="hero-img-wrap">
-      <div class="hero-img img-bedroom"></div>
-    </div>
+    <div class="hero-iw"><div class="hero-img img-bedroom"></div></div>
   </div>
 
-  <!-- TYPE CARDS -->
   <div class="type-cards">
     <div class="type-card tc-gh" onclick="showPage('guesthouse',1)">
-      <div class="type-card-label">Гэстхаус</div>
+      <div class="tc-lbl" data-i18n="tc_gh"></div>
     </div>
     <div class="type-card tc-ap" onclick="showPage('apartment',2)">
-      <div class="type-card-label">Байр</div>
+      <div class="tc-lbl" data-i18n="tc_ap"></div>
     </div>
   </div>
 
-  <!-- ГЭСТХАУСУУД -->
   <div class="ls">
-    <div class="ls-hd"><h2 class="ls-title">Гэстхаусууд</h2></div>
+    <div class="ls-hd"><h2 class="ls-title" data-i18n="sec_gh"></h2></div>
     <div class="lg lg-2">
-      <div class="card">
-        <div class="card-img">
-          <div class="card-ph img-gh-ext"></div>
-          <span class="price-b">MNT 120,000</span>
-        </div>
-        <div class="card-body">
-          <div class="card-name">Этүга Гэстхаус</div>
-          <div class="card-loc"><span>📍</span><span>Улаанбаатар, Метромаллын хойно</span></div>
-          <div class="card-book"><a class="book-lnk">Захиалах →</a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <div class="card-ph img-room-bl"></div>
-          <span class="price-b">MNT 107,177</span>
-        </div>
-        <div class="card-body">
-          <div class="card-name">Сухбаатарын талбайн ойролцоох Этүга Гэстхаус</div>
-          <div class="card-loc"><span>📍</span><span>Улаанбаатар, Сухбаатар талбай</span></div>
-          <div class="card-book"><a class="book-lnk">Захиалах →</a></div>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:right;margin-top:16px"><a class="see-all" onclick="showPage('guesthouse',1)">Бүгдийг харах →</a></div>
-  </div>
-
-  <!-- АПАРТМЕНТУУД -->
-  <div class="ls" style="margin-top:24px">
-    <div class="ls-hd"><h2 class="ls-title">Апартментууд</h2></div>
-    <div class="lg">
-      <div class="card">
-        <div class="card-img">
-          <div class="card-ph img-apt1"></div>
-          <span class="price-b">MNT 200,000</span>
-        </div>
-        <div class="card-body">
-          <div class="card-name">test</div>
-          <div class="card-loc"><span>📍</span><span>Ulaanbaatar</span></div>
-          <div class="card-book"><a class="book-lnk">Захиалах →</a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <div class="card-ph img-apt2"></div>
-          <span class="price-b">MNT 222,222,222</span>
-        </div>
-        <div class="card-body">
-          <div class="card-name">Модны 2-т 9 хүний байр</div>
-          <div class="card-loc"><span>📍</span><span>Ulaanbaatar</span></div>
-          <div class="card-book"><a class="book-lnk">Захиалах →</a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <div class="card-ph img-apt3"></div>
-          <span class="price-b">MNT 160,000</span>
-        </div>
-        <div class="card-body">
-          <div class="card-name">Сааний таунд 3 өрөө байр</div>
-          <div class="card-loc"><span>📍</span><span>Улаанбаатар</span></div>
-          <div class="card-book"><a class="book-lnk">Захиалах →</a></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-img">
-          <div class="card-ph img-apt4"></div>
-          <span class="price-b">MNT 405,127</span>
-        </div>
-        <div class="card-body">
-          <div class="card-name">Үйлдвэрчдийн гудамж дахь Алтай апартмент</div>
-          <div class="card-loc"><span>📍</span><span>Улаанбаатар, Алтай хотхон</span></div>
-          <div class="card-book"><a class="book-lnk">Захиалах →</a></div>
-        </div>
-      </div>
-    </div>
-    <div style="text-align:right;margin-top:16px"><a class="see-all" onclick="showPage('apartment',2)">Бүгдийг харах →</a></div>
-  </div>
-
-  <!-- REVIEWS -->
-  <div class="rv-section">
-    <div class="rv-inner">
-      <h2 class="rv-title">Хэрэглэгчийн сэтгэгдэл</h2>
-      <p class="rv-sub">Манай зочдын бодит үнэлгээ</p>
-      <div class="rv-grid">
-        <div class="rv-card feat">
-          <div class="rv-hd">
-            <div class="rv-av">Э</div>
-            <div>
-              <div class="rv-name">Э.Одонтуяа</div>
-              <div class="rv-meta">UB зочин &bull; Deluxe өрөө &nbsp; 2025-10-01</div>
-            </div>
-            <div class="rv-q">"</div>
-          </div>
-          <p class="rv-txt">Өрөө цэвэрхэн, байршил төв. Дахин ирнэ.</p>
-          <div class="rv-stars">★★★★★</div>
-        </div>
-        <div class="rv-card">
-          <div class="rv-hd">
-            <div class="rv-av" style="background:#cce0ec;color:#1a4a6a">BB</div>
-            <div>
-              <div class="rv-name">Bat-Erdene B.</div>
-              <div class="rv-meta">Бизнес зочин &nbsp; 2025-09-18</div>
-            </div>
-            <div class="rv-q">"</div>
-          </div>
-          <p class="rv-txt">Wi-Fi хурдан, check-in хурдан явагдсан.</p>
-          <div class="rv-stars">★★★★<span style="opacity:.28">★</span></div>
-        </div>
-        <div class="rv-card">
-          <div class="rv-hd">
-            <div class="rv-av" style="background:#d4ecd4;color:#1a4a1a">N</div>
-            <div>
-              <div class="rv-name">Narantsetseg</div>
-              <div class="rv-meta">Амралтын зочин &nbsp; 2025-08-02</div>
-            </div>
-            <div class="rv-q">"</div>
-          </div>
-          <p class="rv-txt">Тохилог, дулаахан. Үйлчилгээ маш сайн.</p>
-          <div class="rv-stars">★★★★★</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ─── ГЭСТХАУС PAGE ─── -->
-<section id="guesthouse" class="page">
-  <div class="full-pg">
-    <h1 class="pg-title">Гэстхаусууд</h1>
-    <p class="pg-sub" style="color:#7a8c98;margin-bottom:32px">Этүга гэстхаусын бүх байр</p>
-    <div class="lg">
       <div class="card">
         <div class="card-img"><div class="card-ph img-gh-ext"></div><span class="price-b">MNT 120,000</span></div>
         <div class="card-body">
-          <div class="card-name">Этүга Гэстхаус</div>
-          <div class="card-loc"><span>📍</span><span>Улаанбаатар, Метромаллын хойно</span></div>
-          <div class="card-book"><a class="book-lnk">Захиалах →</a></div>
+          <div class="card-name" data-i18n="gh1_name"></div>
+          <div class="card-loc"><span>📍</span><span data-i18n="gh1_loc"></span></div>
+          <div class="card-book"><a class="book-lnk" data-i18n="book"></a></div>
         </div>
       </div>
       <div class="card">
         <div class="card-img"><div class="card-ph img-room-bl"></div><span class="price-b">MNT 107,177</span></div>
         <div class="card-body">
-          <div class="card-name">Сухбаатарын талбайн ойролцоох Этүга Гэстхаус</div>
-          <div class="card-loc"><span>📍</span><span>Улаанбаатар, Сухбаатар талбай</span></div>
-          <div class="card-book"><a class="book-lnk">Захиалах →</a></div>
+          <div class="card-name" data-i18n="gh2_name"></div>
+          <div class="card-loc"><span>📍</span><span data-i18n="gh2_loc"></span></div>
+          <div class="card-book"><a class="book-lnk" data-i18n="book"></a></div>
         </div>
       </div>
     </div>
+    <div style="text-align:right;margin-top:16px"><a class="see-all" onclick="showPage('guesthouse',1)" data-i18n="see_all"></a></div>
   </div>
-</section>
 
-<!-- ─── АПАРТМЕНТ PAGE ─── -->
-<section id="apartment" class="page">
-  <div class="full-pg">
-    <h1 class="pg-title">Апартментууд</h1>
-    <p class="pg-sub" style="color:#7a8c98;margin-bottom:32px">Бүх апартментуудыг үзэх</p>
+  <div class="ls" style="margin-top:24px">
+    <div class="ls-hd"><h2 class="ls-title" data-i18n="sec_apt"></h2></div>
     <div class="lg">
       <div class="card">
         <div class="card-img"><div class="card-ph img-apt1"></div><span class="price-b">MNT 200,000</span></div>
         <div class="card-body">
-          <div class="card-name">test</div>
-          <div class="card-loc"><span>📍</span><span>Ulaanbaatar</span></div>
-          <div class="card-book"><a class="book-lnk">Захиалах →</a></div>
+          <div class="card-name" data-i18n="apt1_name"></div>
+          <div class="card-loc"><span>📍</span><span data-i18n="apt1_loc"></span></div>
+          <div class="card-book"><a class="book-lnk" data-i18n="book"></a></div>
         </div>
       </div>
       <div class="card">
         <div class="card-img"><div class="card-ph img-apt2"></div><span class="price-b">MNT 222,222,222</span></div>
         <div class="card-body">
-          <div class="card-name">Модны 2-т 9 хүний байр</div>
-          <div class="card-loc"><span>📍</span><span>Ulaanbaatar</span></div>
-          <div class="card-book"><a class="book-lnk">Захиалах →</a></div>
+          <div class="card-name" data-i18n="apt2_name"></div>
+          <div class="card-loc"><span>📍</span><span data-i18n="apt2_loc"></span></div>
+          <div class="card-book"><a class="book-lnk" data-i18n="book"></a></div>
         </div>
       </div>
       <div class="card">
         <div class="card-img"><div class="card-ph img-apt3"></div><span class="price-b">MNT 160,000</span></div>
         <div class="card-body">
-          <div class="card-name">Сааний таунд 3 өрөө байр</div>
-          <div class="card-loc"><span>📍</span><span>Улаанбаатар</span></div>
-          <div class="card-book"><a class="book-lnk">Захиалах →</a></div>
+          <div class="card-name" data-i18n="apt3_name"></div>
+          <div class="card-loc"><span>📍</span><span data-i18n="apt3_loc"></span></div>
+          <div class="card-book"><a class="book-lnk" data-i18n="book"></a></div>
         </div>
       </div>
       <div class="card">
         <div class="card-img"><div class="card-ph img-apt4"></div><span class="price-b">MNT 405,127</span></div>
         <div class="card-body">
-          <div class="card-name">Үйлдвэрчдийн гудамж дахь Алтай апартмент</div>
-          <div class="card-loc"><span>📍</span><span>Улаанбаатар, Алтай хотхон</span></div>
-          <div class="card-book"><a class="book-lnk">Захиалах →</a></div>
+          <div class="card-name" data-i18n="apt4_name"></div>
+          <div class="card-loc"><span>📍</span><span data-i18n="apt4_loc"></span></div>
+          <div class="card-book"><a class="book-lnk" data-i18n="book"></a></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:right;margin-top:16px"><a class="see-all" onclick="showPage('apartment',2)" data-i18n="see_all"></a></div>
+  </div>
+
+  <div class="rv-sec">
+    <div class="rv-in">
+      <h2 class="rv-title" data-i18n="rv_title"></h2>
+      <p  class="rv-sub"   data-i18n="rv_sub"></p>
+      <div class="rv-grid">
+        <div class="rv-card feat">
+          <div class="rv-hd">
+            <div class="rv-av">Э</div>
+            <div><div class="rv-name">Э.Одонтуяа</div><div class="rv-meta" data-i18n="rv1_meta"></div></div>
+            <div class="rv-q">"</div>
+          </div>
+          <p class="rv-txt" data-i18n="rv1_txt"></p>
+          <div class="rv-stars">★★★★★</div>
+        </div>
+        <div class="rv-card">
+          <div class="rv-hd">
+            <div class="rv-av" style="background:#cce0ec;color:#1a4a6a">BB</div>
+            <div><div class="rv-name">Bat-Erdene B.</div><div class="rv-meta" data-i18n="rv2_meta"></div></div>
+            <div class="rv-q">"</div>
+          </div>
+          <p class="rv-txt" data-i18n="rv2_txt"></p>
+          <div class="rv-stars">★★★★<span style="opacity:.28">★</span></div>
+        </div>
+        <div class="rv-card">
+          <div class="rv-hd">
+            <div class="rv-av" style="background:#d4ecd4;color:#1a4a1a">N</div>
+            <div><div class="rv-name">Narantsetseg</div><div class="rv-meta" data-i18n="rv3_meta"></div></div>
+            <div class="rv-q">"</div>
+          </div>
+          <p class="rv-txt" data-i18n="rv3_txt"></p>
+          <div class="rv-stars">★★★★★</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── FAQ PAGE ─── -->
+<!-- GUESTHOUSE -->
+<section id="guesthouse" class="page">
+  <div class="full-pg">
+    <h1 class="pg-title" data-i18n="sec_gh"></h1>
+    <p class="pg-sub" style="color:#7a8c98;margin-bottom:32px" data-i18n="gh_sub"></p>
+    <div class="lg">
+      <div class="card">
+        <div class="card-img"><div class="card-ph img-gh-ext"></div><span class="price-b">MNT 120,000</span></div>
+        <div class="card-body">
+          <div class="card-name" data-i18n="gh1_name"></div>
+          <div class="card-loc"><span>📍</span><span data-i18n="gh1_loc"></span></div>
+          <div class="card-book"><a class="book-lnk" data-i18n="book"></a></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img"><div class="card-ph img-room-bl"></div><span class="price-b">MNT 107,177</span></div>
+        <div class="card-body">
+          <div class="card-name" data-i18n="gh2_name"></div>
+          <div class="card-loc"><span>📍</span><span data-i18n="gh2_loc"></span></div>
+          <div class="card-book"><a class="book-lnk" data-i18n="book"></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- APARTMENT -->
+<section id="apartment" class="page">
+  <div class="full-pg">
+    <h1 class="pg-title" data-i18n="sec_apt"></h1>
+    <p class="pg-sub" style="color:#7a8c98;margin-bottom:32px" data-i18n="apt_sub"></p>
+    <div class="lg">
+      <div class="card">
+        <div class="card-img"><div class="card-ph img-apt1"></div><span class="price-b">MNT 200,000</span></div>
+        <div class="card-body">
+          <div class="card-name" data-i18n="apt1_name"></div>
+          <div class="card-loc"><span>📍</span><span data-i18n="apt1_loc"></span></div>
+          <div class="card-book"><a class="book-lnk" data-i18n="book"></a></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img"><div class="card-ph img-apt2"></div><span class="price-b">MNT 222,222,222</span></div>
+        <div class="card-body">
+          <div class="card-name" data-i18n="apt2_name"></div>
+          <div class="card-loc"><span>📍</span><span data-i18n="apt2_loc"></span></div>
+          <div class="card-book"><a class="book-lnk" data-i18n="book"></a></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img"><div class="card-ph img-apt3"></div><span class="price-b">MNT 160,000</span></div>
+        <div class="card-body">
+          <div class="card-name" data-i18n="apt3_name"></div>
+          <div class="card-loc"><span>📍</span><span data-i18n="apt3_loc"></span></div>
+          <div class="card-book"><a class="book-lnk" data-i18n="book"></a></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-img"><div class="card-ph img-apt4"></div><span class="price-b">MNT 405,127</span></div>
+        <div class="card-body">
+          <div class="card-name" data-i18n="apt4_name"></div>
+          <div class="card-loc"><span>📍</span><span data-i18n="apt4_loc"></span></div>
+          <div class="card-book"><a class="book-lnk" data-i18n="book"></a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
 <section id="faq" class="page">
   <div class="faq-pg">
-    <h1 class="pg-title">Асуулт хариулт</h1>
-    <p class="pg-sub">Түгээмэл асуултуудад хурдан хариулт.</p>
+    <h1 class="pg-title" data-i18n="faq_title"></h1>
+    <p  class="pg-sub"   data-i18n="faq_sub"></p>
     <div class="faq-list">
-
       <div class="faq-item open">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="fq-dot"></span>
-          <span class="fq-txt">Чек-ин/Чек-аут хэдэн цагт вэ?</span>
-          <span class="fq-chev">∨</span>
-        </div>
-        <div class="faq-ans"><div class="faq-ans-in">Ерөнхийдөө чек-ин 14:00, чек-аут 12:00. Эртийн/оройн цаг хэрэгтэй бол урьдчилан мэдэгдээрэй.</div></div>
+        <div class="faq-q" onclick="toggleFaq(this)"><span class="fq-dot"></span><span class="fq-txt" data-i18n="faq_q1"></span><span class="fq-chev">∨</span></div>
+        <div class="faq-ans"><div class="faq-ans-in" data-i18n="faq_a1"></div></div>
       </div>
-
       <div class="faq-item open">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="fq-dot"></span>
-          <span class="fq-txt">Төлбөрөө яаж хийх вэ?</span>
-          <span class="fq-chev">∨</span>
-        </div>
-        <div class="faq-ans"><div class="faq-ans-in">Бэлнээр, картаар, эсвэл банкаар шилжүүлнэ. Онлайн захиалгад төлбөрийн линк явуулна.</div></div>
+        <div class="faq-q" onclick="toggleFaq(this)"><span class="fq-dot"></span><span class="fq-txt" data-i18n="faq_q2"></span><span class="fq-chev">∨</span></div>
+        <div class="faq-ans"><div class="faq-ans-in" data-i18n="faq_a2"></div></div>
       </div>
-
       <div class="faq-item open">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="fq-dot"></span>
-          <span class="fq-txt">Нисэх буудлаас тээвэр зохион байгуулах уу?</span>
-          <span class="fq-chev">∨</span>
-        </div>
-        <div class="faq-ans"><div class="faq-ans-in">Тийм. Нэмэлт төлбөртэйгээр нисэх буудлын угталт/үдэлт захиалах боломжтой.</div></div>
+        <div class="faq-q" onclick="toggleFaq(this)"><span class="fq-dot"></span><span class="fq-txt" data-i18n="faq_q3"></span><span class="fq-chev">∨</span></div>
+        <div class="faq-ans"><div class="faq-ans-in" data-i18n="faq_a3"></div></div>
       </div>
-
       <div class="faq-item open">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="fq-dot"></span>
-          <span class="fq-txt">Wi-Fi байна уу?</span>
-          <span class="fq-chev">∨</span>
-        </div>
-        <div class="faq-ans"><div class="faq-ans-in">Бүх өрөөнд үнэгүй өндөр хурдны Wi-Fi ашиглах боломжтой.</div></div>
+        <div class="faq-q" onclick="toggleFaq(this)"><span class="fq-dot"></span><span class="fq-txt" data-i18n="faq_q4"></span><span class="fq-chev">∨</span></div>
+        <div class="faq-ans"><div class="faq-ans-in" data-i18n="faq_a4"></div></div>
       </div>
-
       <div class="faq-item open">
-        <div class="faq-q" onclick="toggleFaq(this)">
-          <span class="fq-dot"></span>
-          <span class="fq-txt">Захиалга цуцлалт яаж вэ?</span>
-          <span class="fq-chev">∨</span>
-        </div>
-        <div class="faq-ans"><div class="faq-ans-in">Ихэнх тохиолдолд 48 цагийн өмнө цуцлавал үнэгүй.</div></div>
+        <div class="faq-q" onclick="toggleFaq(this)"><span class="fq-dot"></span><span class="fq-txt" data-i18n="faq_q5"></span><span class="fq-chev">∨</span></div>
+        <div class="faq-ans"><div class="faq-ans-in" data-i18n="faq_a5"></div></div>
       </div>
-
     </div>
   </div>
 </section>
 
-<!-- ─── CONTACT PAGE ─── -->
+<!-- CONTACT -->
 <section id="contact" class="page">
   <div class="ct-pg">
-    <h1 class="pg-title">Холбоо барих</h1>
-    <p class="pg-sub">Бидэнтэй дараах сувгаар шууд холбогдоорой.</p>
+    <h1 class="pg-title" data-i18n="ct_title"></h1>
+    <p  class="pg-sub"   data-i18n="ct_sub"></p>
     <div class="ct-card">
       <div class="ct-methods">
         <a class="ct-m" href="tel:+97689196371">
@@ -573,7 +504,7 @@ footer{background:var(--green-dark);color:#fff;padding:32px 44px;margin-top:56px
         </a>
         <a class="ct-m" href="https://wa.me/97689196371" target="_blank">
           <div class="ct-icon">💬</div>
-          <div><div class="ct-lbl">WhatsApp</div><div class="ct-val">Tap to open</div></div>
+          <div><div class="ct-lbl">WhatsApp</div><div class="ct-val" data-i18n="tap_open"></div></div>
           <div class="ct-arr">→</div>
         </a>
         <a class="ct-m" href="mailto:info@etuga.mn">
@@ -583,39 +514,38 @@ footer{background:var(--green-dark);color:#fff;padding:32px 44px;margin-top:56px
         </a>
         <a class="ct-m" href="#" target="_blank">
           <div class="ct-icon">👤</div>
-          <div><div class="ct-lbl">Facebook</div><div class="ct-val">Tap to open</div></div>
+          <div><div class="ct-lbl">Facebook</div><div class="ct-val" data-i18n="tap_open"></div></div>
           <div class="ct-arr">→</div>
         </a>
         <a class="ct-m" href="#" target="_blank">
           <div class="ct-icon">📷</div>
-          <div><div class="ct-lbl">Instagram</div><div class="ct-val">Tap to open</div></div>
+          <div><div class="ct-lbl">Instagram</div><div class="ct-val" data-i18n="tap_open"></div></div>
           <div class="ct-arr">→</div>
         </a>
       </div>
       <div class="ct-addr">
-        <div class="ct-addr-lbl">Хаяг</div>
-        <div class="ct-addr-txt">СБД, 6-р хороо, Метромаллын хойно, 73/5-р байр, 1-р давхар, 1 тоот</div>
+        <div class="ct-addr-lbl" data-i18n="ct_addr_lbl"></div>
+        <div class="ct-addr-txt" data-i18n="ct_addr"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ─── MAP PAGE ─── -->
+<!-- MAP -->
 <section id="mappage" class="page">
   <div class="map-pg">
-    <h1 class="pg-title" style="margin-bottom:24px">Гэстхаус, Байрнуудын байршил</h1>
+    <h1 class="pg-title" style="margin-bottom:24px" data-i18n="map_title"></h1>
     <div id="map-container"></div>
   </div>
 </section>
 
 </main>
 
-<!-- FOOTER -->
 <footer>
-  <div class="ft-inner">
+  <div class="ft-in">
     <div class="ft-left">
-      <strong>Бидэнтэй холбогдох сувгууд</strong>
-      <p>Сошиал, WhatsApp, имэйлээр холбогдоорой.</p>
+      <strong data-i18n="ft_title"></strong>
+      <p data-i18n="ft_sub"></p>
     </div>
     <div class="ft-links">
       <a class="ft-lnk" href="#" target="_blank">👤 Facebook →</a>
@@ -624,78 +554,205 @@ footer{background:var(--green-dark);color:#fff;padding:32px 44px;margin-top:56px
       <a class="ft-lnk" href="mailto:info@etuga.mn">✉️ Email →</a>
     </div>
   </div>
-  <div class="ft-copy">© 2025 Etuga Guesthouse. Бүх эрх хуулиар хамгаалагдсан.</div>
+  <div class="ft-copy" data-i18n="ft_copy"></div>
 </footer>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-/* ─── SPA NAVIGATION ─── */
-let mapReady = false;
+/* ══ TRANSLATIONS ══ */
+const T = {
+  mn:{
+    nav_home:'Нүүр',nav_gh:'Гэстхаус',nav_apt:'Апартмент',
+    nav_faq:'Асуулт хариулт',nav_contact:'Холбоо барих',nav_map:'Байршил',
+    hero_title:'Этүга гэстхаус, байр түрээс',
+    hero_sub:'Гэстхаус, Апартмент',
+    hero_tag:'Хотын төвтэй ойр • Тав тухтай үйлчилгээ',
+    btn_gh:'Гэстхаус',btn_apt:'Апартментууд',
+    tc_gh:'Гэстхаус',tc_ap:'Байр',
+    sec_gh:'Гэстхаусууд',sec_apt:'Апартментууд',
+    see_all:'Бүгдийг харах →',book:'Захиалах →',
+    gh_sub:'Этүга гэстхаусын бүх байр',apt_sub:'Бүх апартментуудыг үзэх',
+    gh1_name:'Этүга Гэстхаус',gh1_loc:'Улаанбаатар, Метромаллын хойно',
+    gh2_name:'Сухбаатарын талбайн ойролцоох Этүга Гэстхаус',gh2_loc:'Улаанбаатар, Сухбаатар талбай',
+    apt1_name:'test',apt1_loc:'Улаанбаатар',
+    apt2_name:'Модны 2-т 9 хүний байр',apt2_loc:'Улаанбаатар',
+    apt3_name:'Сааний таунд 3 өрөө байр',apt3_loc:'Улаанбаатар',
+    apt4_name:'Үйлдвэрчдийн гудамж дахь Алтай апартмент',apt4_loc:'Улаанбаатар, Алтай хотхон',
+    rv_title:'Хэрэглэгчийн сэтгэгдэл',rv_sub:'Манай зочдын бодит үнэлгээ',
+    rv1_meta:'UB зочин • Deluxe өрөө · 2025-10-01',rv1_txt:'Өрөө цэвэрхэн, байршил төв. Дахин ирнэ.',
+    rv2_meta:'Бизнес зочин · 2025-09-18',rv2_txt:'Wi-Fi хурдан, check-in хурдан явагдсан.',
+    rv3_meta:'Амралтын зочин · 2025-08-02',rv3_txt:'Тохилог, дулаахан. Үйлчилгээ маш сайн.',
+    faq_title:'Асуулт хариулт',faq_sub:'Түгээмэл асуултуудад хурдан хариулт.',
+    faq_q1:'Чек-ин/Чек-аут хэдэн цагт вэ?',faq_a1:'Ерөнхийдөө чек-ин 14:00, чек-аут 12:00. Эртийн/оройн цаг хэрэгтэй бол урьдчилан мэдэгдээрэй.',
+    faq_q2:'Төлбөрөө яаж хийх вэ?',faq_a2:'Бэлнээр, картаар, эсвэл банкаар шилжүүлнэ. Онлайн захиалгад төлбөрийн линк явуулна.',
+    faq_q3:'Нисэх буудлаас тээвэр зохион байгуулах уу?',faq_a3:'Тийм. Нэмэлт төлбөртэйгээр нисэх буудлын угталт/үдэлт захиалах боломжтой.',
+    faq_q4:'Wi-Fi байна уу?',faq_a4:'Бүх өрөөнд үнэгүй өндөр хурдны Wi-Fi ашиглах боломжтой.',
+    faq_q5:'Захиалга цуцлалт яаж вэ?',faq_a5:'Ихэнх тохиолдолд 48 цагийн өмнө цуцлавал үнэгүй.',
+    ct_title:'Холбоо барих',ct_sub:'Бидэнтэй дараах сувгаар шууд холбогдоорой.',
+    ct_addr_lbl:'Хаяг',ct_addr:'СБД, 6-р хороо, Метромаллын хойно, 73/5-р байр, 1-р давхар, 1 тоот',
+    map_title:'Гэстхаус, Байрнуудын байршил',tap_open:'Tap to open',
+    ft_title:'Бидэнтэй холбогдох сувгууд',ft_sub:'Сошиал, WhatsApp, имэйлээр холбогдоорой.',
+    ft_copy:'© 2025 Etuga Guesthouse. Бүх эрх хуулиар хамгаалагдсан.',
+  },
+  en:{
+    nav_home:'Home',nav_gh:'Guesthouse',nav_apt:'Apartment',
+    nav_faq:'FAQ',nav_contact:'Contact',nav_map:'Location',
+    hero_title:'Etuga Guesthouse & Apartments',
+    hero_sub:'Guesthouse, Apartment',
+    hero_tag:'Close to city center • Comfortable service',
+    btn_gh:'Guesthouse',btn_apt:'Apartments',
+    tc_gh:'Guesthouse',tc_ap:'Apartment',
+    sec_gh:'Guesthouses',sec_apt:'Apartments',
+    see_all:'View all →',book:'Book →',
+    gh_sub:'All Etuga guesthouse properties',apt_sub:'View all apartments',
+    gh1_name:'Etuga Guesthouse',gh1_loc:'Ulaanbaatar, Behind Metro Mall',
+    gh2_name:'Etuga Guesthouse near Sukhbaatar Square',gh2_loc:'Ulaanbaatar, Sukhbaatar Square',
+    apt1_name:'test',apt1_loc:'Ulaanbaatar',
+    apt2_name:'9-person apartment in Modny 2',apt2_loc:'Ulaanbaatar',
+    apt3_name:'3-room apartment in Saany Town',apt3_loc:'Ulaanbaatar',
+    apt4_name:"Altai Apartment on Workers' Street",apt4_loc:'Ulaanbaatar, Altai District',
+    rv_title:'Guest Reviews',rv_sub:'Real ratings from our guests',
+    rv1_meta:'UB guest • Deluxe room · 2025-10-01',rv1_txt:'Room was clean, great central location. Will come back.',
+    rv2_meta:'Business guest · 2025-09-18',rv2_txt:'Fast Wi-Fi, check-in was quick and smooth.',
+    rv3_meta:'Leisure guest · 2025-08-02',rv3_txt:'Cozy and warm. Excellent service.',
+    faq_title:'FAQ',faq_sub:'Quick answers to common questions.',
+    faq_q1:'What are the check-in / check-out times?',faq_a1:'Generally check-in is at 14:00 and check-out at 12:00. Contact us in advance if you need early or late timing.',
+    faq_q2:'How do I make a payment?',faq_a2:'Cash, card, or bank transfer. A payment link will be sent for online bookings.',
+    faq_q3:'Can you arrange airport transfer?',faq_a3:'Yes. Airport pickup / drop-off can be arranged for an additional fee.',
+    faq_q4:'Is there Wi-Fi?',faq_a4:'Free high-speed Wi-Fi is available in all rooms.',
+    faq_q5:'How do I cancel a booking?',faq_a5:'Cancellations made 48 hours in advance are generally free of charge.',
+    ct_title:'Contact Us',ct_sub:'Reach us directly through the channels below.',
+    ct_addr_lbl:'Address',ct_addr:'SBD, 6th Khoroo, Behind Metro Mall, Building 73/5, 1st Floor, Unit 1',
+    map_title:'Guesthouse & Apartment Locations',tap_open:'Tap to open',
+    ft_title:'Connect With Us',ft_sub:'Reach us via social media, WhatsApp, or email.',
+    ft_copy:'© 2025 Etuga Guesthouse. All rights reserved.',
+  },
+  ru:{
+    nav_home:'Главная',nav_gh:'Гостевой дом',nav_apt:'Апартамент',
+    nav_faq:'Вопросы',nav_contact:'Контакты',nav_map:'Расположение',
+    hero_title:'Этуга — гостевой дом и апартаменты',
+    hero_sub:'Гостевой дом, Апартамент',
+    hero_tag:'Рядом с центром города • Комфортный сервис',
+    btn_gh:'Гостевой дом',btn_apt:'Апартаменты',
+    tc_gh:'Гостевой дом',tc_ap:'Апартамент',
+    sec_gh:'Гостевые дома',sec_apt:'Апартаменты',
+    see_all:'Смотреть все →',book:'Забронировать →',
+    gh_sub:'Все объекты гостевого дома Этуга',apt_sub:'Смотреть все апартаменты',
+    gh1_name:'Гостевой дом Этуга',gh1_loc:'Улан-Батор, за Метромоллом',
+    gh2_name:'Гостевой дом Этуга у площади Сухэ-Батора',gh2_loc:'Улан-Батор, площадь Сухэ-Батора',
+    apt1_name:'test',apt1_loc:'Улан-Батор',
+    apt2_name:'Апартамент на 9 человек в Модны 2',apt2_loc:'Улан-Батор',
+    apt3_name:'3-комнатный апартамент в Саани Таун',apt3_loc:'Улан-Батор',
+    apt4_name:'Апартамент Алтай на ул. Рабочих',apt4_loc:'Улан-Батор, квартал Алтай',
+    rv_title:'Отзывы гостей',rv_sub:'Реальные оценки наших гостей',
+    rv1_meta:'Гость из УБ • Номер Делюкс · 2025-10-01',rv1_txt:'Номер чистый, расположение центральное. Вернусь снова.',
+    rv2_meta:'Деловой гость · 2025-09-18',rv2_txt:'Быстрый Wi-Fi, заселение прошло быстро.',
+    rv3_meta:'Гость на отдыхе · 2025-08-02',rv3_txt:'Уютно и тепло. Отличный сервис.',
+    faq_title:'Вопросы и ответы',faq_sub:'Быстрые ответы на частые вопросы.',
+    faq_q1:'Каковы время заезда и выезда?',faq_a1:'Как правило, заезд в 14:00, выезд в 12:00. Свяжитесь заранее, если нужен другой график.',
+    faq_q2:'Как оплатить?',faq_a2:'Наличными, картой или банковским переводом. При онлайн-бронировании отправляем ссылку на оплату.',
+    faq_q3:'Возможен ли трансфер из аэропорта?',faq_a3:'Да. Трансфер из/в аэропорт можно заказать за дополнительную плату.',
+    faq_q4:'Есть ли Wi-Fi?',faq_a4:'Во всех номерах доступен бесплатный высокоскоростной Wi-Fi.',
+    faq_q5:'Как отменить бронирование?',faq_a5:'Отмена за 48 часов до заезда, как правило, бесплатна.',
+    ct_title:'Связаться с нами',ct_sub:'Свяжитесь с нами напрямую через каналы ниже.',
+    ct_addr_lbl:'Адрес',ct_addr:'СБД, 6-й хороо, за Метромоллом, корп. 73/5, 1-й этаж, кв. 1',
+    map_title:'Расположение гостевых домов и апартаментов',tap_open:'Нажмите, чтобы открыть',
+    ft_title:'Свяжитесь с нами',ft_sub:'Пишите через соцсети, WhatsApp или email.',
+    ft_copy:'© 2025 Etuga Guesthouse. Все права защищены.',
+  }
+};
 
+const LANG_META = {mn:{flag:'🇲🇳',code:'MN'},en:{flag:'🇬🇧',code:'EN'},ru:{flag:'🇷🇺',code:'RU'}};
+let currentLang = 'mn';
+
+function setLang(lang) {
+  currentLang = lang;
+  const s = T[lang];
+
+  /* apply all data-i18n strings */
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const k = el.getAttribute('data-i18n');
+    if (s[k] !== undefined) el.textContent = s[k];
+  });
+
+  /* update nav button */
+  const m = LANG_META[lang];
+  document.getElementById('currFlag').textContent = m.flag;
+  document.getElementById('currCode').textContent = m.code;
+
+  /* dropdown selected highlight */
+  const opts = document.querySelectorAll('.lang-opt');
+  const idx = {mn:0,en:1,ru:2};
+  opts.forEach((o,i) => o.classList.toggle('sel', i === idx[lang]));
+
+  /* mobile buttons */
+  ['mn','en','ru'].forEach(l => {
+    const b = document.getElementById('mBtn_' + l);
+    if (b) b.classList.toggle('sel', l === lang);
+  });
+
+  document.documentElement.lang = lang;
+  closeLangDD();
+}
+
+/* Language dropdown */
+function toggleLangDD(e) {
+  e.stopPropagation();
+  document.getElementById('langWrap').classList.toggle('open');
+}
+function closeLangDD() {
+  document.getElementById('langWrap').classList.remove('open');
+}
+document.addEventListener('click', e => {
+  if (!document.getElementById('langWrap').contains(e.target)) closeLangDD();
+});
+
+/* SPA navigation */
+let mapReady = false;
 function showPage(id, navIdx) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-
   const links = document.querySelectorAll('.navbar .nav-links .nav-link');
   links.forEach(l => l.classList.remove('active'));
   if (navIdx !== undefined && links[navIdx]) links[navIdx].classList.add('active');
-
   if (id === 'mappage' && !mapReady) { initMap(); mapReady = true; }
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* ─── MOBILE MENU ─── */
+/* Mobile menu */
 function toggleMenu() {
-  const m = document.getElementById('mobileMenu');
-  const h = document.getElementById('hamburger');
-  m.classList.toggle('open');
-  h.classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+  document.getElementById('hamburger').classList.toggle('open');
 }
 function closeMenu() {
   document.getElementById('mobileMenu').classList.remove('open');
   document.getElementById('hamburger').classList.remove('open');
 }
 document.addEventListener('click', e => {
-  const m = document.getElementById('mobileMenu');
-  const h = document.getElementById('hamburger');
+  const m = document.getElementById('mobileMenu'), h = document.getElementById('hamburger');
   if (m.classList.contains('open') && !m.contains(e.target) && !h.contains(e.target)) closeMenu();
 });
 
-/* ─── FAQ ACCORDION ─── */
-function toggleFaq(el) {
-  el.closest('.faq-item').classList.toggle('open');
-}
+/* FAQ accordion */
+function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
 
-/* ─── LEAFLET MAP ─── */
+/* Leaflet map */
 function initMap() {
-  const map = L.map('map-container', { center:[47.9077,106.8832], zoom:13 });
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution:'© OpenStreetMap contributors'
-  }).addTo(map);
-
-  const ico = L.divIcon({
-    className:'',
-    html:`<div style="
-      width:26px;height:32px;position:relative;
-    "><div style="
-      width:26px;height:26px;background:#1e8049;
-      border-radius:50% 50% 50% 0;transform:rotate(-45deg);
-      border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.28);
-    "></div></div>`,
-    iconSize:[26,32],iconAnchor:[13,32]
-  });
-
-  const pts = [
-    [47.9182,106.8973,'Этүга Гэстхаус — Метромаллын хойно'],
-    [47.9048,106.9117,'Сухбаатарын талбайн Этүга Гэстхаус'],
-    [47.9100,106.8620,'Апартмент — Гандан'],
-    [47.8970,106.8510,'Апартмент — Баянгол'],
-    [47.8890,106.9360,'Алтай хотхон Апартмент'],
-  ];
-  pts.forEach(([lat,lng,name]) =>
-    L.marker([lat,lng],{icon:ico}).addTo(map).bindPopup(`<strong>${name}</strong>`)
-  );
+  const map = L.map('map-container',{center:[47.9077,106.8832],zoom:13});
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'}).addTo(map);
+  const ico = L.divIcon({className:'',html:`<div style="width:26px;height:32px"><div style="width:26px;height:26px;background:#1e8049;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.28)"></div></div>`,iconSize:[26,32],iconAnchor:[13,32]});
+  const labels = {
+    mn:['Этүга Гэстхаус — Метромаллын хойно','Сухбаатарын талбайн Этүга Гэстхаус','Апартмент — Гандан','Апартмент — Баянгол','Алтай хотхон Апартмент'],
+    en:['Etuga Guesthouse — Behind Metro Mall','Etuga Guesthouse near Sukhbaatar Sq.','Apartment — Gandan','Apartment — Bayangol','Altai District Apartment'],
+    ru:['Гостевой дом Этуга — за Метромоллом','Гостевой дом у пл. Сухэ-Батора','Апартамент — Гандан','Апартамент — Баянголь','Апартамент, кв. Алтай']
+  };
+  const coords = [[47.9182,106.8973],[47.9048,106.9117],[47.9100,106.8620],[47.8970,106.8510],[47.8890,106.9360]];
+  const lbl = labels[currentLang] || labels.mn;
+  coords.forEach(([lat,lng],i) => L.marker([lat,lng],{icon:ico}).addTo(map).bindPopup(`<strong>${lbl[i]}</strong>`));
 }
+
+/* Init */
+setLang('mn');
 </script>
 </body>
 </html>
