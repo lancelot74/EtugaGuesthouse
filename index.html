@@ -12,17 +12,20 @@
 *{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --ivory:#f5efe4;
-  --ivory-soft:#fbf6ec;
-  --ivory-warm:#ede4d2;
-  --charcoal:#1a1612;
-  --charcoal-soft:#2a241e;
-  --stone:#8a7e6e;
-  --stone-light:#b8ac9a;
-  --oxblood:#6b2c2f;
-  --oxblood-deep:#4f1f22;
-  --hairline:rgba(26,22,18,0.12);
-  --hairline-strong:rgba(26,22,18,0.24);
+  /* Palette — pale green & white.
+     Variable names are kept from the prior palette for diff-friendly renaming;
+     read them by role: --ivory=white surface, --charcoal=evergreen dark, --oxblood=forest accent. */
+  --ivory:#ffffff;
+  --ivory-soft:#fafbfa;
+  --ivory-warm:#e7efe9;
+  --charcoal:#1a2e23;
+  --charcoal-soft:#2a3f30;
+  --stone:#7d8e80;
+  --stone-light:#b5c2b8;
+  --oxblood:#3a6b4e;
+  --oxblood-deep:#2a543d;
+  --hairline:rgba(26,46,35,0.14);
+  --hairline-strong:rgba(26,46,35,0.26);
   --display:'Cormorant Garamond','Times New Roman',serif;
   --body:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
   --ease:cubic-bezier(0.22,1,0.36,1);
@@ -53,13 +56,13 @@ body{
 .curtain.is-open .curtain__panel--r{transform:translateX(101%)}
 .curtain__panel::before{
   content:'';position:absolute;top:6%;bottom:6%;
-  width:1px;background:rgba(245,239,228,0.16);
+  width:1px;background:rgba(255,255,255,0.16);
 }
 .curtain__panel--l::before{right:5%}
 .curtain__panel--r::before{left:5%}
 .curtain__panel::after{
   content:'';position:absolute;top:50%;width:5px;height:5px;
-  border-radius:50%;background:rgba(245,239,228,0.32);
+  border-radius:50%;background:rgba(255,255,255,0.32);
   transform:translateY(-50%);
 }
 .curtain__panel--l::after{right:calc(5% - 2px)}
@@ -77,17 +80,17 @@ body{
   font-family:var(--display);font-style:italic;font-weight:400;
   font-size:clamp(80px,14vw,168px);line-height:1;letter-spacing:-0.02em;
 }
-.curtain__line{margin-top:24px;width:0;height:1px;background:rgba(245,239,228,0.6)}
+.curtain__line{margin-top:24px;width:0;height:1px;background:rgba(255,255,255,0.6)}
 .curtain__word{
   margin-top:18px;font-family:var(--body);
   font-size:10.5px;font-weight:500;letter-spacing:0.42em;
-  text-transform:uppercase;color:rgba(245,239,228,0.62);
+  text-transform:uppercase;color:rgba(255,255,255,0.62);
   opacity:0;
 }
 .curtain__horse{
   position:absolute;bottom:18vh;left:0;
   width:clamp(180px,24vw,320px);
-  color:rgba(245,239,228,0.94);
+  color:rgba(255,255,255,0.94);
   z-index:3;opacity:0;pointer-events:none;
   transform:translateX(-30vw);
 }
@@ -119,7 +122,7 @@ body{
 /* ───── NAVBAR ───── */
 .navbar{
   position:fixed;top:0;left:0;right:0;z-index:120;
-  background:rgba(245,239,228,0.82);
+  background:rgba(206,226,212,0.86);
   backdrop-filter:blur(14px) saturate(120%);
   -webkit-backdrop-filter:blur(14px) saturate(120%);
   border-bottom:1px solid var(--hairline);
@@ -170,7 +173,7 @@ body{
   display:none;position:absolute;top:calc(100% + 8px);right:0;
   background:var(--ivory-soft);border:1px solid var(--hairline);
   min-width:170px;z-index:1002;
-  box-shadow:0 22px 50px -20px rgba(26,22,18,0.18);
+  box-shadow:0 22px 50px -20px rgba(26,46,35,0.18);
 }
 .lang-wrap.open .lang-dd{display:block}
 .lang-opt{
@@ -178,8 +181,8 @@ body{
   font-size:12px;font-weight:500;color:var(--charcoal);
   transition:background 220ms var(--ease),color 220ms var(--ease);
 }
-.lang-opt:hover{background:rgba(26,22,18,0.04)}
-.lang-opt.sel{color:var(--oxblood);background:rgba(107,44,47,0.06)}
+.lang-opt:hover{background:rgba(26,46,35,0.04)}
+.lang-opt.sel{color:var(--oxblood);background:rgba(58,107,78,0.06)}
 
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px}
 .hamburger span{display:block;width:22px;height:1px;background:var(--charcoal);transition:all 320ms var(--ease)}
@@ -248,18 +251,18 @@ main{padding-top:84px}
 .btn-g{background:var(--charcoal);color:var(--ivory);border:1px solid var(--charcoal)}
 .btn-g:hover{background:var(--oxblood);border-color:var(--oxblood);transform:translateY(-1px)}
 .btn-o{background:transparent;color:var(--charcoal);border:1px solid var(--hairline-strong)}
-.btn-o:hover{border-color:var(--charcoal);background:rgba(26,22,18,0.03);transform:translateY(-1px)}
+.btn-o:hover{border-color:var(--charcoal);background:rgba(26,46,35,0.03);transform:translateY(-1px)}
 
 .hero-iw{position:relative;aspect-ratio:4/5;width:100%;max-width:480px;margin-left:auto}
 .hero-img{
   position:absolute;inset:0;overflow:hidden;border-radius:0;
-  background:linear-gradient(160deg,#c9b598 0%,#8e7155 45%,#5a4632 100%);
+  background:linear-gradient(160deg,#b6c4b8 0%,#7c907f 45%,#42584a 100%);
 }
 .hero-img::before{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(ellipse at 30% 22%,rgba(255,240,210,0.32) 0%,transparent 55%),
-    radial-gradient(ellipse at 75% 82%,rgba(40,28,16,0.5) 0%,transparent 60%);
+    radial-gradient(ellipse at 30% 22%,rgba(255,255,255,0.34) 0%,transparent 55%),
+    radial-gradient(ellipse at 75% 82%,rgba(26,46,35,0.5) 0%,transparent 60%);
 }
 .hero-img::after{
   content:'';position:absolute;inset:0;mix-blend-mode:overlay;opacity:0.35;
@@ -273,7 +276,7 @@ main{padding-top:84px}
   font-size:18px;color:var(--charcoal);
 }
 .hero-iw__caption::before{content:'— ';color:var(--oxblood)}
-.img-bedroom{background:linear-gradient(160deg,#c9b598 0%,#8e7155 45%,#5a4632 100%)}
+.img-bedroom{background:linear-gradient(160deg,#b6c4b8 0%,#7c907f 45%,#42584a 100%)}
 
 /* ───── TYPE CARDS ───── */
 .type-cards{
@@ -289,9 +292,9 @@ main{padding-top:84px}
 }
 .type-card:hover::before{transform:scale(1.06)}
 .tc-gh{background:transparent}
-.tc-gh::before{background:linear-gradient(170deg,#6e7d68 0%,#46563f 50%,#2a3528 100%)}
+.tc-gh::before{background:linear-gradient(170deg,#8a9c84 0%,#536a52 50%,#2a4030 100%)}
 .tc-ap{background:transparent}
-.tc-ap::before{background:linear-gradient(170deg,#8a9098 0%,#5a6068 50%,#2e3038 100%)}
+.tc-ap::before{background:linear-gradient(170deg,#a4b3a6 0%,#6c7d70 50%,#3a4c40 100%)}
 .type-card::after{
   content:'';position:absolute;inset:0;
   background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,0.55) 100%);
@@ -334,7 +337,7 @@ main{padding-top:84px}
 .card:hover{transform:none;box-shadow:none}
 .card-img{
   position:relative;aspect-ratio:4/5;overflow:hidden;
-  margin-bottom:20px;background:#dcd2c2;
+  margin-bottom:20px;background:#dce5dd;
 }
 .card-ph{
   width:100%;height:100%;display:block;
@@ -366,13 +369,13 @@ main{padding-top:84px}
 }
 .book-lnk:hover{color:var(--oxblood);border-color:var(--oxblood)}
 
-/* Image variants — refined earth/stone tones */
-.img-gh-ext{background:linear-gradient(160deg,#5b6a5a 0%,#3a4a3a 50%,#2c382c 100%)}
-.img-room-bl{background:linear-gradient(160deg,#8298a8 0%,#5a7080 50%,#3a505c 100%)}
-.img-apt1{background:linear-gradient(160deg,#8a6c52 0%,#604838 50%,#3a2c20 100%)}
-.img-apt2{background:linear-gradient(160deg,#6a8888 0%,#486868 50%,#2c4444 100%)}
-.img-apt3{background:linear-gradient(160deg,#786878 0%,#564a58 50%,#322c36 100%)}
-.img-apt4{background:linear-gradient(160deg,#b89868 0%,#8a6e44 50%,#5a4628 100%)}
+/* Image variants — varied sage/eucalyptus tones */
+.img-gh-ext{background:linear-gradient(160deg,#6a7d68 0%,#3f5340 50%,#2a3a2c 100%)}
+.img-room-bl{background:linear-gradient(160deg,#a8bcad 0%,#788e7c 50%,#4a604e 100%)}
+.img-apt1{background:linear-gradient(160deg,#8d9070 0%,#5e5e42 50%,#3a3a26 100%)}
+.img-apt2{background:linear-gradient(160deg,#7a9088 0%,#506258 50%,#2a3c34 100%)}
+.img-apt3{background:linear-gradient(160deg,#7e8a7a 0%,#525c50 50%,#2e3630 100%)}
+.img-apt4{background:linear-gradient(160deg,#aab488 0%,#7a8454 50%,#4a542a 100%)}
 
 /* ───── REVIEWS ───── */
 .rv-sec{
@@ -519,7 +522,7 @@ footer{background:var(--charcoal);color:var(--ivory);padding:80px 44px 36px;marg
   max-width:1240px;margin:0 auto;
   display:flex;justify-content:space-between;align-items:flex-start;
   gap:40px;flex-wrap:wrap;padding-bottom:36px;
-  border-bottom:1px solid rgba(245,239,228,0.14);
+  border-bottom:1px solid rgba(255,255,255,0.14);
 }
 .ft-left strong{
   display:block;font-family:var(--display);font-size:34px;font-weight:400;
@@ -602,33 +605,29 @@ footer{background:var(--charcoal);color:var(--ivory);padding:80px 44px 36px;marg
     <div class="curtain__word">Etuga · Guesthouse</div>
   </div>
   <div class="curtain__horse" id="curtainHorse" aria-hidden="true">
-    <svg viewBox="0 0 320 160" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-      <!-- Tail -->
-      <path d="M50,60 C32,54 18,42 6,28 C4,24 9,22 14,25 C28,32 44,42 60,52 Z"/>
-      <!-- Hindquarters -->
-      <ellipse cx="98" cy="62" rx="32" ry="22"/>
-      <!-- Body -->
-      <ellipse cx="158" cy="68" rx="62" ry="20"/>
-      <!-- Withers -->
-      <ellipse cx="216" cy="60" rx="18" ry="14"/>
-      <!-- Neck -->
-      <path d="M222,56 C236,44 248,32 260,26 L270,32 C260,46 250,58 240,70 Z"/>
+    <svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+      <!-- Tail: long flowing curve trailing back -->
+      <path d="M 80 70 C 56 68 32 58 10 42 C 4 38 6 32 14 35 C 36 46 60 60 84 70 Z"/>
+      <!-- Torso: elongated pill with raised hindquarters -->
+      <path d="M 84 64 Q 80 50 100 44 Q 140 36 180 38 Q 218 42 230 56 L 226 78 Q 218 82 204 82 L 102 82 Q 90 82 84 76 Z"/>
+      <!-- Neck: arched up-forward from withers -->
+      <path d="M 224 56 Q 240 38 260 28 L 274 36 Q 260 50 246 70 Q 238 78 228 76 Z"/>
+      <!-- Mane: stylized flowing tufts -->
+      <path d="M 240 40 L 244 22 L 250 34 L 256 18 L 262 30 L 268 22 L 272 36 L 254 50 Z"/>
       <!-- Head -->
-      <path d="M258,28 C272,22 286,24 294,32 L296,40 C293,48 288,52 282,52 L274,50 L264,46 L256,40 Z"/>
-      <!-- Ear -->
-      <path d="M270,22 L274,10 L280,22 Z"/>
-      <!-- Mane -->
-      <path d="M228,54 C236,44 244,36 252,30 L250,40 C246,50 240,58 234,64 Z"/>
-      <!-- Back leg, extended back -->
-      <path d="M80,78 C74,94 64,110 54,124 L52,138 L64,140 L74,130 C88,116 98,100 104,82 Z"/>
-      <!-- Back leg, swung forward -->
-      <path d="M116,80 C116,96 120,110 126,124 L130,140 L142,138 L138,124 C134,110 132,96 130,80 Z"/>
-      <!-- Front leg, swung back -->
-      <path d="M180,82 C172,98 170,114 174,128 L178,140 L190,138 L188,128 C188,114 194,98 198,82 Z"/>
-      <!-- Front leg, extended forward -->
-      <path d="M216,80 C222,96 230,112 240,126 L242,138 L230,140 L224,130 C218,114 212,98 208,82 Z"/>
+      <path d="M 266 30 Q 282 22 298 28 Q 310 36 304 48 L 296 52 Q 290 56 284 52 L 278 50 L 270 46 L 264 38 Z"/>
+      <!-- Ear: pointed up -->
+      <path d="M 276 22 L 280 8 L 286 22 Z"/>
       <!-- Eye -->
-      <circle cx="282" cy="34" r="1.2" fill="rgba(26,22,18,0.85)"/>
+      <circle cx="294" cy="36" r="1.6" fill="rgba(255,255,255,0.4)"/>
+      <!-- Front leg, extended forward (reaching) -->
+      <path d="M 220 78 C 228 98 242 118 258 136 L 266 150 L 270 158 L 262 160 L 254 154 L 242 140 L 228 120 L 214 98 Z"/>
+      <!-- Front leg, swung back (bent under body) -->
+      <path d="M 198 82 L 194 104 L 192 126 L 194 150 L 190 158 L 184 154 L 182 136 L 186 112 L 192 86 Z"/>
+      <!-- Back leg, swung forward (bent under body) -->
+      <path d="M 130 82 L 130 104 L 134 126 L 138 150 L 136 158 L 128 156 L 124 140 L 122 118 L 124 88 Z"/>
+      <!-- Back leg, extended back (pushing off) -->
+      <path d="M 96 80 C 84 102 64 122 44 140 L 36 152 L 30 150 L 36 142 L 54 124 L 72 104 L 86 84 Z"/>
     </svg>
   </div>
 </div>
@@ -795,7 +794,7 @@ footer{background:var(--charcoal);color:var(--ivory);padding:80px 44px 36px;marg
         </div>
         <div class="rv-card">
           <div class="rv-hd">
-            <div class="rv-av" style="background:#cce0ec;color:#1a4a6a">BB</div>
+            <div class="rv-av" style="background:#d4e2d8;color:#2a543d">BB</div>
             <div><div class="rv-name">Bat-Erdene B.</div><div class="rv-meta" data-i18n="rv2_meta"></div></div>
             <div class="rv-q">"</div>
           </div>
@@ -804,7 +803,7 @@ footer{background:var(--charcoal);color:var(--ivory);padding:80px 44px 36px;marg
         </div>
         <div class="rv-card">
           <div class="rv-hd">
-            <div class="rv-av" style="background:#d4ecd4;color:#1a4a1a">N</div>
+            <div class="rv-av" style="background:#d8e6dc;color:#2a543d">N</div>
             <div><div class="rv-name">Narantsetseg</div><div class="rv-meta" data-i18n="rv3_meta"></div></div>
             <div class="rv-q">"</div>
           </div>
@@ -820,7 +819,7 @@ footer{background:var(--charcoal);color:var(--ivory);padding:80px 44px 36px;marg
 <section id="guesthouse" class="page">
   <div class="full-pg">
     <h1 class="pg-title" data-i18n="sec_gh"></h1>
-    <p class="pg-sub" style="color:#7a8c98;margin-bottom:32px" data-i18n="gh_sub"></p>
+    <p class="pg-sub" style="color:#7d8e80;margin-bottom:32px" data-i18n="gh_sub"></p>
     <div class="lg">
       <div class="card">
         <div class="card-img"><div class="card-ph img-gh-ext"></div><span class="price-b">MNT 120,000</span></div>
@@ -846,7 +845,7 @@ footer{background:var(--charcoal);color:var(--ivory);padding:80px 44px 36px;marg
 <section id="apartment" class="page">
   <div class="full-pg">
     <h1 class="pg-title" data-i18n="sec_apt"></h1>
-    <p class="pg-sub" style="color:#7a8c98;margin-bottom:32px" data-i18n="apt_sub"></p>
+    <p class="pg-sub" style="color:#7d8e80;margin-bottom:32px" data-i18n="apt_sub"></p>
     <div class="lg">
       <div class="card">
         <div class="card-img"><div class="card-ph img-apt1"></div><span class="price-b">MNT 200,000</span></div>
@@ -1190,7 +1189,7 @@ function toggleFaq(el) { el.closest('.faq-item').classList.toggle('open'); }
 function initMap() {
   const map = L.map('map-container',{center:[47.9077,106.8832],zoom:13});
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'© OpenStreetMap contributors'}).addTo(map);
-  const ico = L.divIcon({className:'',html:`<div style="width:26px;height:32px"><div style="width:26px;height:26px;background:#1e8049;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.28)"></div></div>`,iconSize:[26,32],iconAnchor:[13,32]});
+  const ico = L.divIcon({className:'',html:`<div style="width:26px;height:32px"><div style="width:26px;height:26px;background:#2a543d;border-radius:50% 50% 50% 0;transform:rotate(-45deg);border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.28)"></div></div>`,iconSize:[26,32],iconAnchor:[13,32]});
   const labels = {
     mn:['Этүга Гэстхаус — Метромаллын хойно','Сухбаатарын талбайн Этүга Гэстхаус','Апартмент — Гандан','Апартмент — Баянгол','Алтай хотхон Апартмент'],
     en:['Etuga Guesthouse — Behind Metro Mall','Etuga Guesthouse near Sukhbaatar Sq.','Apartment — Gandan','Apartment — Bayangol','Altai District Apartment'],
