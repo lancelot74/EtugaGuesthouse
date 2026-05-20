@@ -34,8 +34,9 @@ body{
 .nav-wrap{
   position:fixed;top:12px;left:50%;transform:translateX(-50%);
   width:calc(100% - 24px);max-width:1100px;
-  z-index:200;
+  z-index:1100;
 }
+footer{position:relative;z-index:1100}
 nav{
   background:var(--green);
   border-radius:20px;
@@ -102,7 +103,7 @@ nav{
 /* Mobile menu overlay */
 .mobile-menu{
   display:none;
-  position:fixed;inset:0;z-index:300;
+  position:fixed;inset:0;z-index:1200;
 }
 .mobile-menu.open{display:block}
 .menu-overlay{
@@ -197,78 +198,159 @@ nav{
 .prop-gallery{
   display:grid;gap:14px;
   grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  margin-bottom:32px;
 }
 .prop-gallery-img{
   aspect-ratio:4/3;border-radius:14px;overflow:hidden;
   background:linear-gradient(135deg,#a8bcb0 0%,#5a7468 60%,#3a5044 100%);
-  position:relative;
+  position:relative;cursor:zoom-in;
+  transition:transform 0.25s;
 }
+.prop-gallery-img:hover{transform:translateY(-2px)}
 .prop-gallery-img img{width:100%;height:100%;object-fit:cover;display:block}
+
+/* gallery slider strip + arrows */
+.prop-gallery-wrap{margin-bottom:32px}
+.prop-gallery-more{
+  position:relative;margin-top:14px;
+}
+.prop-gallery-strip{
+  display:flex;gap:10px;
+  overflow-x:auto;overflow-y:hidden;
+  scroll-behavior:smooth;
+  -ms-overflow-style:none;
+  scrollbar-width:none;
+  padding:4px 2px;
+}
+.prop-gallery-strip::-webkit-scrollbar{display:none}
+.prop-gallery-thumb{
+  flex:0 0 160px;height:120px;
+  border-radius:10px;overflow:hidden;
+  background:linear-gradient(135deg,#a8bcb0 0%,#5a7468 60%,#3a5044 100%);
+  cursor:zoom-in;position:relative;
+  border:1px solid var(--border);
+  transition:transform 0.2s;
+}
+.prop-gallery-thumb:hover{transform:translateY(-2px)}
+.prop-gallery-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.gal-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,0.96);
+  border:1px solid var(--border);
+  color:var(--green-dark);
+  font-size:1.25rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;
+  cursor:pointer;z-index:3;
+  box-shadow:0 4px 14px rgba(0,0,0,0.12);
+  transition:all 0.2s;line-height:1;padding:0 0 3px;
+  font-family:var(--font);
+}
+.gal-arrow:hover{background:white;transform:translateY(-50%) scale(1.08)}
+.gal-arrow:disabled{opacity:0.35;cursor:default;pointer-events:none}
+.gal-arrow-prev{left:-6px}
+.gal-arrow-next{right:-6px}
+
+/* lightbox */
+.lightbox{
+  position:fixed;inset:0;
+  background:rgba(10,20,15,0.92);
+  z-index:9500;
+  display:none;align-items:center;justify-content:center;
+  padding:24px;
+}
+.lightbox.open{display:flex}
+.lightbox-img{
+  max-width:min(94vw,1200px);
+  max-height:84vh;
+  border-radius:10px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.5);
+  user-select:none;
+}
+.lb-close,.lb-prev,.lb-next{
+  position:absolute;
+  background:rgba(255,255,255,0.12);
+  border:1px solid rgba(255,255,255,0.25);
+  color:white;border-radius:50%;
+  width:46px;height:46px;
+  font-size:1.4rem;font-weight:700;
+  cursor:pointer;display:flex;
+  align-items:center;justify-content:center;
+  transition:all 0.2s;line-height:1;padding:0 0 2px;
+  font-family:var(--font);
+}
+.lb-close:hover,.lb-prev:hover,.lb-next:hover{background:rgba(255,255,255,0.22)}
+.lb-close{top:18px;right:18px}
+.lb-prev{left:18px;top:50%;transform:translateY(-50%)}
+.lb-next{right:18px;top:50%;transform:translateY(-50%)}
+.lb-counter{
+  position:absolute;bottom:22px;left:50%;
+  transform:translateX(-50%);
+  color:rgba(255,255,255,0.85);
+  font-size:0.85rem;font-weight:600;
+  background:rgba(0,0,0,0.35);
+  padding:5px 12px;border-radius:50px;
+  letter-spacing:0.05em;
+}
+@media(max-width:640px){
+  .lb-close,.lb-prev,.lb-next{width:40px;height:40px;font-size:1.15rem}
+  .lb-close{top:10px;right:10px}
+  .lb-prev{left:8px}
+  .lb-next{right:8px}
+}
 .prop-cta{
   display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
   margin-top:8px;
 }
 
-/* ── HERO MARQUEE (top of landing) ── */
-.marquee{
-  margin:-12px 0 8px;  /* nudge up under the floating nav, with breathing room below */
-  padding:18px 0;
-  overflow:hidden;
-  background:linear-gradient(180deg,var(--green-pale) 0%,var(--green-light) 100%);
-  border-bottom:1px solid var(--border);
+/* ── HERO SLIDER ── */
+.hero-slider{
   position:relative;
+  overflow:hidden;
 }
-.marquee::before,.marquee::after{
-  content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none;
+.hero-slider-track{
+  display:flex;
+  transition:transform 700ms cubic-bezier(0.22,1,0.36,1);
+  will-change:transform;
 }
-.marquee::before{left:0;background:linear-gradient(90deg,var(--green-pale),transparent)}
-.marquee::after{right:0;background:linear-gradient(-90deg,var(--green-pale),transparent)}
-.marquee-track{
-  display:flex;gap:14px;
-  width:max-content;
-  animation:marqueeScroll 60s linear infinite;
+.hero-slide{
+  flex:0 0 100%;
+  min-width:0;
+  padding:32px 16px 20px;
 }
-.marquee:hover .marquee-track{animation-play-state:paused}
-@keyframes marqueeScroll{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
-.marq-card{
-  flex:0 0 220px;height:280px;
-  border-radius:18px;overflow:hidden;
-  position:relative;cursor:pointer;
-  background:#e4eae5;
-  display:flex;flex-direction:column;
-  text-decoration:none;color:inherit;
-  box-shadow:0 4px 16px rgba(0,0,0,0.08);
+.hero-slide .hero-inner{max-width:1100px;margin:0 auto}
+.hero-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,0.92);
   border:1px solid var(--border);
-  transition:transform 0.35s,box-shadow 0.35s;
-}
-.marq-card:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 8px 28px rgba(0,0,0,0.14)}
-.marq-card-img{
-  width:100%;height:65%;
-  background:linear-gradient(135deg,#a8bcb0 0%,#5a7468 60%,#3a5044 100%);
+  color:var(--green-dark);
+  font-size:1.4rem;font-weight:700;
   display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;
+  cursor:pointer;z-index:5;
+  box-shadow:0 4px 14px rgba(0,0,0,0.10);
+  transition:all 0.2s;
+  font-family:var(--font);
+  line-height:1;padding:0 0 3px;
 }
-.marq-card-img img{
-  width:100%;height:100%;object-fit:cover;display:block;
+.hero-arrow:hover{background:white;transform:translateY(-50%) scale(1.08)}
+.hero-arrow-prev{left:14px}
+.hero-arrow-next{right:14px}
+.hero-dots{
+  position:absolute;bottom:14px;left:50%;
+  transform:translateX(-50%);
+  display:flex;gap:8px;z-index:5;
 }
-.marq-card-img-fallback{
-  color:rgba(255,255,255,0.7);font-family:Georgia,serif;font-size:2.4rem;font-weight:400;
+.hero-dot{
+  width:9px;height:9px;border-radius:50%;
+  background:rgba(45,92,56,0.25);
+  border:none;cursor:pointer;padding:0;
+  transition:all 0.25s;
 }
-.marq-card-body{
-  padding:12px 14px;background:white;flex:1;
-  display:flex;flex-direction:column;justify-content:center;
-}
-.marq-card-name{
-  font-size:0.92rem;font-weight:800;
-  color:var(--text);margin-bottom:3px;line-height:1.2;
-}
-.marq-card-feat{
-  font-size:0.74rem;color:var(--sub);font-weight:600;
-  letter-spacing:0.02em;
+.hero-dot.active{background:var(--green);transform:scale(1.3)}
+@media(max-width:640px){
+  .hero-arrow{width:36px;height:36px;font-size:1.15rem}
+  .hero-arrow-prev{left:6px}
+  .hero-arrow-next{right:6px}
 }
 
 /* ── PAGE CONTENT (SPA section visibility) ── */
@@ -278,8 +360,8 @@ nav{
 
 /* ── HERO ── */
 #hero{
-  padding:32px 16px 20px;
-  max-width:1100px;margin:0 auto;
+  padding:0;
+  margin:0 auto;
 }
 .hero-inner{
   display:grid;grid-template-columns:1fr 1fr;
@@ -810,7 +892,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
   <div class="curtain__mark" id="curtainMark">
     <div class="curtain__letter">E</div>
     <div class="curtain__line"></div>
-    <div class="curtain__word">Etuga · Guesthouse</div>
+    <div class="curtain__word">Etuga · Guesthouse · Apartment</div>
   </div>
   <div class="curtain__horse" id="curtainHorse" aria-hidden="true">
     <svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
@@ -892,104 +974,12 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
 
 <div class="page active" id="home">
 
-<!-- MARQUEE — 11 properties, duplicated for seamless infinite loop -->
-<section class="marquee" id="marquee" aria-label="Properties">
-  <div class="marquee-track">
-    <!-- Set A -->
-    <a class="marq-card" onclick="showPage('gh-01')">
-      <div class="marq-card-img"><img src="images/guesthouses/gh-01/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_gh01_name">Guesthouse 01</div><div class="marq-card-feat" data-i18n="prop_gh01_feat">Central location</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('gh-02')">
-      <div class="marq-card-img"><img src="images/guesthouses/gh-02/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_gh02_name">Guesthouse 02</div><div class="marq-card-feat" data-i18n="prop_gh02_feat">Near Sukhbaatar Sq.</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-01')">
-      <div class="marq-card-img"><img src="images/apartments/apt-01/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt01_name">Apartment 01</div><div class="marq-card-feat" data-i18n="prop_apt01_feat">Studio · City view</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-02')">
-      <div class="marq-card-img"><img src="images/apartments/apt-02/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt02_name">Apartment 02</div><div class="marq-card-feat" data-i18n="prop_apt02_feat">1-bedroom · Garden</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-03')">
-      <div class="marq-card-img"><img src="images/apartments/apt-03/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt03_name">Apartment 03</div><div class="marq-card-feat" data-i18n="prop_apt03_feat">2-bedroom · Family</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-04')">
-      <div class="marq-card-img"><img src="images/apartments/apt-04/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt04_name">Apartment 04</div><div class="marq-card-feat" data-i18n="prop_apt04_feat">Cozy studio</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-05')">
-      <div class="marq-card-img"><img src="images/apartments/apt-05/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt05_name">Apartment 05</div><div class="marq-card-feat" data-i18n="prop_apt05_feat">Spacious 2-bed</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-06')">
-      <div class="marq-card-img"><img src="images/apartments/apt-06/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt06_name">Apartment 06</div><div class="marq-card-feat" data-i18n="prop_apt06_feat">Loft style</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-07')">
-      <div class="marq-card-img"><img src="images/apartments/apt-07/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt07_name">Apartment 07</div><div class="marq-card-feat" data-i18n="prop_apt07_feat">3-bedroom · Group</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-08')">
-      <div class="marq-card-img"><img src="images/apartments/apt-08/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt08_name">Apartment 08</div><div class="marq-card-feat" data-i18n="prop_apt08_feat">Modern · Quiet</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-09')">
-      <div class="marq-card-img"><img src="images/apartments/apt-09/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt09_name">Apartment 09</div><div class="marq-card-feat" data-i18n="prop_apt09_feat">Designer · Premium</div></div>
-    </a>
-    <!-- Set B (duplicate for seamless loop) -->
-    <a class="marq-card" onclick="showPage('gh-01')" aria-hidden="true" tabindex="-1">
-      <div class="marq-card-img"><img src="images/guesthouses/gh-01/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_gh01_name">Guesthouse 01</div><div class="marq-card-feat" data-i18n="prop_gh01_feat">Central location</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('gh-02')" aria-hidden="true" tabindex="-1">
-      <div class="marq-card-img"><img src="images/guesthouses/gh-02/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_gh02_name">Guesthouse 02</div><div class="marq-card-feat" data-i18n="prop_gh02_feat">Near Sukhbaatar Sq.</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-01')" aria-hidden="true" tabindex="-1">
-      <div class="marq-card-img"><img src="images/apartments/apt-01/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt01_name">Apartment 01</div><div class="marq-card-feat" data-i18n="prop_apt01_feat">Studio · City view</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-02')" aria-hidden="true" tabindex="-1">
-      <div class="marq-card-img"><img src="images/apartments/apt-02/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt02_name">Apartment 02</div><div class="marq-card-feat" data-i18n="prop_apt02_feat">1-bedroom · Garden</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-03')" aria-hidden="true" tabindex="-1">
-      <div class="marq-card-img"><img src="images/apartments/apt-03/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt03_name">Apartment 03</div><div class="marq-card-feat" data-i18n="prop_apt03_feat">2-bedroom · Family</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-04')" aria-hidden="true" tabindex="-1">
-      <div class="marq-card-img"><img src="images/apartments/apt-04/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt04_name">Apartment 04</div><div class="marq-card-feat" data-i18n="prop_apt04_feat">Cozy studio</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-05')" aria-hidden="true" tabindex="-1">
-      <div class="marq-card-img"><img src="images/apartments/apt-05/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt05_name">Apartment 05</div><div class="marq-card-feat" data-i18n="prop_apt05_feat">Spacious 2-bed</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-06')" aria-hidden="true" tabindex="-1">
-      <div class="marq-card-img"><img src="images/apartments/apt-06/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt06_name">Apartment 06</div><div class="marq-card-feat" data-i18n="prop_apt06_feat">Loft style</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-07')" aria-hidden="true" tabindex="-1">
-      <div class="marq-card-img"><img src="images/apartments/apt-07/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt07_name">Apartment 07</div><div class="marq-card-feat" data-i18n="prop_apt07_feat">3-bedroom · Group</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-08')" aria-hidden="true" tabindex="-1">
-      <div class="marq-card-img"><img src="images/apartments/apt-08/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt08_name">Apartment 08</div><div class="marq-card-feat" data-i18n="prop_apt08_feat">Modern · Quiet</div></div>
-    </a>
-    <a class="marq-card" onclick="showPage('apt-09')" aria-hidden="true" tabindex="-1">
-      <div class="marq-card-img"><img src="images/apartments/apt-09/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=marq-card-img-fallback>E</span>'"></div>
-      <div class="marq-card-body"><div class="marq-card-name" data-i18n="prop_apt09_name">Apartment 09</div><div class="marq-card-feat" data-i18n="prop_apt09_feat">Designer · Premium</div></div>
-    </a>
-  </div>
-</section>
 
-<!-- HERO -->
+<!-- HERO SLIDER -->
 <section id="hero">
+<div class="hero-slider" id="heroSlider">
+<div class="hero-slider-track" id="heroTrack">
+<div class="hero-slide">
   <div class="hero-inner">
     <div class="hero-text reveal">
       <p class="hero-eyebrow" data-i18n="hero_eyebrow">📍 Sukhbaatar, Ulaanbaatar</p>
@@ -1011,6 +1001,67 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
       </div>
     </div>
   </div>
+</div>
+
+<!-- SLIDE 2 — Guesthouse focus -->
+<div class="hero-slide">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-eyebrow" data-i18n="hero_eyebrow">📍 Sukhbaatar, Ulaanbaatar</p>
+      <h1 class="hero-title" data-i18n="hero_title_gh">Warm Stays. Central Living.</h1>
+      <p class="hero-sub" data-i18n="hero_sub_gh">Our Guesthouse</p>
+      <p class="hero-sub2" data-i18n="hero_sub2_gh">Family-friendly &nbsp;•&nbsp; Garden &nbsp;•&nbsp; 24-hour reception</p>
+      <div class="hero-btns">
+        <a class="btn-solid" onclick="showPage('gh-01')" data-i18n="hero_btn_rooms">Guesthouse</a>
+        <a class="btn-outline" onclick="navTo('#contact')" data-i18n="hero_btn_contact">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <div class="hero-img-blob">
+        <img src="images/guesthouses/gh-01/hero.jpg" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="hero-badge">
+        <div class="hero-badge-icon">🏠</div>
+        <div class="hero-badge-text"><b data-i18n="badge_gh_main">2 Guesthouses</b><span data-i18n="badge_gh_sub">central, family-friendly</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 3 — Apartments focus -->
+<div class="hero-slide">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <p class="hero-eyebrow" data-i18n="hero_eyebrow">📍 Sukhbaatar, Ulaanbaatar</p>
+      <h1 class="hero-title" data-i18n="hero_title_apt">9 Apartments Across the City</h1>
+      <p class="hero-sub" data-i18n="hero_sub_apt">Apartments for Rent</p>
+      <p class="hero-sub2" data-i18n="hero_sub2_apt">Studios to 3-bedrooms &nbsp;•&nbsp; Fully furnished</p>
+      <div class="hero-btns">
+        <a class="btn-solid" onclick="navTo('#apartments')" data-i18n="hero_btn_apt">Browse Apartments</a>
+        <a class="btn-outline" onclick="navTo('#contact')" data-i18n="hero_btn_contact">Get in Touch</a>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <div class="hero-img-blob">
+        <img src="images/apartments/apt-01/hero.jpg" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="hero-badge">
+        <div class="hero-badge-icon">🏢</div>
+        <div class="hero-badge-text"><b data-i18n="badge_apt_main">9 Properties</b><span data-i18n="badge_apt_sub">across Ulaanbaatar</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div><!-- /hero-slider-track -->
+<button class="hero-arrow hero-arrow-prev" onclick="heroSlide(-1)" aria-label="Previous slide">‹</button>
+<button class="hero-arrow hero-arrow-next" onclick="heroSlide(1)" aria-label="Next slide">›</button>
+<div class="hero-dots" id="heroDots">
+  <button class="hero-dot active" onclick="heroGo(0)" aria-label="Slide 1"></button>
+  <button class="hero-dot" onclick="heroGo(1)" aria-label="Slide 2"></button>
+  <button class="hero-dot" onclick="heroGo(2)" aria-label="Slide 3"></button>
+</div>
+</div><!-- /hero-slider -->
 </section>
 
 <!-- CATEGORY -->
@@ -1032,7 +1083,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
 <!-- APARTMENTS — 9 separate apartment listings -->
 <div class="section" id="apartments">
   <h2 class="section-title reveal" data-i18n="sec_apartments">Apartments</h2>
-  <p class="section-sub reveal" data-i18n="sec_apartments_sub">Nine self-contained apartments across Ulaanbaatar — explore each one in detail.</p>
+  <p class="section-sub reveal" data-i18n="sec_apartments_sub">Ten self-contained apartments across Ulaanbaatar — explore each one in detail.</p>
   <div class="listing-grid">
     <div class="listing-card reveal">
       <a onclick="showPage('apt-01')" style="text-decoration:none;color:inherit;cursor:pointer;display:block">
@@ -1129,6 +1180,18 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
           <div class="listing-name" data-i18n="apt09_name">Apartment 09</div>
           <div class="listing-loc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="apt09_loc">Ulaanbaatar</span></div>
           <div class="room-desc" data-i18n="apt09_desc">Designer · Premium finishes · Sleeps 2</div>
+          <div class="listing-footer"><span class="book-pill" data-i18n="view_pill">View →</span></div>
+        </div>
+      </a>
+    </div>
+
+    <div class="listing-card reveal">
+      <a onclick="showPage('apt-10')" style="text-decoration:none;color:inherit;cursor:pointer;display:block">
+        <div class="listing-img"><img src="images/apartments/apt-10/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#a8bcb0,#5a7468,#3a5044)';this.parentElement.style.height='210px'"><div class="price-badge"><span data-i18n="badge_apt">₮ Apartment</span></div></div>
+        <div class="listing-body">
+          <div class="listing-name" data-i18n="apt10_name">Sunny Town II</div>
+          <div class="listing-loc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="apt10_loc">Ulaanbaatar</span></div>
+          <div class="room-desc" data-i18n="apt10_desc">Bright · Sunny · Sleeps 2-4</div>
           <div class="listing-footer"><span class="book-pill" data-i18n="view_pill">View →</span></div>
         </div>
       </a>
@@ -1412,11 +1475,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_gh01_name">Guesthouse 01</h1>
     <p class="prop-tagline" data-i18n="prop_gh01_tagline">A warm, central place to call home — full description coming soon.</p>
     <div class="prop-features" data-i18n="prop_gh01_features">Free Wi-Fi · Shared kitchen · Garden · 24-hour reception · 4 room types available · Family friendly</div>
-    <div class="prop-gallery">
-      <div class="prop-gallery-img"><img src="images/guesthouses/gh-01/gallery-1.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/guesthouses/gh-01/gallery-2.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/guesthouses/gh-01/gallery-3.jpg" alt="" onerror="this.style.display='none'"></div>
-    </div>
+    <div class="prop-gallery-wrap" data-dir="images/guesthouses/gh-01"></div>
     <div class="prop-cta">
       <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
@@ -1432,11 +1491,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_gh02_name">Guesthouse 02</h1>
     <p class="prop-tagline" data-i18n="prop_gh02_tagline">Comfortable stay near Sukhbaatar Square — full description coming soon.</p>
     <div class="prop-features" data-i18n="prop_gh02_features">Free Wi-Fi · Shared kitchen · Central location · 24-hour reception · Family friendly</div>
-    <div class="prop-gallery">
-      <div class="prop-gallery-img"><img src="images/guesthouses/gh-02/gallery-1.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/guesthouses/gh-02/gallery-2.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/guesthouses/gh-02/gallery-3.jpg" alt="" onerror="this.style.display='none'"></div>
-    </div>
+    <div class="prop-gallery-wrap" data-dir="images/guesthouses/gh-02"></div>
     <div class="prop-cta">
       <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
@@ -1452,11 +1507,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_apt01_name">Apartment 01</h1>
     <p class="prop-tagline" data-i18n="prop_apt01_tagline">Full description coming soon — drop your photos into images/apartments/apt-01/</p>
     <div class="prop-features" data-i18n="prop_apt01_features">Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4</div>
-    <div class="prop-gallery">
-      <div class="prop-gallery-img"><img src="images/apartments/apt-01/gallery-1.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-01/gallery-2.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-01/gallery-3.jpg" alt="" onerror="this.style.display='none'"></div>
-    </div>
+    <div class="prop-gallery-wrap" data-dir="images/apartments/apt-01"></div>
     <div class="prop-cta">
       <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
@@ -1472,11 +1523,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_apt02_name">Apartment 02</h1>
     <p class="prop-tagline" data-i18n="prop_apt02_tagline">Full description coming soon — drop your photos into images/apartments/apt-02/</p>
     <div class="prop-features" data-i18n="prop_apt02_features">Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4</div>
-    <div class="prop-gallery">
-      <div class="prop-gallery-img"><img src="images/apartments/apt-02/gallery-1.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-02/gallery-2.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-02/gallery-3.jpg" alt="" onerror="this.style.display='none'"></div>
-    </div>
+    <div class="prop-gallery-wrap" data-dir="images/apartments/apt-02"></div>
     <div class="prop-cta">
       <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
@@ -1492,11 +1539,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_apt03_name">Apartment 03</h1>
     <p class="prop-tagline" data-i18n="prop_apt03_tagline">Full description coming soon — drop your photos into images/apartments/apt-03/</p>
     <div class="prop-features" data-i18n="prop_apt03_features">Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4</div>
-    <div class="prop-gallery">
-      <div class="prop-gallery-img"><img src="images/apartments/apt-03/gallery-1.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-03/gallery-2.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-03/gallery-3.jpg" alt="" onerror="this.style.display='none'"></div>
-    </div>
+    <div class="prop-gallery-wrap" data-dir="images/apartments/apt-03"></div>
     <div class="prop-cta">
       <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
@@ -1512,11 +1555,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_apt04_name">Apartment 04</h1>
     <p class="prop-tagline" data-i18n="prop_apt04_tagline">Full description coming soon — drop your photos into images/apartments/apt-04/</p>
     <div class="prop-features" data-i18n="prop_apt04_features">Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4</div>
-    <div class="prop-gallery">
-      <div class="prop-gallery-img"><img src="images/apartments/apt-04/gallery-1.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-04/gallery-2.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-04/gallery-3.jpg" alt="" onerror="this.style.display='none'"></div>
-    </div>
+    <div class="prop-gallery-wrap" data-dir="images/apartments/apt-04"></div>
     <div class="prop-cta">
       <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
@@ -1532,11 +1571,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_apt05_name">Apartment 05</h1>
     <p class="prop-tagline" data-i18n="prop_apt05_tagline">Full description coming soon — drop your photos into images/apartments/apt-05/</p>
     <div class="prop-features" data-i18n="prop_apt05_features">Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4</div>
-    <div class="prop-gallery">
-      <div class="prop-gallery-img"><img src="images/apartments/apt-05/gallery-1.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-05/gallery-2.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-05/gallery-3.jpg" alt="" onerror="this.style.display='none'"></div>
-    </div>
+    <div class="prop-gallery-wrap" data-dir="images/apartments/apt-05"></div>
     <div class="prop-cta">
       <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
@@ -1552,11 +1587,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_apt06_name">Apartment 06</h1>
     <p class="prop-tagline" data-i18n="prop_apt06_tagline">Full description coming soon — drop your photos into images/apartments/apt-06/</p>
     <div class="prop-features" data-i18n="prop_apt06_features">Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4</div>
-    <div class="prop-gallery">
-      <div class="prop-gallery-img"><img src="images/apartments/apt-06/gallery-1.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-06/gallery-2.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-06/gallery-3.jpg" alt="" onerror="this.style.display='none'"></div>
-    </div>
+    <div class="prop-gallery-wrap" data-dir="images/apartments/apt-06"></div>
     <div class="prop-cta">
       <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
@@ -1572,11 +1603,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_apt07_name">Apartment 07</h1>
     <p class="prop-tagline" data-i18n="prop_apt07_tagline">Full description coming soon — drop your photos into images/apartments/apt-07/</p>
     <div class="prop-features" data-i18n="prop_apt07_features">Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4</div>
-    <div class="prop-gallery">
-      <div class="prop-gallery-img"><img src="images/apartments/apt-07/gallery-1.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-07/gallery-2.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-07/gallery-3.jpg" alt="" onerror="this.style.display='none'"></div>
-    </div>
+    <div class="prop-gallery-wrap" data-dir="images/apartments/apt-07"></div>
     <div class="prop-cta">
       <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
@@ -1592,11 +1619,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_apt08_name">Apartment 08</h1>
     <p class="prop-tagline" data-i18n="prop_apt08_tagline">Full description coming soon — drop your photos into images/apartments/apt-08/</p>
     <div class="prop-features" data-i18n="prop_apt08_features">Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4</div>
-    <div class="prop-gallery">
-      <div class="prop-gallery-img"><img src="images/apartments/apt-08/gallery-1.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-08/gallery-2.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-08/gallery-3.jpg" alt="" onerror="this.style.display='none'"></div>
-    </div>
+    <div class="prop-gallery-wrap" data-dir="images/apartments/apt-08"></div>
     <div class="prop-cta">
       <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
@@ -1612,11 +1635,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_apt09_name">Apartment 09</h1>
     <p class="prop-tagline" data-i18n="prop_apt09_tagline">Full description coming soon — drop your photos into images/apartments/apt-09/</p>
     <div class="prop-features" data-i18n="prop_apt09_features">Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4</div>
-    <div class="prop-gallery">
-      <div class="prop-gallery-img"><img src="images/apartments/apt-09/gallery-1.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-09/gallery-2.jpg" alt="" onerror="this.style.display='none'"></div>
-      <div class="prop-gallery-img"><img src="images/apartments/apt-09/gallery-3.jpg" alt="" onerror="this.style.display='none'"></div>
-    </div>
+    <div class="prop-gallery-wrap" data-dir="images/apartments/apt-09"></div>
     <div class="prop-cta">
       <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
@@ -1624,6 +1643,31 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
   </div>
 </section>
 
+<section id="apt-10" class="page">
+  <div class="prop-pg">
+    <a class="prop-back" onclick="showPage('home',{scrollTo:'#hero'})"><span>←</span> <span data-i18n="back_home">Back to home</span></a>
+    <div class="prop-hero"><img src="images/apartments/apt-10/hero.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=prop-hero-fallback>E</span>'"></div>
+    <p class="prop-eyebrow" data-i18n="prop_apt10_eyebrow">📍 Ulaanbaatar · Apartment</p>
+    <h1 class="prop-name" data-i18n="prop_apt10_name">Sunny Town II</h1>
+    <p class="prop-tagline" data-i18n="prop_apt10_tagline">Full description coming soon — drop your photos into images/apartments/apt-10/</p>
+    <div class="prop-features" data-i18n="prop_apt10_features">Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4</div>
+    <div class="prop-gallery-wrap" data-dir="images/apartments/apt-10"></div>
+    <div class="prop-cta">
+      <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
+      <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" aria-hidden="true" role="dialog">
+  <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+  <button class="lb-prev" id="lbPrev" aria-label="Previous">‹</button>
+  <img class="lightbox-img" id="lbImg" alt="">
+  <button class="lb-next" id="lbNext" aria-label="Next">›</button>
+  <div class="lb-counter" id="lbCounter"></div>
+</div>
 
 <!-- FOOTER -->
 <footer>
@@ -1651,6 +1695,15 @@ const T={
     hero_sub:'Гэстхаус ба Апартмент',
     hero_sub2:'Хотын төвтэй ойр &nbsp;•&nbsp; Тав тухтай үйлчилгээ',
     hero_btn_rooms:'Гэстхаус',hero_btn_contact:'Холбоо барих',
+    hero_title_gh:'Дулаан байрлал. Хотын төв.',
+    hero_sub_gh:'Манай гэстхаус',
+    hero_sub2_gh:'Гэр бүлд тохиромжтой &nbsp;•&nbsp; Цэцэрлэг &nbsp;•&nbsp; 24 цагийн үйлчилгээ',
+    badge_gh_main:'2 гэстхаус',badge_gh_sub:'хотын төвд, гэр бүлд тохиромжтой',
+    hero_title_apt:'Хотын 10 байр түрээслүүлнэ',
+    hero_sub_apt:'Түрээсийн байр',
+    hero_sub2_apt:'Студиогоос 3 өрөө хүртэл &nbsp;•&nbsp; Бүрэн тавилгатай',
+    hero_btn_apt:'Байрууд үзэх',
+    badge_apt_main:'10 байр',badge_apt_sub:'Улаанбаатар хотод',
     badge_main:'Өндөр үнэлгээтэй',badge_sub:'олон улсын зочдоос',
     cat_gh:'Гэстхаус',cat_rooms:'Өрөөнүүд',
     
@@ -1691,93 +1744,101 @@ const T={
     /* NEW PROPERTY / APARTMENT / MISC PLACEHOLDERS — replace as needed */
     apt01_desc:'Студио · Хотын харагдац · 2 хүн',
     apt01_loc:'Улаанбаатар',
-    apt01_name:'Апартмент 01',
+    apt01_name:'227',
     apt02_desc:'1 өрөө · Цэцэрлэгийн харагдац · 3 хүн',
     apt02_loc:'Улаанбаатар',
-    apt02_name:'Апартмент 02',
+    apt02_name:'228',
     apt03_desc:'2 өрөө · Гэр бүлд · 5 хүн',
     apt03_loc:'Улаанбаатар',
-    apt03_name:'Апартмент 03',
+    apt03_name:'2010',
     apt04_desc:'Тохилог студио · Чимээгүй гудамж · 2 хүн',
     apt04_loc:'Улаанбаатар',
-    apt04_name:'Апартмент 04',
+    apt04_name:'2011',
     apt05_desc:'Уужим 2 өрөө · 4 хүн',
     apt05_loc:'Улаанбаатар',
-    apt05_name:'Апартмент 05',
+    apt05_name:'38 Toot',
     apt06_desc:'Лофт хэв маяг · Өндөр тааз · 2 хүн',
     apt06_loc:'Улаанбаатар',
-    apt06_name:'Апартмент 06',
+    apt06_name:'4 Toot',
     apt07_desc:'3 өрөө · Бүлэг зочдод · 7 хүн',
     apt07_loc:'Улаанбаатар',
-    apt07_name:'Апартмент 07',
+    apt07_name:'Altai 61',
     apt08_desc:'Орчин үеийн · Чимээгүй хороолол · 3 хүн',
     apt08_loc:'Улаанбаатар',
-    apt08_name:'Апартмент 08',
+    apt08_name:'Consul',
     apt09_desc:'Дизайн · Премиум · 2 хүн',
     apt09_loc:'Улаанбаатар',
-    apt09_name:'Апартмент 09',
+    apt09_name:'Dulguun Nuur',
+    apt10_desc:'Тод · Нарлаг · 2-4 хүн',
+    apt10_loc:'Улаанбаатар',
+    apt10_name:'Sunny Town II',
     back_home:'Нүүр хуудас руу',
     badge_apt:'₮ Апартмент',
     map_hint:'Аль ч pin дээр дарж тухайн байрны хуудсыг нээгээрэй.',
     prop_apt01_eyebrow:'📍 Улаанбаатар · Апартмент',
     prop_apt01_feat:'Студио · Хотын харагдац',
     prop_apt01_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · 2-4 хүн',
-    prop_apt01_name:'Апартмент 01',
+    prop_apt01_name:'227',
     prop_apt01_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ — зургуудаа images/apartments/apt-01/ хавтсанд тавь.',
     prop_apt02_eyebrow:'📍 Улаанбаатар · Апартмент',
     prop_apt02_feat:'1 өрөө · Цэцэрлэгтэй',
     prop_apt02_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · 2-4 хүн',
-    prop_apt02_name:'Апартмент 02',
+    prop_apt02_name:'228',
     prop_apt02_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ — зургуудаа images/apartments/apt-02/ хавтсанд тавь.',
     prop_apt03_eyebrow:'📍 Улаанбаатар · Апартмент',
     prop_apt03_feat:'2 өрөө · Гэр бүлд тохиромжтой',
     prop_apt03_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · 2-4 хүн',
-    prop_apt03_name:'Апартмент 03',
+    prop_apt03_name:'2010',
     prop_apt03_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ — зургуудаа images/apartments/apt-03/ хавтсанд тавь.',
     prop_apt04_eyebrow:'📍 Улаанбаатар · Апартмент',
     prop_apt04_feat:'Тохилог студио',
     prop_apt04_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · 2-4 хүн',
-    prop_apt04_name:'Апартмент 04',
+    prop_apt04_name:'2011',
     prop_apt04_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ — зургуудаа images/apartments/apt-04/ хавтсанд тавь.',
     prop_apt05_eyebrow:'📍 Улаанбаатар · Апартмент',
     prop_apt05_feat:'Уужим 2 өрөө',
     prop_apt05_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · 2-4 хүн',
-    prop_apt05_name:'Апартмент 05',
+    prop_apt05_name:'38 Toot',
     prop_apt05_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ — зургуудаа images/apartments/apt-05/ хавтсанд тавь.',
     prop_apt06_eyebrow:'📍 Улаанбаатар · Апартмент',
     prop_apt06_feat:'Лофт хэв маяг',
     prop_apt06_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · 2-4 хүн',
-    prop_apt06_name:'Апартмент 06',
+    prop_apt06_name:'4 Toot',
     prop_apt06_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ — зургуудаа images/apartments/apt-06/ хавтсанд тавь.',
     prop_apt07_eyebrow:'📍 Улаанбаатар · Апартмент',
     prop_apt07_feat:'3 өрөө · Бүлэг зочдод',
     prop_apt07_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · 2-4 хүн',
-    prop_apt07_name:'Апартмент 07',
+    prop_apt07_name:'Altai 61',
     prop_apt07_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ — зургуудаа images/apartments/apt-07/ хавтсанд тавь.',
     prop_apt08_eyebrow:'📍 Улаанбаатар · Апартмент',
     prop_apt08_feat:'Орчин үеийн · Чимээгүй',
     prop_apt08_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · 2-4 хүн',
-    prop_apt08_name:'Апартмент 08',
+    prop_apt08_name:'Consul',
     prop_apt08_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ — зургуудаа images/apartments/apt-08/ хавтсанд тавь.',
     prop_apt09_eyebrow:'📍 Улаанбаатар · Апартмент',
     prop_apt09_feat:'Дизайн · Премиум',
     prop_apt09_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · 2-4 хүн',
-    prop_apt09_name:'Апартмент 09',
+    prop_apt09_name:'Dulguun Nuur',
     prop_apt09_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ — зургуудаа images/apartments/apt-09/ хавтсанд тавь.',
+    prop_apt10_eyebrow:'📍 Улаанбаатар · Апартмент',
+    prop_apt10_feat:'Тод · Нарлаг',
+    prop_apt10_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · 2-4 хүн',
+    prop_apt10_name:'Sunny Town II',
+    prop_apt10_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ — зургуудаа images/apartments/apt-10/ хавтсанд тавь.',
     prop_gh01_eyebrow:'📍 Улаанбаатар · Гэстхаус',
-    prop_gh01_feat:'Хотын төв',
+    prop_gh01_feat:'Сүхбаатарын талбайн ойролцоо',
     prop_gh01_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · Олон төрлийн өрөө',
-    prop_gh01_name:'Гэстхаус 01',
+    prop_gh01_name:'Urlan',
     prop_gh01_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ — зургуудаа images/guesthouses/gh-01/ хавтсанд тавь.',
     prop_gh02_eyebrow:'📍 Улаанбаатар · Гэстхаус',
-    prop_gh02_feat:'Сүхбаатарын талбайн ойролцоо',
+    prop_gh02_feat:'Хотын төв',
     prop_gh02_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · Олон төрлийн өрөө',
-    prop_gh02_name:'Гэстхаус 02',
+    prop_gh02_name:'ROM',
     prop_gh02_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ — зургуудаа images/guesthouses/gh-02/ хавтсанд тавь.',
     prop_inquire:'Энэ байрны талаар асуух →',
     prop_on_map:'Газрын зураг дээр',
     sec_apartments:'Апартментууд',
-    sec_apartments_sub:'Улаанбаатарт байгаа есөн бие даасан апартмент — нэг бүрчлэн харах боломжтой.',
+    sec_apartments_sub:'Улаанбаатарт байгаа арав бие даасан апартмент — нэг бүрчлэн харах боломжтой.',
     sec_gh_rooms_sub:'Гэстхаусын дөрвөн төрлийн өрөөнөөс сонгоно уу.',
     sec_guesthouse_rooms:'Гэстхаусын өрөөний төрлүүд',
     view_guesthouse:'Гэстхаусыг үзэх →',
@@ -1790,6 +1851,15 @@ const T={
     hero_sub:'Guesthouse &amp; Apartments',
     hero_sub2:'Close to city centre &nbsp;•&nbsp; Comfortable service',
     hero_btn_rooms:'Guesthouse',hero_btn_contact:'Get in Touch',
+    hero_title_gh:'Warm Stays. Central Living.',
+    hero_sub_gh:'Our Guesthouse',
+    hero_sub2_gh:'Family-friendly &nbsp;•&nbsp; Garden &nbsp;•&nbsp; 24-hour reception',
+    badge_gh_main:'2 Guesthouses',badge_gh_sub:'central, family-friendly',
+    hero_title_apt:'10 Apartments Across the City',
+    hero_sub_apt:'Apartments for Rent',
+    hero_sub2_apt:'Studios to 3-bedrooms &nbsp;•&nbsp; Fully furnished',
+    hero_btn_apt:'Browse Apartments',
+    badge_apt_main:'10 Properties',badge_apt_sub:'across Ulaanbaatar',
     badge_main:'Highly Rated',badge_sub:'by international guests',
     cat_gh:'Guesthouse',cat_rooms:'Rooms',
     
@@ -1830,93 +1900,101 @@ const T={
     /* NEW PROPERTY / APARTMENT / MISC PLACEHOLDERS — replace as needed */
     apt01_desc:'Studio · City view · Sleeps 2',
     apt01_loc:'Ulaanbaatar',
-    apt01_name:'Apartment 01',
+    apt01_name:'227',
     apt02_desc:'1-bedroom · Garden view · Sleeps 3',
     apt02_loc:'Ulaanbaatar',
-    apt02_name:'Apartment 02',
+    apt02_name:'228',
     apt03_desc:'2-bedroom · Family-friendly · Sleeps 5',
     apt03_loc:'Ulaanbaatar',
-    apt03_name:'Apartment 03',
+    apt03_name:'2010',
     apt04_desc:'Cozy studio · Quiet street · Sleeps 2',
     apt04_loc:'Ulaanbaatar',
-    apt04_name:'Apartment 04',
+    apt04_name:'2011',
     apt05_desc:'Spacious 2-bed · Sleeps 4',
     apt05_loc:'Ulaanbaatar',
-    apt05_name:'Apartment 05',
+    apt05_name:'38 Toot',
     apt06_desc:'Loft style · High ceilings · Sleeps 2',
     apt06_loc:'Ulaanbaatar',
-    apt06_name:'Apartment 06',
+    apt06_name:'4 Toot',
     apt07_desc:'3-bedroom · Group-friendly · Sleeps 7',
     apt07_loc:'Ulaanbaatar',
-    apt07_name:'Apartment 07',
+    apt07_name:'Altai 61',
     apt08_desc:'Modern · Quiet area · Sleeps 3',
     apt08_loc:'Ulaanbaatar',
-    apt08_name:'Apartment 08',
+    apt08_name:'Consul',
     apt09_desc:'Designer · Premium finishes · Sleeps 2',
     apt09_loc:'Ulaanbaatar',
-    apt09_name:'Apartment 09',
+    apt09_name:'Dulguun Nuur',
+    apt10_desc:'Bright · Sunny · Sleeps 2-4',
+    apt10_loc:'Ulaanbaatar',
+    apt10_name:'Sunny Town II',
     back_home:'Back to home',
     badge_apt:'₮ Apartment',
     map_hint:'Click any pin to open that property\'s page.',
     prop_apt01_eyebrow:'📍 Ulaanbaatar · Apartment',
     prop_apt01_feat:'Studio · City view',
     prop_apt01_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4',
-    prop_apt01_name:'Apartment 01',
+    prop_apt01_name:'227',
     prop_apt01_tagline:'Full description coming soon — drop your photos into images/apartments/apt-01/',
     prop_apt02_eyebrow:'📍 Ulaanbaatar · Apartment',
     prop_apt02_feat:'1-bedroom · Garden',
     prop_apt02_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4',
-    prop_apt02_name:'Apartment 02',
+    prop_apt02_name:'228',
     prop_apt02_tagline:'Full description coming soon — drop your photos into images/apartments/apt-02/',
     prop_apt03_eyebrow:'📍 Ulaanbaatar · Apartment',
     prop_apt03_feat:'2-bedroom · Family',
     prop_apt03_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4',
-    prop_apt03_name:'Apartment 03',
+    prop_apt03_name:'2010',
     prop_apt03_tagline:'Full description coming soon — drop your photos into images/apartments/apt-03/',
     prop_apt04_eyebrow:'📍 Ulaanbaatar · Apartment',
     prop_apt04_feat:'Cozy studio',
     prop_apt04_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4',
-    prop_apt04_name:'Apartment 04',
+    prop_apt04_name:'2011',
     prop_apt04_tagline:'Full description coming soon — drop your photos into images/apartments/apt-04/',
     prop_apt05_eyebrow:'📍 Ulaanbaatar · Apartment',
     prop_apt05_feat:'Spacious 2-bed',
     prop_apt05_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4',
-    prop_apt05_name:'Apartment 05',
+    prop_apt05_name:'38 Toot',
     prop_apt05_tagline:'Full description coming soon — drop your photos into images/apartments/apt-05/',
     prop_apt06_eyebrow:'📍 Ulaanbaatar · Apartment',
     prop_apt06_feat:'Loft style',
     prop_apt06_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4',
-    prop_apt06_name:'Apartment 06',
+    prop_apt06_name:'4 Toot',
     prop_apt06_tagline:'Full description coming soon — drop your photos into images/apartments/apt-06/',
     prop_apt07_eyebrow:'📍 Ulaanbaatar · Apartment',
     prop_apt07_feat:'3-bedroom · Group',
     prop_apt07_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4',
-    prop_apt07_name:'Apartment 07',
+    prop_apt07_name:'Altai 61',
     prop_apt07_tagline:'Full description coming soon — drop your photos into images/apartments/apt-07/',
     prop_apt08_eyebrow:'📍 Ulaanbaatar · Apartment',
     prop_apt08_feat:'Modern · Quiet',
     prop_apt08_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4',
-    prop_apt08_name:'Apartment 08',
+    prop_apt08_name:'Consul',
     prop_apt08_tagline:'Full description coming soon — drop your photos into images/apartments/apt-08/',
     prop_apt09_eyebrow:'📍 Ulaanbaatar · Apartment',
     prop_apt09_feat:'Designer · Premium',
     prop_apt09_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4',
-    prop_apt09_name:'Apartment 09',
+    prop_apt09_name:'Dulguun Nuur',
     prop_apt09_tagline:'Full description coming soon — drop your photos into images/apartments/apt-09/',
+    prop_apt10_eyebrow:'📍 Ulaanbaatar · Apartment',
+    prop_apt10_feat:'Bright · Sunny',
+    prop_apt10_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4',
+    prop_apt10_name:'Sunny Town II',
+    prop_apt10_tagline:'Full description coming soon — drop your photos into images/apartments/apt-10/',
     prop_gh01_eyebrow:'📍 Ulaanbaatar · Guesthouse',
-    prop_gh01_feat:'Central location',
+    prop_gh01_feat:'Near Sukhbaatar Sq.',
     prop_gh01_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Multiple room types',
-    prop_gh01_name:'Guesthouse 01',
+    prop_gh01_name:'Urlan',
     prop_gh01_tagline:'Full description coming soon — drop your photos into images/guesthouses/gh-01/',
     prop_gh02_eyebrow:'📍 Ulaanbaatar · Guesthouse',
-    prop_gh02_feat:'Near Sukhbaatar Sq.',
+    prop_gh02_feat:'City center',
     prop_gh02_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Multiple room types',
-    prop_gh02_name:'Guesthouse 02',
+    prop_gh02_name:'ROM',
     prop_gh02_tagline:'Full description coming soon — drop your photos into images/guesthouses/gh-02/',
     prop_inquire:'Inquire about this property →',
     prop_on_map:'See on map',
     sec_apartments:'Apartments',
-    sec_apartments_sub:'Nine self-contained apartments across Ulaanbaatar — explore each one in detail.',
+    sec_apartments_sub:'Ten self-contained apartments across Ulaanbaatar — explore each one in detail.',
     sec_gh_rooms_sub:'Choose from four room types at our guesthouse.',
     sec_guesthouse_rooms:'Guesthouse Room Types',
     view_guesthouse:'View the guesthouse →',
@@ -1929,6 +2007,15 @@ const T={
     hero_sub:'Гостевой дом и апартаменты',
     hero_sub2:'Близко к центру города &nbsp;•&nbsp; Комфортный сервис',
     hero_btn_rooms:'Гостевой дом',hero_btn_contact:'Связаться',
+    hero_title_gh:'Тёплые номера в центре города',
+    hero_sub_gh:'Наш гостевой дом',
+    hero_sub2_gh:'Для семей &nbsp;•&nbsp; Сад &nbsp;•&nbsp; Круглосуточная стойка регистрации',
+    badge_gh_main:'2 гостевых дома',badge_gh_sub:'в центре, для семей',
+    hero_title_apt:'10 апартаментов по городу',
+    hero_sub_apt:'Аренда апартаментов',
+    hero_sub2_apt:'От студии до 3-комнатных &nbsp;•&nbsp; Полностью меблированы',
+    hero_btn_apt:'Смотреть апартаменты',
+    badge_apt_main:'10 объектов',badge_apt_sub:'по всему Улан-Батору',
     badge_main:'Высокий рейтинг',badge_sub:'от международных гостей',
     cat_gh:'Гостевой дом',cat_rooms:'Номера',
     
@@ -1969,93 +2056,101 @@ const T={
     /* NEW PROPERTY / APARTMENT / MISC PLACEHOLDERS — replace as needed */
     apt01_desc:'Студия · Вид на город · 2 гостя',
     apt01_loc:'Улан-Батор',
-    apt01_name:'Апартамент 01',
+    apt01_name:'227',
     apt02_desc:'1-комнатный · Вид на сад · 3 гостя',
     apt02_loc:'Улан-Батор',
-    apt02_name:'Апартамент 02',
+    apt02_name:'228',
     apt03_desc:'2-комнатный · Семейный · 5 гостей',
     apt03_loc:'Улан-Батор',
-    apt03_name:'Апартамент 03',
+    apt03_name:'2010',
     apt04_desc:'Уютная студия · Тихая улица · 2 гостя',
     apt04_loc:'Улан-Батор',
-    apt04_name:'Апартамент 04',
+    apt04_name:'2011',
     apt05_desc:'Просторный 2-комнатный · 4 гостя',
     apt05_loc:'Улан-Батор',
-    apt05_name:'Апартамент 05',
+    apt05_name:'38 Toot',
     apt06_desc:'Стиль лофт · Высокие потолки · 2 гостя',
     apt06_loc:'Улан-Батор',
-    apt06_name:'Апартамент 06',
+    apt06_name:'4 Toot',
     apt07_desc:'3-комнатный · Для группы · 7 гостей',
     apt07_loc:'Улан-Батор',
-    apt07_name:'Апартамент 07',
+    apt07_name:'Altai 61',
     apt08_desc:'Современный · Тихий район · 3 гостя',
     apt08_loc:'Улан-Батор',
-    apt08_name:'Апартамент 08',
+    apt08_name:'Consul',
     apt09_desc:'Дизайнерский · Премиум отделка · 2 гостя',
     apt09_loc:'Улан-Батор',
-    apt09_name:'Апартамент 09',
+    apt09_name:'Dulguun Nuur',
+    apt10_desc:'Светлый · Солнечный · 2-4 гостя',
+    apt10_loc:'Улан-Батор',
+    apt10_name:'Sunny Town II',
     back_home:'Вернуться на главную',
     badge_apt:'₮ Апартамент',
     map_hint:'Нажмите на любую метку, чтобы открыть страницу объекта.',
     prop_apt01_eyebrow:'📍 Улан-Батор · Апартамент',
     prop_apt01_feat:'Студия · Вид на город',
     prop_apt01_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · На 2-4 гостей',
-    prop_apt01_name:'Апартамент 01',
+    prop_apt01_name:'227',
     prop_apt01_tagline:'Полное описание скоро — загружайте фото в папку images/apartments/apt-01/',
     prop_apt02_eyebrow:'📍 Улан-Батор · Апартамент',
     prop_apt02_feat:'1-комнатный · Сад',
     prop_apt02_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · На 2-4 гостей',
-    prop_apt02_name:'Апартамент 02',
+    prop_apt02_name:'228',
     prop_apt02_tagline:'Полное описание скоро — загружайте фото в папку images/apartments/apt-02/',
     prop_apt03_eyebrow:'📍 Улан-Батор · Апартамент',
     prop_apt03_feat:'2-комнатный · Семейный',
     prop_apt03_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · На 2-4 гостей',
-    prop_apt03_name:'Апартамент 03',
+    prop_apt03_name:'2010',
     prop_apt03_tagline:'Полное описание скоро — загружайте фото в папку images/apartments/apt-03/',
     prop_apt04_eyebrow:'📍 Улан-Батор · Апартамент',
     prop_apt04_feat:'Уютная студия',
     prop_apt04_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · На 2-4 гостей',
-    prop_apt04_name:'Апартамент 04',
+    prop_apt04_name:'2011',
     prop_apt04_tagline:'Полное описание скоро — загружайте фото в папку images/apartments/apt-04/',
     prop_apt05_eyebrow:'📍 Улан-Батор · Апартамент',
     prop_apt05_feat:'Просторный 2-комнатный',
     prop_apt05_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · На 2-4 гостей',
-    prop_apt05_name:'Апартамент 05',
+    prop_apt05_name:'38 Toot',
     prop_apt05_tagline:'Полное описание скоро — загружайте фото в папку images/apartments/apt-05/',
     prop_apt06_eyebrow:'📍 Улан-Батор · Апартамент',
     prop_apt06_feat:'Стиль лофт',
     prop_apt06_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · На 2-4 гостей',
-    prop_apt06_name:'Апартамент 06',
+    prop_apt06_name:'4 Toot',
     prop_apt06_tagline:'Полное описание скоро — загружайте фото в папку images/apartments/apt-06/',
     prop_apt07_eyebrow:'📍 Улан-Батор · Апартамент',
     prop_apt07_feat:'3-комнатный · Группа',
     prop_apt07_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · На 2-4 гостей',
-    prop_apt07_name:'Апартамент 07',
+    prop_apt07_name:'Altai 61',
     prop_apt07_tagline:'Полное описание скоро — загружайте фото в папку images/apartments/apt-07/',
     prop_apt08_eyebrow:'📍 Улан-Батор · Апартамент',
     prop_apt08_feat:'Современный · Тихий',
     prop_apt08_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · На 2-4 гостей',
-    prop_apt08_name:'Апартамент 08',
+    prop_apt08_name:'Consul',
     prop_apt08_tagline:'Полное описание скоро — загружайте фото в папку images/apartments/apt-08/',
     prop_apt09_eyebrow:'📍 Улан-Батор · Апартамент',
     prop_apt09_feat:'Дизайнерский · Премиум',
     prop_apt09_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · На 2-4 гостей',
-    prop_apt09_name:'Апартамент 09',
+    prop_apt09_name:'Dulguun Nuur',
     prop_apt09_tagline:'Полное описание скоро — загружайте фото в папку images/apartments/apt-09/',
+    prop_apt10_eyebrow:'📍 Улан-Батор · Апартамент',
+    prop_apt10_feat:'Светлый · Солнечный',
+    prop_apt10_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · На 2-4 гостей',
+    prop_apt10_name:'Sunny Town II',
+    prop_apt10_tagline:'Полное описание скоро — загружайте фото в папку images/apartments/apt-10/',
     prop_gh01_eyebrow:'📍 Улан-Батор · Гостевой дом',
-    prop_gh01_feat:'Центр города',
+    prop_gh01_feat:'Возле пл. Сухэ-Батора',
     prop_gh01_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · Несколько типов номеров',
-    prop_gh01_name:'Гостевой дом 01',
+    prop_gh01_name:'Urlan',
     prop_gh01_tagline:'Полное описание скоро — загружайте фото в папку images/guesthouses/gh-01/',
     prop_gh02_eyebrow:'📍 Улан-Батор · Гостевой дом',
-    prop_gh02_feat:'Возле пл. Сухэ-Батора',
+    prop_gh02_feat:'Центр города',
     prop_gh02_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · Несколько типов номеров',
-    prop_gh02_name:'Гостевой дом 02',
+    prop_gh02_name:'ROM',
     prop_gh02_tagline:'Полное описание скоро — загружайте фото в папку images/guesthouses/gh-02/',
     prop_inquire:'Узнать об этом объекте →',
     prop_on_map:'На карте',
     sec_apartments:'Апартаменты',
-    sec_apartments_sub:'Девять отдельных апартаментов в Улан-Баторе — изучите каждый.',
+    sec_apartments_sub:'Десять отдельных апартаментов в Улан-Баторе — изучите каждый.',
     sec_gh_rooms_sub:'Выберите из четырёх типов номеров в нашем гостевом доме.',
     sec_guesthouse_rooms:'Типы номеров в гостевом доме',
     view_guesthouse:'Посмотреть гостевой дом →',
@@ -2143,6 +2238,7 @@ const PROPERTIES=[
   {id:'apt-07',lat:47.9015, lng:106.9050, key:'prop_apt07_name'},
   {id:'apt-08',lat:47.9095, lng:106.8780, key:'prop_apt08_name'},
   {id:'apt-09',lat:47.9155, lng:106.8990, key:'prop_apt09_name'},
+  {id:'apt-10',lat:47.9140, lng:106.9040, key:'prop_apt10_name'},
 ];
 let _mapInstance=null;
 let _mapMarkers=[];
@@ -2181,9 +2277,10 @@ function _swapPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const target=document.getElementById(id);
   if(target)target.classList.add('active');
-  // Toggle marquee + nav active state
-  const marquee=document.getElementById('marquee');
-  if(marquee)marquee.style.display=(id==='home')?'block':'none';
+  // Pause hero auto-rotation when off home, resume on home
+  if(id==='home'){heroAutoStart();} else {heroAutoStop();}
+  // Lazy-init galleries on the prop page being shown
+  if(target&&typeof initGalleriesIn==='function')initGalleriesIn(target);
   // Lazy-init map when entering home (location is inside home)
   if(id==='home'&&!_mapInited&&typeof initMap==='function'){
     setTimeout(()=>{initMap();_mapInited=true;},100);
@@ -2191,6 +2288,159 @@ function _swapPage(id){
   window.scrollTo({top:0});
   closeMenu();
 }
+
+/* ═══ HERO SLIDER ═══ */
+let _heroIdx=0;
+let _heroTimer=null;
+const HERO_SLIDE_MS=6000;
+function _heroCount(){const t=document.getElementById('heroTrack');return t?t.children.length:0;}
+function _heroRender(){
+  const track=document.getElementById('heroTrack');
+  if(!track)return;
+  track.style.transform=`translateX(-${_heroIdx*100}%)`;
+  document.querySelectorAll('#heroDots .hero-dot').forEach((d,i)=>{
+    d.classList.toggle('active', i===_heroIdx);
+  });
+}
+function heroGo(i){
+  const n=_heroCount();if(!n)return;
+  _heroIdx=((i%n)+n)%n;
+  _heroRender();
+  heroAutoStart();
+}
+function heroSlide(d){heroGo(_heroIdx+d);}
+function heroAutoStart(){
+  heroAutoStop();
+  const n=_heroCount();if(n<2)return;
+  _heroTimer=setInterval(()=>{_heroIdx=(_heroIdx+1)%n;_heroRender();},HERO_SLIDE_MS);
+}
+function heroAutoStop(){if(_heroTimer){clearInterval(_heroTimer);_heroTimer=null;}}
+// Pause on hover, resume on leave
+window.addEventListener('load',()=>{
+  const sl=document.getElementById('heroSlider');
+  if(sl){
+    sl.addEventListener('mouseenter',heroAutoStop);
+    sl.addEventListener('mouseleave',heroAutoStart);
+  }
+  heroAutoStart();
+});
+
+/* ═══ PROPERTY GALLERIES (dynamic) ═══ */
+const GAL_MAX=20;            /* probe up to gallery-20.jpg */
+const GAL_VISIBLE=3;         /* main grid shows first 3 */
+const _galleryImages={};     /* { dir: [url, url, …] } */
+const _galleryReady=new WeakSet();
+
+function _probeImage(url){
+  return new Promise(resolve=>{
+    const im=new Image();
+    im.onload=()=>resolve(true);
+    im.onerror=()=>resolve(false);
+    im.src=url;
+  });
+}
+async function _probeAll(dir){
+  const found=[];
+  for(let i=1;i<=GAL_MAX;i++){
+    const url=`${dir}/gallery-${i}.jpg`;
+    if(await _probeImage(url)) found.push(url);
+    else break; /* stop at first gap — assume contiguous numbering */
+  }
+  return found;
+}
+function _buildGallery(wrap, urls){
+  wrap.innerHTML='';
+  if(!urls.length)return;
+  const main=document.createElement('div');
+  main.className='prop-gallery';
+  urls.slice(0,GAL_VISIBLE).forEach((u,i)=>{
+    const cell=document.createElement('div');
+    cell.className='prop-gallery-img';
+    cell.innerHTML=`<img src="${u}" alt="">`;
+    cell.addEventListener('click',()=>openLightbox(urls,i));
+    main.appendChild(cell);
+  });
+  wrap.appendChild(main);
+  if(urls.length>GAL_VISIBLE){
+    const more=document.createElement('div');
+    more.className='prop-gallery-more';
+    more.innerHTML=`
+      <button class="gal-arrow gal-arrow-prev" aria-label="Scroll left">‹</button>
+      <div class="prop-gallery-strip"></div>
+      <button class="gal-arrow gal-arrow-next" aria-label="Scroll right">›</button>
+    `;
+    const strip=more.querySelector('.prop-gallery-strip');
+    urls.slice(GAL_VISIBLE).forEach((u,k)=>{
+      const t=document.createElement('div');
+      t.className='prop-gallery-thumb';
+      t.innerHTML=`<img src="${u}" alt="">`;
+      t.addEventListener('click',()=>openLightbox(urls, GAL_VISIBLE+k));
+      strip.appendChild(t);
+    });
+    const prev=more.querySelector('.gal-arrow-prev');
+    const next=more.querySelector('.gal-arrow-next');
+    const updateArrows=()=>{
+      prev.disabled=strip.scrollLeft<=2;
+      next.disabled=strip.scrollLeft+strip.clientWidth>=strip.scrollWidth-2;
+    };
+    prev.addEventListener('click',()=>strip.scrollBy({left:-strip.clientWidth*0.8,behavior:'smooth'}));
+    next.addEventListener('click',()=>strip.scrollBy({left: strip.clientWidth*0.8,behavior:'smooth'}));
+    strip.addEventListener('scroll',updateArrows);
+    setTimeout(updateArrows,30);
+    wrap.appendChild(more);
+  }
+}
+function initGalleriesIn(root){
+  const mounts=root.querySelectorAll('.prop-gallery-wrap[data-dir]');
+  mounts.forEach(async wrap=>{
+    if(_galleryReady.has(wrap))return;
+    _galleryReady.add(wrap);
+    const dir=wrap.dataset.dir;
+    const urls=_galleryImages[dir] || await _probeAll(dir);
+    _galleryImages[dir]=urls;
+    _buildGallery(wrap, urls);
+  });
+}
+
+/* ═══ LIGHTBOX ═══ */
+let _lbUrls=[],_lbIdx=0;
+function openLightbox(urls,idx){
+  _lbUrls=urls;_lbIdx=idx||0;
+  const lb=document.getElementById('lightbox');
+  _lbRender();
+  lb.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow='';
+}
+function lbStep(d){
+  if(!_lbUrls.length)return;
+  _lbIdx=(_lbIdx+d+_lbUrls.length)%_lbUrls.length;
+  _lbRender();
+}
+function _lbRender(){
+  document.getElementById('lbImg').src=_lbUrls[_lbIdx];
+  document.getElementById('lbCounter').textContent=`${_lbIdx+1} / ${_lbUrls.length}`;
+  const onlyOne=_lbUrls.length<2;
+  document.getElementById('lbPrev').style.display=onlyOne?'none':'';
+  document.getElementById('lbNext').style.display=onlyOne?'none':'';
+}
+window.addEventListener('load',()=>{
+  document.getElementById('lbClose').addEventListener('click',closeLightbox);
+  document.getElementById('lbPrev').addEventListener('click',()=>lbStep(-1));
+  document.getElementById('lbNext').addEventListener('click',()=>lbStep(1));
+  document.getElementById('lightbox').addEventListener('click',e=>{
+    if(e.target.id==='lightbox')closeLightbox();
+  });
+  document.addEventListener('keydown',e=>{
+    if(!document.getElementById('lightbox').classList.contains('open'))return;
+    if(e.key==='Escape')closeLightbox();
+    else if(e.key==='ArrowLeft')lbStep(-1);
+    else if(e.key==='ArrowRight')lbStep(1);
+  });
+});
 
 function showPage(id, opts){
   opts=opts||{};
