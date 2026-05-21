@@ -879,19 +879,9 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
 @media(max-width:700px){
   .nav-links-desk{display:none}
   .hamburger{display:flex}
-  /* image fills slide as full-bleed background behind text */
-  .hero-slide{position:relative;padding:28px 52px 64px}
-  .hero-inner{grid-template-columns:1fr;position:relative;z-index:1}
-  .hero-img-wrap{
-    position:absolute;inset:0;
-    max-width:none;margin:0;z-index:0;
-  }
-  .hero-img-wrap::after{
-    content:'';position:absolute;inset:0;
-    background:rgba(255,255,255,0.72);z-index:1;
-  }
-  .hero-img-blob{width:100%;height:100%;aspect-ratio:unset;border-radius:0}
-  .hero-badge{display:none}
+  .hero-inner{grid-template-columns:1fr}
+  .hero-img-wrap{display:none}
+  .hero-slide{padding:20px 52px 64px}
   .hero-dots{bottom:20px}
   .hero-arrow{top:auto;bottom:42px;transform:none}
   .hero-arrow:hover{transform:scale(1.08)}
