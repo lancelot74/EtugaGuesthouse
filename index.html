@@ -879,16 +879,20 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
 @media(max-width:700px){
   .nav-links-desk{display:none}
   .hamburger{display:flex}
-  .hero-inner{grid-template-columns:1fr}
-  /* show image below text, compact */
-  .hero-img-wrap{max-width:180px;margin:14px auto 0}
+  /* image fills slide as full-bleed background behind text */
+  .hero-slide{position:relative;padding:28px 52px 64px}
+  .hero-inner{grid-template-columns:1fr;position:relative;z-index:1}
+  .hero-img-wrap{
+    position:absolute;inset:0;
+    max-width:none;margin:0;z-index:0;
+  }
+  .hero-img-wrap::after{
+    content:'';position:absolute;inset:0;
+    background:rgba(255,255,255,0.72);z-index:1;
+  }
+  .hero-img-blob{width:100%;height:100%;aspect-ratio:unset;border-radius:0}
   .hero-badge{display:none}
-  /* side padding keeps text clear of arrows; bottom padding gives room for dots */
-  .hero-slide{padding:20px 52px 64px}
-  /* push dots up enough that they sit below the slide buttons */
   .hero-dots{bottom:20px}
-  /* arrows stay at mid-height of the taller slide — move them lower so they
-     don't fight with title text on very narrow screens */
   .hero-arrow{top:auto;bottom:42px;transform:none}
   .hero-arrow:hover{transform:scale(1.08)}
   .hero-arrow-prev{left:6px}
