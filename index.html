@@ -2720,6 +2720,7 @@ window.addEventListener('load',()=>{
 
 function showPage(id, opts){
   opts=opts||{};
+  _syncURL(id);
   if(reduceMotion){_swapPage(id);if(opts.scrollTo)_scrollToHash(opts.scrollTo);return;}
   const cur=document.querySelector('.page.active');
   if(cur&&cur.id===id&&!opts.scrollTo&&!_introPlaying)return;
@@ -2751,8 +2752,29 @@ function navTo(hash){
   else showPage('home',{scrollTo:hash});
 }
 
+/* ═══ Shareable deep links ═══
+   Every property/apartment page gets its own URL (…/#apt-03, …/#gh-01) so a
+   shared link opens straight to that page. Home clears the hash. Back/forward
+   work via popstate. */
+function _pageExists(id){
+  const el=document.getElementById(id);
+  return !!el&&el.classList.contains('page');
+}
+function _currentHashPage(){
+  const id=(location.hash||'').replace(/^#/,'');
+  return (id&&_pageExists(id))?id:'home';
+}
+function _syncURL(id){
+  if(_currentHashPage()===id)return;                 // already reflected (e.g. after Back)
+  const url=(id==='home')?(location.pathname+location.search):('#'+id);
+  history.pushState({page:id},'',url);
+}
+window.addEventListener('popstate',()=>_swapPage(_currentHashPage()));
+
 /* ═══ INIT + FIRST-LOAD INTRO ═══ */
 setLang('en');
+/* Open the page named in the URL hash (a shared deep link) before the intro reveals */
+if(_currentHashPage()!=='home')_swapPage(_currentHashPage());
 // Init map lazily — wait for layout + leaflet to finish loading
 window.addEventListener('load',()=>{
   if(typeof L!=='undefined')initMap();
