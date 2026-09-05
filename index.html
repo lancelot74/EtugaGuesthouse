@@ -542,6 +542,8 @@ nav{
   transition:all 0.2s;display:inline-flex;align-items:center;gap:4px;
 }
 .book-pill:hover{background:var(--green);color:white}
+.room-types{margin:32px 0}
+.room-types .section-title{font-size:1.25rem}
 
 /* ── REVIEWS ── */
 #reviews{
@@ -1125,6 +1127,31 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
       </a>
     </div>
   </div>
+  <h3 class="gh-sub-title reveal" data-i18n="whole_guesthouses_title">Rent a Whole Guesthouse</h3>
+  <div class="listing-grid">
+    <div class="listing-card reveal">
+      <a onclick="showPage('gh-02')" style="text-decoration:none;color:inherit;cursor:pointer;display:block">
+        <div class="listing-img"><img src="images/guesthouses/gh-02/thumb.jpg" alt="Nogoon Urlan Guesthouse"><div class="price-badge" data-i18n="badge_whole_guesthouse">Whole Guesthouse</div></div>
+        <div class="listing-body">
+          <div class="listing-name" data-i18n="whole_urlan_name">Rent All of Nogoon Urlan</div>
+          <div class="listing-loc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="room_loc">Ulaanbaatar</span></div>
+          <div class="room-desc" data-i18n="whole_urlan_desc">Reserve the entire guesthouse for your family or group.</div>
+          <div class="listing-footer"><span class="book-pill" data-i18n="view_pill">View →</span></div>
+        </div>
+      </a>
+    </div>
+    <div class="listing-card reveal">
+      <a onclick="showPage('gh-01')" style="text-decoration:none;color:inherit;cursor:pointer;display:block">
+        <div class="listing-img"><img src="images/guesthouses/gh-01/thumb.jpg" alt="Rom Guesthouse"><div class="price-badge" data-i18n="badge_whole_guesthouse">Whole Guesthouse</div></div>
+        <div class="listing-body">
+          <div class="listing-name" data-i18n="whole_rom_name">Rent All of Rom</div>
+          <div class="listing-loc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="room_loc_rom">Ulaanbaatar</span></div>
+          <div class="room-desc" data-i18n="whole_rom_desc">Reserve the entire guesthouse for your family or group.</div>
+          <div class="listing-footer"><span class="book-pill" data-i18n="view_pill">View →</span></div>
+        </div>
+      </a>
+    </div>
+  </div>
 </div>
 
 <!-- GUESTHOUSES — Nogoon Urlan & Rom -->
@@ -1330,22 +1357,6 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
       </div>
       <span class="contact-arrow">→</span>
     </a>
-    <a href="https://facebook.com" target="_blank" class="contact-item">
-      <div class="contact-icon">📘</div>
-      <div class="contact-info">
-        <div class="contact-label">Facebook</div>
-        <div class="contact-val" data-i18n="ct_tap">Tap to open</div>
-      </div>
-      <span class="contact-arrow">→</span>
-    </a>
-    <a href="https://instagram.com" target="_blank" class="contact-item">
-      <div class="contact-icon">📸</div>
-      <div class="contact-info">
-        <div class="contact-label">Instagram</div>
-        <div class="contact-val" data-i18n="ct_tap">Tap to open</div>
-      </div>
-      <span class="contact-arrow">→</span>
-    </a>
     <div class="address-card">
       <div class="address-label" data-i18n="ct_addr_lbl">Address</div>
       <div class="address-text" data-i18n="ct_addr">Sukhbaatar St., 1st Floor, Apt 73/5, Nogoon Urlan Khotkhon,<br>Sukhbaatar District, Ulaanbaatar, Mongolia</div>
@@ -1365,6 +1376,10 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_gh01_name">Rom</h1>
     <p class="prop-tagline" data-i18n="prop_gh01_tagline">A warm, central place to call home — full description coming soon.</p>
     <div class="prop-features" data-i18n="prop_gh01_features">Free Wi-Fi · Shared kitchen · Garden · 24-hour reception · 4 room types available · Family friendly</div>
+    <div class="room-types" data-room-dir="images/guesthouses/gh-01" data-room-loc="room_loc_rom">
+      <h2 class="section-title" data-i18n="room_types_title">Room Types</h2>
+      <div class="listing-grid"></div>
+    </div>
     <div class="prop-gallery-wrap" data-dir="images/guesthouses/gh-01"></div>
     <div class="prop-cta">
       <a class="btn-solid" href="https://www.booking.com/hotel/mn/rom-etuga-guesthouse.html" target="_blank" rel="noopener" data-i18n="prop_book">Book on Booking.com →</a>
@@ -1382,6 +1397,10 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <h1 class="prop-name" data-i18n="prop_gh02_name">Nogoon Urlan</h1>
     <p class="prop-tagline" data-i18n="prop_gh02_tagline">Comfortable stay near Sukhbaatar Square — full description coming soon.</p>
     <div class="prop-features" data-i18n="prop_gh02_features">Free Wi-Fi · Shared kitchen · Central location · 24-hour reception · Family friendly</div>
+    <div class="room-types" data-room-dir="images/guesthouses/gh-02" data-room-loc="room_loc">
+      <h2 class="section-title" data-i18n="room_types_title">Room Types</h2>
+      <div class="listing-grid"></div>
+    </div>
     <div class="prop-gallery-wrap" data-dir="images/guesthouses/gh-02"></div>
     <div class="prop-cta">
       <a class="btn-solid" href="https://www.booking.com/hotel/mn/etuga-guesthouse-close-to-sukhbaatar-square.html" target="_blank" rel="noopener" data-i18n="prop_book">Book on Booking.com →</a>
@@ -1597,6 +1616,13 @@ const T={
     room_loc:'Улаанбаатар, Сүхбаатарын талбай',
     room_loc_rom:'Улаанбаатар, Модны 2',
     badge_guesthouse:'Гэстхаус',
+    badge_whole_guesthouse:'Бүхэл гэстхаус',
+    whole_guesthouses_title:'Гэстхаусыг бүхэлд нь түрээслэх',
+    whole_urlan_name:'Ногоон Урланг бүхэлд нь түрээслэх',
+    whole_rom_name:'Ромыг бүхэлд нь түрээслэх',
+    whole_urlan_desc:'Гэр бүл эсвэл бүлгээрээ гэстхаусыг бүхэлд нь захиалаарай.',
+    whole_rom_desc:'Гэр бүл эсвэл бүлгээрээ гэстхаусыг бүхэлд нь захиалаарай.',
+    room_types_title:'Өрөөний төрлүүд',
     room_single_desc:'1 ор · Тусдаа угаалгын өрөө · Тагт · Ажлын ширээ · Хувцасны шүүгээ',
     room_double_desc:'1 том ор · Тусдаа угаалгын өрөө · Хот эсвэл цэцэрлэгийн харагдац · Минибар',
     room_twin_desc:'2 ор · Тусдаа угаалгын өрөө · Зурагт · Ажлын ширээ · Тагт',
@@ -1749,6 +1775,13 @@ const T={
     room_loc:'Ulaanbaatar, Sukhbaatar Square',
     room_loc_rom:'Ulaanbaatar, Modny 2',
     badge_guesthouse:'Guesthouse',
+    badge_whole_guesthouse:'Whole Guesthouse',
+    whole_guesthouses_title:'Rent a Whole Guesthouse',
+    whole_urlan_name:'Rent All of Nogoon Urlan',
+    whole_rom_name:'Rent All of Rom',
+    whole_urlan_desc:'Reserve the entire guesthouse for your family or group.',
+    whole_rom_desc:'Reserve the entire guesthouse for your family or group.',
+    room_types_title:'Room Types',
     room_single_desc:'1 Twin Bed · Private Bathroom · Balcony · Work Desk · Wardrobe',
     room_double_desc:'1 Full Bed · Private Bathroom · City or Garden View · Minibar',
     room_twin_desc:'2 Twin Beds · Private Bathroom · TV · Work Desk · Balcony',
@@ -1901,6 +1934,13 @@ const T={
     room_loc:'Улан-Батор, площадь Сухэ-Батора',
     room_loc_rom:'Улан-Батор, Модны 2',
     badge_guesthouse:'Гостевой дом',
+    badge_whole_guesthouse:'Весь гостевой дом',
+    whole_guesthouses_title:'Аренда гостевого дома целиком',
+    whole_urlan_name:'Арендовать весь Nogoon Urlan',
+    whole_rom_name:'Арендовать весь Rom',
+    whole_urlan_desc:'Забронируйте весь гостевой дом для семьи или группы.',
+    whole_rom_desc:'Забронируйте весь гостевой дом для семьи или группы.',
+    room_types_title:'Типы номеров',
     room_single_desc:'1 кровать · Личная ванная · Балкон · Рабочий стол · Шкаф',
     room_double_desc:'1 двуспальная кровать · Личная ванная · Вид на город или сад · Мини-бар',
     room_twin_desc:'2 кровати · Личная ванная · ТВ · Рабочий стол · Балкон',
@@ -2052,6 +2092,13 @@ const T={
     room_loc:'乌兰巴托，苏赫巴托尔广场',
     room_loc_rom:'乌兰巴托，莫德尼2号',
     badge_guesthouse:'招待所',
+    badge_whole_guesthouse:'整栋招待所',
+    whole_guesthouses_title:'整栋招待所出租',
+    whole_urlan_name:'整租诺贡乌兰',
+    whole_rom_name:'整租罗姆',
+    whole_urlan_desc:'为家人或团体预订整栋招待所。',
+    whole_rom_desc:'为家人或团体预订整栋招待所。',
+    room_types_title:'房型',
     room_single_desc:'1张单人床 · 独立浴室 · 阳台 · 书桌 · 衣柜',
     room_double_desc:'1张大床 · 独立浴室 · 城市或花园景观 · 迷你吧',
     room_twin_desc:'2张单人床 · 独立浴室 · 电视 · 书桌 · 阳台',
@@ -2181,6 +2228,34 @@ const T={
     view_pill:'查看 →',
   }
 };
+
+const ROOM_TYPES=[
+  {name:'room_single',badge:'badge_single',desc:'room_single_desc'},
+  {name:'room_double',badge:'badge_double',desc:'room_double_desc'},
+  {name:'room_twin',badge:'badge_twin',desc:'room_twin_desc'},
+  {name:'room_triple',badge:'badge_triple',desc:'room_triple_desc'},
+];
+document.querySelectorAll('.room-types').forEach(section=>{
+  const grid=section.querySelector('.listing-grid');
+  ROOM_TYPES.forEach((room,index)=>{
+    grid.insertAdjacentHTML('beforeend',`
+      <div class="listing-card">
+        <div class="listing-img">
+          <img src="${section.dataset.roomDir}/gallery-${index+1}.jpg" alt="">
+          <div class="price-badge" data-i18n="${room.badge}"></div>
+        </div>
+        <div class="listing-body">
+          <div class="listing-name" data-i18n="${room.name}"></div>
+          <div class="listing-loc">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span data-i18n="${section.dataset.roomLoc}"></span>
+          </div>
+          <div class="room-desc" data-i18n="${room.desc}"></div>
+          <div class="listing-footer"><a class="book-pill" onclick="navTo('#contact')" data-i18n="book_pill"></a></div>
+        </div>
+      </div>`);
+  });
+});
 
 const LANG_META={mn:{flag:'🇲🇳',code:'MN'},en:{flag:'🇬🇧',code:'EN'},ru:{flag:'🇷🇺',code:'RU'},zh:{flag:'🇨🇳',code:'中文'}};
 let currentLang='en';
