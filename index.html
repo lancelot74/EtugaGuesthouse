@@ -747,9 +747,8 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
 .reveal{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
 .reveal.visible{opacity:1;transform:none}
 
-/* ── CURTAIN / DOORS — first-load intro ── */
+/* ── CURTAIN / DOORS — page transitions ── */
 .curtain{position:fixed;inset:0;z-index:9000;pointer-events:none;display:flex;overflow:hidden}
-.curtain.is-intro{pointer-events:auto;cursor:pointer}
 .curtain__panel{
   width:50%;background:var(--green-dark);
   position:relative;will-change:transform;
@@ -772,53 +771,6 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
 .curtain__panel--l::after{right:calc(5% - 2.5px)}
 .curtain__panel--r::after{left:calc(5% - 2.5px)}
 
-.curtain__mark{
-  position:absolute;left:50%;top:50%;
-  transform:translate(-50%,-50%);
-  display:flex;flex-direction:column;align-items:center;
-  z-index:2;opacity:0;pointer-events:none;color:#fff;
-}
-.curtain__letter{
-  font-family:Georgia,serif;font-weight:400;
-  font-size:clamp(80px,14vw,168px);line-height:1;letter-spacing:-0.05em;
-}
-.curtain__line{margin-top:22px;width:0;height:1px;background:rgba(255,255,255,0.6)}
-.curtain__word{
-  margin-top:18px;font-family:var(--font);
-  font-size:0.68rem;font-weight:700;letter-spacing:0.4em;
-  text-transform:uppercase;color:rgba(255,255,255,0.72);
-  opacity:0;
-}
-.curtain__horse{
-  position:absolute;bottom:18vh;left:0;
-  width:clamp(180px,24vw,320px);
-  color:rgba(255,255,255,0.94);
-  z-index:3;opacity:0;pointer-events:none;
-  transform:translateX(-30vw);
-}
-.curtain__horse svg{width:100%;height:auto;display:block;filter:drop-shadow(0 8px 24px rgba(0,0,0,0.4))}
-
-.curtain.is-intro .curtain__mark{animation:introMarkIn 700ms cubic-bezier(0.22,1,0.36,1) 200ms forwards}
-.curtain.is-intro .curtain__letter{animation:introLetter 700ms cubic-bezier(0.22,1,0.36,1) 200ms backwards}
-.curtain.is-intro .curtain__line{animation:introLine 900ms cubic-bezier(0.22,1,0.36,1) 650ms forwards}
-.curtain.is-intro .curtain__word{animation:introFade 600ms cubic-bezier(0.22,1,0.36,1) 1100ms forwards}
-.curtain.is-intro .curtain__horse{animation:gallop 1600ms cubic-bezier(0.45,0,0.55,1) 1100ms forwards}
-.curtain.is-intro.is-fading .curtain__mark{animation:introFadeOut 500ms cubic-bezier(0.22,1,0.36,1) forwards}
-
-@keyframes introMarkIn{from{opacity:0}to{opacity:1}}
-@keyframes introLetter{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
-@keyframes introLine{to{width:148px}}
-@keyframes introFade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
-@keyframes introFadeOut{to{opacity:0;transform:translate(-50%,-54%)}}
-@keyframes gallop{
-  0%   { opacity:0; transform:translateX(-30vw) translateY(0) }
-  10%  { opacity:1; transform:translateX(-12vw) translateY(-4px) }
-  30%  { transform:translateX(14vw) translateY(2px) }
-  50%  { transform:translateX(42vw) translateY(-6px) }
-  70%  { transform:translateX(70vw) translateY(0) }
-  90%  { opacity:1; transform:translateX(100vw) translateY(-3px) }
-  100% { opacity:0; transform:translateX(130vw) translateY(0) }
-}
 
 /* ── LANGUAGE PICKER ── */
 .lang-wrap{position:relative;margin-left:8px}
@@ -867,7 +819,6 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
 
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:0.01ms !important;transition-duration:0.01ms !important}
-  .curtain__horse{display:none}
   .reveal{opacity:1 !important;transform:none !important}
 }
 
@@ -891,30 +842,10 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
 </style>
 </head>
 <body>
-<!-- ════ CURTAIN / DOORS — first-load intro ════ -->
-<div class="curtain is-closed" id="curtain" aria-hidden="true">
+<!-- ════ CURTAIN / DOORS — page transitions ════ -->
+<div class="curtain is-open" id="curtain" aria-hidden="true">
   <div class="curtain__panel curtain__panel--l"></div>
   <div class="curtain__panel curtain__panel--r"></div>
-  <div class="curtain__mark" id="curtainMark">
-    <div class="curtain__letter">E</div>
-    <div class="curtain__line"></div>
-    <div class="curtain__word">Etuga · Guesthouse · Apartment</div>
-  </div>
-  <div class="curtain__horse" id="curtainHorse" aria-hidden="true">
-    <svg viewBox="0 0 340 180" xmlns="http://www.w3.org/2000/svg" fill="currentColor">
-      <path d="M 80 70 C 56 68 32 58 10 42 C 4 38 6 32 14 35 C 36 46 60 60 84 70 Z"/>
-      <path d="M 84 64 Q 80 50 100 44 Q 140 36 180 38 Q 218 42 230 56 L 226 78 Q 218 82 204 82 L 102 82 Q 90 82 84 76 Z"/>
-      <path d="M 224 56 Q 240 38 260 28 L 274 36 Q 260 50 246 70 Q 238 78 228 76 Z"/>
-      <path d="M 240 40 L 244 22 L 250 34 L 256 18 L 262 30 L 268 22 L 272 36 L 254 50 Z"/>
-      <path d="M 266 30 Q 282 22 298 28 Q 310 36 304 48 L 296 52 Q 290 56 284 52 L 278 50 L 270 46 L 264 38 Z"/>
-      <path d="M 276 22 L 280 8 L 286 22 Z"/>
-      <circle cx="294" cy="36" r="1.6" fill="rgba(255,255,255,0.4)"/>
-      <path d="M 220 78 C 228 98 242 118 258 136 L 266 150 L 270 158 L 262 160 L 254 154 L 242 140 L 228 120 L 214 98 Z"/>
-      <path d="M 198 82 L 194 104 L 192 126 L 194 150 L 190 158 L 184 154 L 182 136 L 186 112 L 192 86 Z"/>
-      <path d="M 130 82 L 130 104 L 134 126 L 138 150 L 136 158 L 128 156 L 124 140 L 122 118 L 124 88 Z"/>
-      <path d="M 96 80 C 84 102 64 122 44 140 L 36 152 L 30 150 L 36 142 L 54 124 L 72 104 L 86 84 Z"/>
-    </svg>
-  </div>
 </div>
 
 <!-- NAV -->
@@ -1021,7 +952,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
       <p class="hero-sub" data-i18n="hero_sub_gh">Our Guesthouse</p>
       <p class="hero-sub2" data-i18n="hero_sub2_gh">Family-friendly &nbsp;•&nbsp; Garden &nbsp;•&nbsp; 24-hour reception</p>
       <div class="hero-btns">
-        <a class="btn-solid" onclick="showPage('gh-01')" data-i18n="hero_btn_rooms">Guesthouse</a>
+        <a class="btn-solid" onclick="navTo('#guesthouse-rooms')" data-i18n="hero_btn_rooms">Guesthouse</a>
         <a class="btn-outline" onclick="navTo('#contact')" data-i18n="hero_btn_contact">Get in Touch</a>
       </div>
     </div>
@@ -1045,7 +976,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
       <p class="hero-sub" data-i18n="hero_sub">Guesthouse &amp; Apartments</p>
       <p class="hero-sub2" data-i18n="hero_sub2">Close to city centre &nbsp;•&nbsp; Comfortable service</p>
       <div class="hero-btns">
-        <a class="btn-solid" onclick="showPage('gh-01')" data-i18n="hero_btn_rooms">Guesthouse</a>
+        <a class="btn-solid" onclick="navTo('#guesthouse-rooms')" data-i18n="hero_btn_rooms">Guesthouse</a>
         <a class="btn-outline" onclick="navTo('#contact')" data-i18n="hero_btn_contact">Get in Touch</a>
       </div>
     </div>
@@ -1075,7 +1006,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
 <!-- CATEGORY -->
 <div class="cat-section reveal">
   <div class="cat-grid">
-    <a onclick="showPage('gh-01')" class="cat-card">
+    <a onclick="navTo('#guesthouse-rooms')" class="cat-card">
       <img src="images/guesthouses/gh-01/gallery-9.jpg" alt="Guesthouse">
       <div class="cat-card-overlay"><span class="cat-card-label" data-i18n="cat_gh">Guesthouse</span></div>
     </a>
@@ -1091,7 +1022,7 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
 <!-- APARTMENTS — 9 separate apartment listings -->
 <div class="section" id="apartments">
   <h2 class="section-title reveal" data-i18n="sec_apartments">Apartments</h2>
-  <p class="section-sub reveal" data-i18n="sec_apartments_sub">Ten self-contained apartments across Ulaanbaatar — explore each one in detail.</p>
+  <p class="section-sub reveal" data-i18n="sec_apartments_sub">Nine self-contained apartments across Ulaanbaatar — explore each one in detail.</p>
   <div class="listing-grid">
     <div class="listing-card reveal">
       <a onclick="showPage('apt-01')" style="text-decoration:none;color:inherit;cursor:pointer;display:block">
@@ -1100,17 +1031,6 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
           <div class="listing-name" data-i18n="apt01_name">Apartment 01</div>
           <div class="listing-loc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="apt01_loc">Ulaanbaatar</span></div>
           <div class="room-desc" data-i18n="apt01_desc">Studio · City view · Sleeps 2</div>
-          <div class="listing-footer"><span class="book-pill" data-i18n="view_pill">View →</span></div>
-        </div>
-      </a>
-    </div>
-    <div class="listing-card reveal">
-      <a onclick="showPage('apt-02')" style="text-decoration:none;color:inherit;cursor:pointer;display:block">
-        <div class="listing-img"><img src="images/apartments/apt-02/thumb.jpg" alt="" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#a8bcb0,#5a7468,#3a5044)';this.parentElement.style.height='210px'"><div class="price-badge"><span data-i18n="badge_apt">₮ Apartment</span></div></div>
-        <div class="listing-body">
-          <div class="listing-name" data-i18n="apt02_name">Apartment 02</div>
-          <div class="listing-loc"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg><span data-i18n="apt02_loc">Ulaanbaatar</span></div>
-          <div class="room-desc" data-i18n="apt02_desc">1-bedroom · Garden view · Sleeps 3</div>
           <div class="listing-footer"><span class="book-pill" data-i18n="view_pill">View →</span></div>
         </div>
       </a>
@@ -1207,153 +1127,41 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
   </div>
 </div>
 
-<!-- GUESTHOUSE ROOMS — Urlan & Rom -->
+<!-- GUESTHOUSES — Nogoon Urlan & Rom -->
 <div class="section" id="guesthouse-rooms">
-  <h2 class="section-title reveal" data-i18n="sec_guesthouse_rooms">Guesthouse Room Types</h2>
-  <p class="section-sub reveal" data-i18n="sec_gh_rooms_sub">Explore room types at both our guesthouses.</p>
-
-  <h3 class="gh-sub-title reveal" data-i18n="gh_urlan_title">Urlan — Etuga Guesthouse</h3>
+  <h2 class="section-title reveal" data-i18n="sec_guesthouse_rooms">Our Guesthouses</h2>
+  <p class="section-sub reveal" data-i18n="sec_gh_rooms_sub">Choose a guesthouse to explore its rooms and details.</p>
   <div class="listing-grid">
-
-    <div class="listing-card reveal" onclick="showPage('gh-01')" style="cursor:pointer">
+    <div class="listing-card reveal" onclick="showPage('gh-02')" style="cursor:pointer">
       <div class="listing-img">
-        <img src="images/guesthouses/gh-02/gallery-1.jpg" alt="" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#a8bcb0,#5a7468,#3a5044)';this.parentElement.style.height='210px'">
-        <div class="price-badge" data-i18n="badge_single">₮ Room</div>
+        <img src="images/guesthouses/gh-02/thumb.jpg" alt="Nogoon Urlan Guesthouse">
+        <div class="price-badge" data-i18n="badge_guesthouse">Guesthouse</div>
       </div>
       <div class="listing-body">
-        <div class="listing-name" data-i18n="room_single">Room</div>
+        <div class="listing-name" data-i18n="prop_gh02_name">Nogoon Urlan</div>
         <div class="listing-loc">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
           <span data-i18n="room_loc">Ulaanbaatar</span>
         </div>
-        <div class="room-desc" data-i18n="room_single_desc">Description</div>
-        <div class="listing-footer"><a class="book-pill" onclick="event.stopPropagation();showPage('gh-01')" data-i18n="view_pill">View →</a></div>
+        <div class="room-desc" data-i18n="prop_gh02_tagline">A welcoming stay in the Nogoon Urlan complex.</div>
+        <div class="listing-footer"><a class="book-pill" onclick="event.stopPropagation();showPage('gh-02')" data-i18n="view_pill">View →</a></div>
       </div>
     </div>
-
     <div class="listing-card reveal" onclick="showPage('gh-01')" style="cursor:pointer">
       <div class="listing-img">
-        <img src="images/guesthouses/gh-02/gallery-2.jpg" alt="" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#a8bcb0,#5a7468,#3a5044)';this.parentElement.style.height='210px'">
-        <div class="price-badge" data-i18n="badge_double">₮ Room</div>
+        <img src="images/guesthouses/gh-01/thumb.jpg" alt="Rom Guesthouse">
+        <div class="price-badge" data-i18n="badge_guesthouse">Guesthouse</div>
       </div>
       <div class="listing-body">
-        <div class="listing-name" data-i18n="room_double">Room</div>
+        <div class="listing-name" data-i18n="prop_gh01_name">Rom</div>
         <div class="listing-loc">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span data-i18n="room_loc">Ulaanbaatar</span>
+          <span data-i18n="room_loc_rom">Ulaanbaatar</span>
         </div>
-        <div class="room-desc" data-i18n="room_double_desc">Description</div>
+        <div class="room-desc" data-i18n="prop_gh01_tagline">A comfortable, central guesthouse in Ulaanbaatar.</div>
         <div class="listing-footer"><a class="book-pill" onclick="event.stopPropagation();showPage('gh-01')" data-i18n="view_pill">View →</a></div>
       </div>
     </div>
-
-    <div class="listing-card reveal" onclick="showPage('gh-01')" style="cursor:pointer">
-      <div class="listing-img">
-        <img src="images/guesthouses/gh-02/gallery-3.jpg" alt="" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#a8bcb0,#5a7468,#3a5044)';this.parentElement.style.height='210px'">
-        <div class="price-badge" data-i18n="badge_twin">₮ Room</div>
-      </div>
-      <div class="listing-body">
-        <div class="listing-name" data-i18n="room_twin">Room</div>
-        <div class="listing-loc">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span data-i18n="room_loc">Ulaanbaatar</span>
-        </div>
-        <div class="room-desc" data-i18n="room_twin_desc">Description</div>
-        <div class="listing-footer"><a class="book-pill" onclick="event.stopPropagation();showPage('gh-01')" data-i18n="view_pill">View →</a></div>
-      </div>
-    </div>
-
-    <div class="listing-card reveal" onclick="showPage('gh-01')" style="cursor:pointer">
-      <div class="listing-img">
-        <img src="images/guesthouses/gh-02/gallery-4.jpg" alt="" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#a8bcb0,#5a7468,#3a5044)';this.parentElement.style.height='210px'">
-        <div class="price-badge" data-i18n="badge_triple">₮ Room</div>
-      </div>
-      <div class="listing-body">
-        <div class="listing-name" data-i18n="room_triple">Room</div>
-        <div class="listing-loc">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span data-i18n="room_loc">Ulaanbaatar</span>
-        </div>
-        <div class="room-desc" data-i18n="room_triple_desc">Description</div>
-        <div class="listing-footer"><a class="book-pill" onclick="event.stopPropagation();showPage('gh-01')" data-i18n="view_pill">View →</a></div>
-      </div>
-    </div>
-
-  </div>
-  <div class="reveal" style="text-align:center;margin-top:28px">
-    <a class="btn-solid" onclick="showPage('gh-01')" data-i18n="view_guesthouse">View the guesthouse →</a>
-  </div>
-
-  <h3 class="gh-sub-title reveal" style="margin-top:48px" data-i18n="gh_rom_title">Rom — Rom Etuga Guesthouse</h3>
-  <div class="listing-grid">
-
-    <div class="listing-card reveal" onclick="showPage('gh-02')" style="cursor:pointer">
-      <div class="listing-img">
-        <img src="images/guesthouses/gh-01/gallery-1.jpg" alt="" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#a8bcb0,#5a7468,#3a5044)';this.parentElement.style.height='210px'">
-        <div class="price-badge" data-i18n="badge_single">₮ Room</div>
-      </div>
-      <div class="listing-body">
-        <div class="listing-name" data-i18n="room_single">Room</div>
-        <div class="listing-loc">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span data-i18n="room_loc_rom">Ulaanbaatar</span>
-        </div>
-        <div class="room-desc" data-i18n="room_single_desc">Description</div>
-        <div class="listing-footer"><a class="book-pill" onclick="event.stopPropagation();showPage('gh-02')" data-i18n="view_pill">View →</a></div>
-      </div>
-    </div>
-
-    <div class="listing-card reveal" onclick="showPage('gh-02')" style="cursor:pointer">
-      <div class="listing-img">
-        <img src="images/guesthouses/gh-01/gallery-2.jpg" alt="" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#a8bcb0,#5a7468,#3a5044)';this.parentElement.style.height='210px'">
-        <div class="price-badge" data-i18n="badge_double">₮ Room</div>
-      </div>
-      <div class="listing-body">
-        <div class="listing-name" data-i18n="room_double">Room</div>
-        <div class="listing-loc">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span data-i18n="room_loc_rom">Ulaanbaatar</span>
-        </div>
-        <div class="room-desc" data-i18n="room_double_desc">Description</div>
-        <div class="listing-footer"><a class="book-pill" onclick="event.stopPropagation();showPage('gh-02')" data-i18n="view_pill">View →</a></div>
-      </div>
-    </div>
-
-    <div class="listing-card reveal" onclick="showPage('gh-02')" style="cursor:pointer">
-      <div class="listing-img">
-        <img src="images/guesthouses/gh-01/gallery-3.jpg" alt="" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#a8bcb0,#5a7468,#3a5044)';this.parentElement.style.height='210px'">
-        <div class="price-badge" data-i18n="badge_twin">₮ Room</div>
-      </div>
-      <div class="listing-body">
-        <div class="listing-name" data-i18n="room_twin">Room</div>
-        <div class="listing-loc">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span data-i18n="room_loc_rom">Ulaanbaatar</span>
-        </div>
-        <div class="room-desc" data-i18n="room_twin_desc">Description</div>
-        <div class="listing-footer"><a class="book-pill" onclick="event.stopPropagation();showPage('gh-02')" data-i18n="view_pill">View →</a></div>
-      </div>
-    </div>
-
-    <div class="listing-card reveal" onclick="showPage('gh-02')" style="cursor:pointer">
-      <div class="listing-img">
-        <img src="images/guesthouses/gh-01/gallery-4.jpg" alt="" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#a8bcb0,#5a7468,#3a5044)';this.parentElement.style.height='210px'">
-        <div class="price-badge" data-i18n="badge_triple">₮ Room</div>
-      </div>
-      <div class="listing-body">
-        <div class="listing-name" data-i18n="room_triple">Room</div>
-        <div class="listing-loc">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          <span data-i18n="room_loc_rom">Ulaanbaatar</span>
-        </div>
-        <div class="room-desc" data-i18n="room_triple_desc">Description</div>
-        <div class="listing-footer"><a class="book-pill" onclick="event.stopPropagation();showPage('gh-02')" data-i18n="view_pill">View →</a></div>
-      </div>
-    </div>
-
-  </div>
-  <div class="reveal" style="text-align:center;margin-top:28px">
-    <a class="btn-solid" onclick="showPage('gh-02')" data-i18n="view_guesthouse_rom">View the guesthouse →</a>
   </div>
 </div>
 
@@ -1554,12 +1362,12 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <a class="prop-back" onclick="showPage('home',{scrollTo:'#hero'})"><span>←</span> <span data-i18n="back_home">Back to home</span></a>
     <div class="prop-hero"><img src="images/guesthouses/gh-01/hero.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=prop-hero-fallback>E</span>'"></div>
     <p class="prop-eyebrow" data-i18n="prop_gh01_eyebrow">📍 Ulaanbaatar · Guesthouse</p>
-    <h1 class="prop-name" data-i18n="prop_gh01_name">Guesthouse 01</h1>
+    <h1 class="prop-name" data-i18n="prop_gh01_name">Rom</h1>
     <p class="prop-tagline" data-i18n="prop_gh01_tagline">A warm, central place to call home — full description coming soon.</p>
     <div class="prop-features" data-i18n="prop_gh01_features">Free Wi-Fi · Shared kitchen · Garden · 24-hour reception · 4 room types available · Family friendly</div>
     <div class="prop-gallery-wrap" data-dir="images/guesthouses/gh-01"></div>
     <div class="prop-cta">
-      <a class="btn-solid" href="https://www.booking.com/hotel/mn/etuga-guesthouse-close-to-sukhbaatar-square.html" target="_blank" rel="noopener" data-i18n="prop_book">Book on Booking.com →</a>
+      <a class="btn-solid" href="https://www.booking.com/hotel/mn/rom-etuga-guesthouse.html" target="_blank" rel="noopener" data-i18n="prop_book">Book on Booking.com →</a>
       <a class="btn-outline" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
     </div>
@@ -1571,12 +1379,12 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <a class="prop-back" onclick="showPage('home',{scrollTo:'#hero'})"><span>←</span> <span data-i18n="back_home">Back to home</span></a>
     <div class="prop-hero"><img src="images/guesthouses/gh-02/hero.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=prop-hero-fallback>E</span>'"></div>
     <p class="prop-eyebrow" data-i18n="prop_gh02_eyebrow">📍 Ulaanbaatar · Guesthouse</p>
-    <h1 class="prop-name" data-i18n="prop_gh02_name">Guesthouse 02</h1>
+    <h1 class="prop-name" data-i18n="prop_gh02_name">Nogoon Urlan</h1>
     <p class="prop-tagline" data-i18n="prop_gh02_tagline">Comfortable stay near Sukhbaatar Square — full description coming soon.</p>
     <div class="prop-features" data-i18n="prop_gh02_features">Free Wi-Fi · Shared kitchen · Central location · 24-hour reception · Family friendly</div>
     <div class="prop-gallery-wrap" data-dir="images/guesthouses/gh-02"></div>
     <div class="prop-cta">
-      <a class="btn-solid" href="https://www.booking.com/hotel/mn/rom-etuga-guesthouse.html" target="_blank" rel="noopener" data-i18n="prop_book">Book on Booking.com →</a>
+      <a class="btn-solid" href="https://www.booking.com/hotel/mn/etuga-guesthouse-close-to-sukhbaatar-square.html" target="_blank" rel="noopener" data-i18n="prop_book">Book on Booking.com →</a>
       <a class="btn-outline" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
     </div>
@@ -1595,22 +1403,6 @@ footer p{color:rgba(255,255,255,0.75);font-size:0.85rem;margin-bottom:20px}
     <div class="prop-cta">
       <a class="btn-solid" href="https://www.booking.com/hotel/mn/central-apartment-in-sunny-town-ulaanbaatar.html" target="_blank" rel="noopener" data-i18n="prop_book">Book on Booking.com →</a>
       <a class="btn-outline" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
-      <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
-    </div>
-  </div>
-</section>
-
-<section id="apt-02" class="page">
-  <div class="prop-pg">
-    <a class="prop-back" onclick="showPage('home',{scrollTo:'#hero'})"><span>←</span> <span data-i18n="back_home">Back to home</span></a>
-    <div class="prop-hero"><img src="images/apartments/apt-02/hero.jpg" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='<span class=prop-hero-fallback>E</span>'"></div>
-    <p class="prop-eyebrow" data-i18n="prop_apt02_eyebrow">📍 Ulaanbaatar · Apartment</p>
-    <h1 class="prop-name" data-i18n="prop_apt02_name">Apartment 02</h1>
-    <p class="prop-tagline" data-i18n="prop_apt02_tagline">Full description coming soon — drop your photos into images/apartments/apt-02/</p>
-    <div class="prop-features" data-i18n="prop_apt02_features">Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4</div>
-    <div class="prop-gallery-wrap" data-dir="images/apartments/apt-02"></div>
-    <div class="prop-cta">
-      <a class="btn-solid" onclick="navTo('#contact')" data-i18n="prop_inquire">Inquire about this property →</a>
       <a class="btn-outline" onclick="navTo('#location')" data-i18n="prop_on_map">See on map</a>
     </div>
   </div>
@@ -1796,7 +1588,7 @@ const T={
     hero_sub_apt:'Түрээсийн байр',
     hero_sub2_apt:'Студиогоос 3 өрөө хүртэл &nbsp;•&nbsp; Бүрэн тавилгатай',
     hero_btn_apt:'Байрууд үзэх',
-    badge_apt_main:'10 байр',badge_apt_sub:'Улаанбаатар хотод',
+    badge_apt_main:'9 байр',badge_apt_sub:'Улаанбаатар хотод',
     badge_main:'Өндөр үнэлгээтэй',badge_sub:'олон улсын зочдоос',
     cat_gh:'Гэстхаус',cat_rooms:'Апартаментууд',
     
@@ -1804,9 +1596,7 @@ const T={
     room_single:'Нэг хүний өрөө',room_double:'Хос өрөө',room_twin:'Хоёр орт өрөө',room_triple:'Гурван хүний энгийн өрөө',
     room_loc:'Улаанбаатар, Сүхбаатарын талбай',
     room_loc_rom:'Улаанбаатар, Модны 2',
-    gh_urlan_title:'Урлан — Этүга Гэстхаус',
-    gh_rom_title:'Ром — Ром Этүга Гэстхаус',
-    view_guesthouse_rom:'Гэстхаусыг үзэх →',
+    badge_guesthouse:'Гэстхаус',
     room_single_desc:'1 ор · Тусдаа угаалгын өрөө · Тагт · Ажлын ширээ · Хувцасны шүүгээ',
     room_double_desc:'1 том ор · Тусдаа угаалгын өрөө · Хот эсвэл цэцэрлэгийн харагдац · Минибар',
     room_twin_desc:'2 ор · Тусдаа угаалгын өрөө · Зурагт · Ажлын ширээ · Тагт',
@@ -1842,9 +1632,6 @@ const T={
     apt01_desc:'Sunny town · 3-р орц · 7 давхар',
     apt01_loc:'Sunny town',
     apt01_name:'Central apartment in Sunny town',
-    apt02_desc:'1 өрөө · Цэцэрлэгийн харагдац · 3 хүн',
-    apt02_loc:'Улаанбаатар',
-    apt02_name:'228',
     apt03_desc:'Time classic tower · 20 давхар',
     apt03_loc:'Цирк',
     apt03_name:'Classic apartment II at Circus',
@@ -1877,11 +1664,6 @@ const T={
     prop_apt01_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө',
     prop_apt01_name:'Central apartment in Sunny town',
     prop_apt01_tagline:'2 queen beds, 4 twin beds, 2 bathrooms — sleeps 8. Spacious 4-bedroom apartment in Sunny Town with balcony, hot tub, washing machine, kitchen, bath, and TV. Free WiFi and free on-site parking. Located in Ulaanbaatar city center, 10 minutes walk from Narantuul market and 5 minutes walk from National park.',
-    prop_apt02_eyebrow:'📍 Улаанбаатар · Апартмент',
-    prop_apt02_feat:'1 өрөө · Цэцэрлэгтэй',
-    prop_apt02_features:'Үнэгүй Wi-Fi · Хувийн ариун цэврийн өрөө · Гал тогоо · Зочны өрөө · 2-4 хүн',
-    prop_apt02_name:'228',
-    prop_apt02_tagline:'Дэлгэрэнгүй мэдээлэл удахгүй нэмэгдэнэ.',
     prop_apt03_eyebrow:'📍 Цирк · Апартмент',
     prop_apt03_feat:'1 унтлагын өрөө · 2 хүн',
     prop_apt03_features:'Үнэгүй Wi-Fi · Тагт · Балкон · Гал тогоо · Угаалгын машин · ТВ',
@@ -1922,24 +1704,24 @@ const T={
     prop_apt10_features:'Үнэгүй Wi-Fi · Хатуу ванн · Балкон · Гал тогоо · Угаалгын машин · ТВ',
     prop_apt10_name:'Central apartment II in Sunny town',
     prop_apt10_tagline:'1 queen bed, 2 twin beds, 1 bathroom — sleeps 4. Spacious 2-bedroom apartment in Sunny Town with hot tub, kitchenette, balcony, washing machine, kitchen, bath, and TV. Free WiFi. Located in Ulaanbaatar city center, 10 minutes walk from Narantuul market and 5 minutes walk from National park.',
-    prop_gh01_eyebrow:'📍 Ногоон урлан · Гэстхаус',
-    prop_gh01_feat:'Гэр бүлийн өрөөнүүд · Үнэгүй зогсоол',
-    prop_gh01_features:'Үнэгүй Wi-Fi · Цэцэрлэг · Тагт · Нийтийн гал тогоо · Дэлгүүрийн булан · Тоглоомын талбай · Зогсоол',
-    prop_gh01_name:'Etuga guesthouse',
-    prop_gh01_tagline:'Family rooms with private bathrooms, each with a balcony offering garden or city views, a work desk, and a wardrobe. Guests enjoy a garden, terrace, free WiFi, shared kitchen, minimarket, outdoor play area, laundry service, and free on-site parking. Located less than 0.6 mi from Sukhbaatar Square, near the National Museum of Mongolian History and Chinggis Khan Statue. New Ulaanbaatar International Airport is 30 mi away.',
-    prop_gh02_eyebrow:'📍 Ром төв · Гэстхаус',
-    prop_gh02_feat:'8 хүн · Хот төв',
-    prop_gh02_features:'Үнэгүй Wi-Fi · Гал тогооны булан · Угаалгын машин · Хувийн ариун цэврийн өрөө · Хоолны газар · ТВ · Шүүгээ',
-    prop_gh02_name:'Rom Etuga guesthouse',
-    prop_gh02_tagline:'7 single beds, 1 queen bed, 2 bathrooms — sleeps 8. Welcoming guesthouse with free WiFi, kitchenette, washing machine, private bathroom with shower, dining area, TV, and wardrobe. Located in the city center, 27 mi from New Ulaanbaatar International Airport. Nearby: Ulaanbaatar Opera House (1.6 mi), National Museum of Mongolian History (2.1 mi).',
+    prop_gh01_eyebrow:'📍 Ром төв · Гэстхаус',
+    prop_gh01_feat:'8 хүн · Хот төв',
+    prop_gh01_features:'Үнэгүй Wi-Fi · Гал тогооны булан · Угаалгын машин · Хувийн ариун цэврийн өрөө · Хоолны газар · ТВ · Шүүгээ',
+    prop_gh01_name:'Rom',
+    prop_gh01_tagline:'7 single beds, 1 queen bed, 2 bathrooms — sleeps 8. Welcoming guesthouse with free WiFi, kitchenette, washing machine, private bathroom with shower, dining area, TV, and wardrobe. Located in the city center, 27 mi from New Ulaanbaatar International Airport. Nearby: Ulaanbaatar Opera House (1.6 mi), National Museum of Mongolian History (2.1 mi).',
+    prop_gh02_eyebrow:'📍 Ногоон урлан · Гэстхаус',
+    prop_gh02_feat:'Гэр бүлийн өрөөнүүд · Үнэгүй зогсоол',
+    prop_gh02_features:'Үнэгүй Wi-Fi · Цэцэрлэг · Тагт · Нийтийн гал тогоо · Дэлгүүрийн булан · Тоглоомын талбай · Зогсоол',
+    prop_gh02_name:'Nogoon Urlan',
+    prop_gh02_tagline:'Family rooms with private bathrooms, each with a balcony offering garden or city views, a work desk, and a wardrobe. Guests enjoy a garden, terrace, free WiFi, shared kitchen, minimarket, outdoor play area, laundry service, and free on-site parking. Located less than 0.6 mi from Sukhbaatar Square, near the National Museum of Mongolian History and Chinggis Khan Statue. New Ulaanbaatar International Airport is 30 mi away.',
     prop_inquire:'Энэ байрны талаар асуух →',
     prop_on_map:'Газрын зураг дээр',
     prop_book:'Booking-ээр захиалах →',
     prop_book_airbnb:'Airbnb-ээр захиалах →',
     sec_apartments:'Апартментууд',
-    sec_apartments_sub:'Улаанбаатарт байгаа арав бие даасан апартмент — нэг бүрчлэн харах боломжтой.',
-    sec_gh_rooms_sub:'Манай хоёр гэстхаусын өрөөний төрлүүдийг үзнэ үү.',
-    sec_guesthouse_rooms:'Гэстхаусын өрөөний төрлүүд',
+    sec_apartments_sub:'Улаанбаатарт байгаа есөн бие даасан апартмент — нэг бүрчлэн харах боломжтой.',
+    sec_gh_rooms_sub:'Өрөө болон дэлгэрэнгүй мэдээллийг үзэх гэстхаусаа сонгоно уу.',
+    sec_guesthouse_rooms:'Манай гэстхаусууд',
     view_guesthouse:'Гэстхаусыг үзэх →',
     view_pill:'Үзэх →',
   },
@@ -1958,7 +1740,7 @@ const T={
     hero_sub_apt:'Apartments for Rent',
     hero_sub2_apt:'Studios to 3-bedrooms &nbsp;•&nbsp; Fully furnished',
     hero_btn_apt:'Browse Apartments',
-    badge_apt_main:'10 Properties',badge_apt_sub:'across Ulaanbaatar',
+    badge_apt_main:'9 Properties',badge_apt_sub:'across Ulaanbaatar',
     badge_main:'Highly Rated',badge_sub:'by international guests',
     cat_gh:'Guesthouse',cat_rooms:'Apartments',
     
@@ -1966,9 +1748,7 @@ const T={
     room_single:'Single Room',room_double:'Double Room',room_twin:'Twin Room',room_triple:'Basic Triple Room',
     room_loc:'Ulaanbaatar, Sukhbaatar Square',
     room_loc_rom:'Ulaanbaatar, Modny 2',
-    gh_urlan_title:'Urlan — Etuga Guesthouse',
-    gh_rom_title:'Rom — Rom Etuga Guesthouse',
-    view_guesthouse_rom:'View the guesthouse →',
+    badge_guesthouse:'Guesthouse',
     room_single_desc:'1 Twin Bed · Private Bathroom · Balcony · Work Desk · Wardrobe',
     room_double_desc:'1 Full Bed · Private Bathroom · City or Garden View · Minibar',
     room_twin_desc:'2 Twin Beds · Private Bathroom · TV · Work Desk · Balcony',
@@ -2004,9 +1784,6 @@ const T={
     apt01_desc:'4 bedrooms · 2 bathrooms · Sleeps 8',
     apt01_loc:'Sunny Town',
     apt01_name:'Central apartment in Sunny town',
-    apt02_desc:'1-bedroom · Garden view · Sleeps 3',
-    apt02_loc:'Ulaanbaatar',
-    apt02_name:'228',
     apt03_desc:'1 bedroom · 1 bathroom · Sleeps 2',
     apt03_loc:'Circus',
     apt03_name:'Classic apartment II at Circus',
@@ -2039,11 +1816,6 @@ const T={
     prop_apt01_features:'Free Wi-Fi · Balcony · Hot tub · Kitchen · Washing machine · TV · Free parking',
     prop_apt01_name:'Central apartment in Sunny town',
     prop_apt01_tagline:'2 queen beds, 4 twin beds, 2 bathrooms — sleeps 8. Spacious 4-bedroom apartment in Sunny Town with balcony, hot tub, washing machine, kitchen, bath, and TV. Free WiFi and free on-site parking. Located in Ulaanbaatar city center, 10 minutes walk from Narantuul market and 5 minutes walk from National park.',
-    prop_apt02_eyebrow:'📍 Ulaanbaatar · Apartment',
-    prop_apt02_feat:'1-bedroom · Garden',
-    prop_apt02_features:'Free Wi-Fi · Private bathroom · Kitchen · Living area · Sleeps 2-4',
-    prop_apt02_name:'228',
-    prop_apt02_tagline:'Full description coming soon.',
     prop_apt03_eyebrow:'📍 Circus · Apartment',
     prop_apt03_feat:'1 bedroom · Sleeps 2',
     prop_apt03_features:'Free Wi-Fi · Terrace · Balcony · Kitchen · Washing machine · TV',
@@ -2084,24 +1856,24 @@ const T={
     prop_apt10_features:'Free Wi-Fi · Hot tub · Balcony · Kitchen · Washing machine · TV',
     prop_apt10_name:'Central apartment II in Sunny town',
     prop_apt10_tagline:'1 queen bed, 2 twin beds, 1 bathroom — sleeps 4. Spacious 2-bedroom apartment in Sunny Town with hot tub, kitchenette, balcony, washing machine, kitchen, bath, and TV. Free WiFi. Located in Ulaanbaatar city center, 10 minutes walk from Narantuul market and 5 minutes walk from National park.',
-    prop_gh01_eyebrow:'📍 Nogoon Urlan · Guesthouse',
-    prop_gh01_feat:'Family rooms · Free parking',
-    prop_gh01_features:'Free Wi-Fi · Garden · Terrace · Shared kitchen · Minimarket · Outdoor play area · Free parking',
-    prop_gh01_name:'Etuga guesthouse',
-    prop_gh01_tagline:'Family rooms with private bathrooms, each with a balcony offering garden or city views, a work desk, and a wardrobe. Guests enjoy a garden, terrace, free WiFi, shared kitchen, minimarket, outdoor play area, laundry service, and free on-site parking. Located less than 0.6 mi from Sukhbaatar Square, near the National Museum of Mongolian History and Chinggis Khan Statue. New Ulaanbaatar International Airport is 30 mi away.',
-    prop_gh02_eyebrow:'📍 Rom Center · Guesthouse',
-    prop_gh02_feat:'Sleeps 8 · City center',
-    prop_gh02_features:'Free Wi-Fi · Kitchenette · Washing machine · Private bathroom · Dining area · TV · Wardrobe',
-    prop_gh02_name:'Rom Etuga guesthouse',
-    prop_gh02_tagline:'7 single beds, 1 queen bed, 2 bathrooms — sleeps 8. Welcoming guesthouse with free WiFi, kitchenette, washing machine, private bathroom with shower, dining area, TV, and wardrobe. Located in the city center, 27 mi from New Ulaanbaatar International Airport. Nearby: Ulaanbaatar Opera House (1.6 mi), National Museum of Mongolian History (2.1 mi).',
+    prop_gh01_eyebrow:'📍 Rom Center · Guesthouse',
+    prop_gh01_feat:'Sleeps 8 · City center',
+    prop_gh01_features:'Free Wi-Fi · Kitchenette · Washing machine · Private bathroom · Dining area · TV · Wardrobe',
+    prop_gh01_name:'Rom',
+    prop_gh01_tagline:'7 single beds, 1 queen bed, 2 bathrooms — sleeps 8. Welcoming guesthouse with free WiFi, kitchenette, washing machine, private bathroom with shower, dining area, TV, and wardrobe. Located in the city center, 27 mi from New Ulaanbaatar International Airport. Nearby: Ulaanbaatar Opera House (1.6 mi), National Museum of Mongolian History (2.1 mi).',
+    prop_gh02_eyebrow:'📍 Nogoon Urlan · Guesthouse',
+    prop_gh02_feat:'Family rooms · Free parking',
+    prop_gh02_features:'Free Wi-Fi · Garden · Terrace · Shared kitchen · Minimarket · Outdoor play area · Free parking',
+    prop_gh02_name:'Nogoon Urlan',
+    prop_gh02_tagline:'Family rooms with private bathrooms, each with a balcony offering garden or city views, a work desk, and a wardrobe. Guests enjoy a garden, terrace, free WiFi, shared kitchen, minimarket, outdoor play area, laundry service, and free on-site parking. Located less than 0.6 mi from Sukhbaatar Square, near the National Museum of Mongolian History and Chinggis Khan Statue. New Ulaanbaatar International Airport is 30 mi away.',
     prop_inquire:'Inquire about this property →',
     prop_on_map:'See on map',
     prop_book:'Book on Booking.com →',
     prop_book_airbnb:'Book on Airbnb →',
     sec_apartments:'Apartments',
-    sec_apartments_sub:'Ten self-contained apartments across Ulaanbaatar — explore each one in detail.',
-    sec_gh_rooms_sub:'Explore room types at both our guesthouses.',
-    sec_guesthouse_rooms:'Guesthouse Room Types',
+    sec_apartments_sub:'Nine self-contained apartments across Ulaanbaatar — explore each one in detail.',
+    sec_gh_rooms_sub:'Choose a guesthouse to explore its rooms and details.',
+    sec_guesthouse_rooms:'Our Guesthouses',
     view_guesthouse:'View the guesthouse →',
     view_pill:'View →',
   },
@@ -2120,7 +1892,7 @@ const T={
     hero_sub_apt:'Аренда апартаментов',
     hero_sub2_apt:'От студии до 3-комнатных &nbsp;•&nbsp; Полностью меблированы',
     hero_btn_apt:'Смотреть апартаменты',
-    badge_apt_main:'10 объектов',badge_apt_sub:'по всему Улан-Батору',
+    badge_apt_main:'9 объектов',badge_apt_sub:'по всему Улан-Батору',
     badge_main:'Высокий рейтинг',badge_sub:'от международных гостей',
     cat_gh:'Гостевой дом',cat_rooms:'Апартаменты',
     
@@ -2128,9 +1900,7 @@ const T={
     room_single:'Одноместный номер',room_double:'Двухместный номер',room_twin:'Твин-номер',room_triple:'Стандартный трёхместный',
     room_loc:'Улан-Батор, площадь Сухэ-Батора',
     room_loc_rom:'Улан-Батор, Модны 2',
-    gh_urlan_title:'Урлан — Гостевой дом Etuga',
-    gh_rom_title:'Ром — Гостевой дом ROM',
-    view_guesthouse_rom:'Смотреть гостевой дом →',
+    badge_guesthouse:'Гостевой дом',
     room_single_desc:'1 кровать · Личная ванная · Балкон · Рабочий стол · Шкаф',
     room_double_desc:'1 двуспальная кровать · Личная ванная · Вид на город или сад · Мини-бар',
     room_twin_desc:'2 кровати · Личная ванная · ТВ · Рабочий стол · Балкон',
@@ -2166,9 +1936,6 @@ const T={
     apt01_desc:'Sunny Town · 3 подъезд · 7 этаж',
     apt01_loc:'Sunny Town',
     apt01_name:'Central apartment in Sunny town',
-    apt02_desc:'1-комнатный · Вид на сад · 3 гостя',
-    apt02_loc:'Улан-Батор',
-    apt02_name:'228',
     apt03_desc:'Time Classic Tower · 20 этаж',
     apt03_loc:'Цирк',
     apt03_name:'Classic apartment II at Circus',
@@ -2201,11 +1968,6 @@ const T={
     prop_apt01_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная',
     prop_apt01_name:'Central apartment in Sunny town',
     prop_apt01_tagline:'2 queen beds, 4 twin beds, 2 bathrooms — sleeps 8. Spacious 4-bedroom apartment in Sunny Town with balcony, hot tub, washing machine, kitchen, bath, and TV. Free WiFi and free on-site parking. Located in Ulaanbaatar city center, 10 minutes walk from Narantuul market and 5 minutes walk from National park.',
-    prop_apt02_eyebrow:'📍 Улан-Батор · Апартамент',
-    prop_apt02_feat:'1-комнатный · Сад',
-    prop_apt02_features:'Бесплатный Wi-Fi · Личная ванная · Кухня · Гостиная · На 2-4 гостей',
-    prop_apt02_name:'228',
-    prop_apt02_tagline:'Полное описание скоро.',
     prop_apt03_eyebrow:'📍 Цирк · Апартамент',
     prop_apt03_feat:'1 спальня · 2 гостя',
     prop_apt03_features:'Бесплатный Wi-Fi · Терраса · Балкон · Кухня · Стиральная машина · ТВ',
@@ -2246,24 +2008,24 @@ const T={
     prop_apt10_features:'Бесплатный Wi-Fi · Джакузи · Балкон · Кухня · Стиральная машина · ТВ',
     prop_apt10_name:'Central apartment II in Sunny town',
     prop_apt10_tagline:'1 queen bed, 2 twin beds, 1 bathroom — sleeps 4. Spacious 2-bedroom apartment in Sunny Town with hot tub, kitchenette, balcony, washing machine, kitchen, bath, and TV. Free WiFi. Located in Ulaanbaatar city center, 10 minutes walk from Narantuul market and 5 minutes walk from National park.',
-    prop_gh01_eyebrow:'📍 Ногоон Урлан · Гостевой дом',
-    prop_gh01_feat:'Семейные номера · Бесплатная парковка',
-    prop_gh01_features:'Бесплатный Wi-Fi · Сад · Терраса · Общая кухня · Мини-маркет · Детская площадка · Парковка',
-    prop_gh01_name:'Etuga guesthouse',
-    prop_gh01_tagline:'Family rooms with private bathrooms, each with a balcony offering garden or city views, a work desk, and a wardrobe. Guests enjoy a garden, terrace, free WiFi, shared kitchen, minimarket, outdoor play area, laundry service, and free on-site parking. Located less than 0.6 mi from Sukhbaatar Square, near the National Museum of Mongolian History and Chinggis Khan Statue. New Ulaanbaatar International Airport is 30 mi away.',
-    prop_gh02_eyebrow:'📍 Центр ROM · Гостевой дом',
-    prop_gh02_feat:'8 гостей · Центр города',
-    prop_gh02_features:'Бесплатный Wi-Fi · Кухонный уголок · Стиральная машина · Личная ванная · Столовая · ТВ · Гардероб',
-    prop_gh02_name:'Rom Etuga guesthouse',
-    prop_gh02_tagline:'7 single beds, 1 queen bed, 2 bathrooms — sleeps 8. Welcoming guesthouse with free WiFi, kitchenette, washing machine, private bathroom with shower, dining area, TV, and wardrobe. Located in the city center, 27 mi from New Ulaanbaatar International Airport. Nearby: Ulaanbaatar Opera House (1.6 mi), National Museum of Mongolian History (2.1 mi).',
+    prop_gh01_eyebrow:'📍 Центр ROM · Гостевой дом',
+    prop_gh01_feat:'8 гостей · Центр города',
+    prop_gh01_features:'Бесплатный Wi-Fi · Кухонный уголок · Стиральная машина · Личная ванная · Столовая · ТВ · Гардероб',
+    prop_gh01_name:'Rom',
+    prop_gh01_tagline:'7 single beds, 1 queen bed, 2 bathrooms — sleeps 8. Welcoming guesthouse with free WiFi, kitchenette, washing machine, private bathroom with shower, dining area, TV, and wardrobe. Located in the city center, 27 mi from New Ulaanbaatar International Airport. Nearby: Ulaanbaatar Opera House (1.6 mi), National Museum of Mongolian History (2.1 mi).',
+    prop_gh02_eyebrow:'📍 Ногоон Урлан · Гостевой дом',
+    prop_gh02_feat:'Семейные номера · Бесплатная парковка',
+    prop_gh02_features:'Бесплатный Wi-Fi · Сад · Терраса · Общая кухня · Мини-маркет · Детская площадка · Парковка',
+    prop_gh02_name:'Nogoon Urlan',
+    prop_gh02_tagline:'Family rooms with private bathrooms, each with a balcony offering garden or city views, a work desk, and a wardrobe. Guests enjoy a garden, terrace, free WiFi, shared kitchen, minimarket, outdoor play area, laundry service, and free on-site parking. Located less than 0.6 mi from Sukhbaatar Square, near the National Museum of Mongolian History and Chinggis Khan Statue. New Ulaanbaatar International Airport is 30 mi away.',
     prop_inquire:'Узнать об этом объекте →',
     prop_on_map:'На карте',
     prop_book:'Забронировать на Booking.com →',
     prop_book_airbnb:'Забронировать на Airbnb →',
     sec_apartments:'Апартаменты',
-    sec_apartments_sub:'Десять отдельных апартаментов в Улан-Баторе — изучите каждый.',
-    sec_gh_rooms_sub:'Ознакомьтесь с типами номеров в обоих наших гостевых домах.',
-    sec_guesthouse_rooms:'Типы номеров в гостевом доме',
+    sec_apartments_sub:'Девять отдельных апартаментов в Улан-Баторе — изучите каждый.',
+    sec_gh_rooms_sub:'Выберите гостевой дом, чтобы посмотреть номера и подробности.',
+    sec_guesthouse_rooms:'Наши гостевые дома',
     view_guesthouse:'Посмотреть гостевой дом →',
     view_pill:'Посмотреть →',
   },
@@ -2282,16 +2044,14 @@ const T={
     hero_sub_apt:'公寓出租',
     hero_sub2_apt:'单间至三居室 &nbsp;•&nbsp; 全家具配置',
     hero_btn_apt:'浏览公寓',
-    badge_apt_main:'10套房源',badge_apt_sub:'遍布乌兰巴托',
+    badge_apt_main:'9套房源',badge_apt_sub:'遍布乌兰巴托',
     badge_main:'高度评价',badge_sub:'来自国际客人',
     cat_gh:'招待所',cat_rooms:'公寓',
     badge_single:'₮ 单人间',badge_double:'₮ 双人间',badge_twin:'₮ 双床间',badge_triple:'₮ 三人间',
     room_single:'单人间',room_double:'双人间',room_twin:'双床间',room_triple:'基础三人间',
     room_loc:'乌兰巴托，苏赫巴托尔广场',
     room_loc_rom:'乌兰巴托，莫德尼2号',
-    gh_urlan_title:'乌兰 — 艾图嘎招待所',
-    gh_rom_title:'罗姆 — 罗姆艾图嘎招待所',
-    view_guesthouse_rom:'查看招待所 →',
+    badge_guesthouse:'招待所',
     room_single_desc:'1张单人床 · 独立浴室 · 阳台 · 书桌 · 衣柜',
     room_double_desc:'1张大床 · 独立浴室 · 城市或花园景观 · 迷你吧',
     room_twin_desc:'2张单人床 · 独立浴室 · 电视 · 书桌 · 阳台',
@@ -2327,9 +2087,6 @@ const T={
     apt01_desc:'4间卧室 · 2间浴室 · 可住8人',
     apt01_loc:'阳光城',
     apt01_name:'阳光城中心公寓',
-    apt02_desc:'1间卧室 · 花园景观 · 可住3人',
-    apt02_loc:'乌兰巴托',
-    apt02_name:'228号公寓',
     apt03_desc:'1间卧室 · 1间浴室 · 可住2人',
     apt03_loc:'马戏场',
     apt03_name:'马戏场II经典公寓',
@@ -2362,11 +2119,6 @@ const T={
     prop_apt01_features:'免费Wi-Fi · 阳台 · 按摩浴缸 · 厨房 · 洗衣机 · 电视 · 免费停车',
     prop_apt01_name:'阳光城中心公寓',
     prop_apt01_tagline:'2张大床，4张单人床，2间浴室——可住8人。阳光城宽敞四居室公寓，设有阳台、按摩浴缸、洗衣机、厨房、浴缸及电视。免费WiFi和免费停车。位于乌兰巴托市中心，步行10分钟可达那仁图勒市场，步行5分钟可达国家公园。',
-    prop_apt02_eyebrow:'📍 乌兰巴托 · 公寓',
-    prop_apt02_feat:'1间卧室 · 花园',
-    prop_apt02_features:'免费Wi-Fi · 独立浴室 · 厨房 · 起居室 · 可住2-4人',
-    prop_apt02_name:'228号公寓',
-    prop_apt02_tagline:'详细介绍即将更新。',
     prop_apt03_eyebrow:'📍 马戏场 · 公寓',
     prop_apt03_feat:'1间卧室 · 可住2人',
     prop_apt03_features:'免费Wi-Fi · 露台 · 阳台 · 厨房 · 洗衣机 · 电视',
@@ -2407,24 +2159,24 @@ const T={
     prop_apt10_features:'免费Wi-Fi · 按摩浴缸 · 阳台 · 厨房 · 洗衣机 · 电视',
     prop_apt10_name:'阳光城中心公寓II',
     prop_apt10_tagline:'1张大床，2张单人床，1间浴室——可住4人。阳光城宽敞两居室公寓，设有按摩浴缸、简易厨房、阳台、洗衣机、厨房、浴缸及电视。免费WiFi。位于乌兰巴托市中心，步行10分钟可达那仁图勒市场，步行5分钟可达国家公园。',
-    prop_gh01_eyebrow:'📍 诺贡乌尔兰 · 招待所',
-    prop_gh01_feat:'家庭客房 · 免费停车',
-    prop_gh01_features:'免费Wi-Fi · 花园 · 露台 · 共享厨房 · 便利店 · 户外游乐区 · 免费停车',
-    prop_gh01_name:'艾图嘎招待所',
-    prop_gh01_tagline:'家庭客房配有独立浴室，每间房均设有可观赏花园或城市景观的阳台、书桌及衣柜。享有花园、露台、免费WiFi、共享厨房、便利店、户外游乐区、洗衣服务及免费停车位。距苏赫巴托尔广场不足0.6英里，毗邻蒙古国家历史博物馆和成吉思汗雕像。距新乌兰巴托国际机场30英里。',
-    prop_gh02_eyebrow:'📍 罗姆中心 · 招待所',
-    prop_gh02_feat:'可住8人 · 市中心',
-    prop_gh02_features:'免费Wi-Fi · 简易厨房 · 洗衣机 · 独立浴室 · 餐厅 · 电视 · 衣柜',
-    prop_gh02_name:'罗姆艾图嘎招待所',
-    prop_gh02_tagline:'7张单人床，1张大床，2间浴室——可住8人。温馨招待所，提供免费WiFi、简易厨房、洗衣机、配有淋浴的独立浴室、餐厅、电视及衣柜。位于市中心，距新乌兰巴托国际机场27英里。附近有乌兰巴托歌剧院（1.6英里）和蒙古国家历史博物馆（2.1英里）。',
+    prop_gh01_eyebrow:'📍 罗姆中心 · 招待所',
+    prop_gh01_feat:'可住8人 · 市中心',
+    prop_gh01_features:'免费Wi-Fi · 简易厨房 · 洗衣机 · 独立浴室 · 餐厅 · 电视 · 衣柜',
+    prop_gh01_name:'罗姆',
+    prop_gh01_tagline:'7张单人床，1张大床，2间浴室——可住8人。温馨招待所，提供免费WiFi、简易厨房、洗衣机、配有淋浴的独立浴室、餐厅、电视及衣柜。位于市中心，距新乌兰巴托国际机场27英里。附近有乌兰巴托歌剧院（1.6英里）和蒙古国家历史博物馆（2.1英里）。',
+    prop_gh02_eyebrow:'📍 诺贡乌尔兰 · 招待所',
+    prop_gh02_feat:'家庭客房 · 免费停车',
+    prop_gh02_features:'免费Wi-Fi · 花园 · 露台 · 共享厨房 · 便利店 · 户外游乐区 · 免费停车',
+    prop_gh02_name:'诺贡乌兰',
+    prop_gh02_tagline:'家庭客房配有独立浴室，每间房均设有可观赏花园或城市景观的阳台、书桌及衣柜。享有花园、露台、免费WiFi、共享厨房、便利店、户外游乐区、洗衣服务及免费停车位。距苏赫巴托尔广场不足0.6英里，毗邻蒙古国家历史博物馆和成吉思汗雕像。距新乌兰巴托国际机场30英里。',
     prop_inquire:'咨询此房源 →',
     prop_on_map:'在地图上查看',
     prop_book:'在Booking.com预订 →',
     prop_book_airbnb:'在Airbnb预订 →',
     sec_apartments:'公寓',
-    sec_apartments_sub:'乌兰巴托10套独立公寓——逐一探索。',
-    sec_gh_rooms_sub:'探索我们两家招待所的房型。',
-    sec_guesthouse_rooms:'招待所房型',
+    sec_apartments_sub:'乌兰巴托9套独立公寓——逐一探索。',
+    sec_gh_rooms_sub:'选择一家招待所，查看房间和详细信息。',
+    sec_guesthouse_rooms:'我们的招待所',
     view_guesthouse:'查看招待所 →',
     view_pill:'查看 →',
   }
@@ -2502,7 +2254,6 @@ const PROPERTIES=[
   {id:'gh-01', lat:47.92825, lng:106.91578, key:'prop_gh01_name'},
   {id:'gh-02', lat:47.91857, lng:106.88345, key:'prop_gh02_name'},
   {id:'apt-01',lat:47.90420, lng:106.94310, key:'prop_apt01_name'},
-  {id:'apt-02',lat:47.91200, lng:106.88700, key:'prop_apt02_name'},
   {id:'apt-03',lat:47.91165, lng:106.90640, key:'prop_apt03_name'},
   {id:'apt-04',lat:47.91173, lng:106.90648, key:'prop_apt04_name'},
   {id:'apt-05',lat:47.92831, lng:106.91580, key:'prop_apt05_name'},
@@ -2719,7 +2470,7 @@ function showPage(id, opts){
   _syncURL(id);
   if(reduceMotion){_swapPage(id);if(opts.scrollTo)_scrollToHash(opts.scrollTo);return;}
   const cur=document.querySelector('.page.active');
-  if(cur&&cur.id===id&&!opts.scrollTo&&!_introPlaying)return;
+  if(cur&&cur.id===id&&!opts.scrollTo)return;
   if(_curtainBusy)return;
   _curtainBusy=true;
   const curtain=document.getElementById('curtain');
@@ -2767,9 +2518,9 @@ function _syncURL(id){
 }
 window.addEventListener('popstate',()=>_swapPage(_currentHashPage()));
 
-/* ═══ INIT + FIRST-LOAD INTRO ═══ */
+/* ═══ INIT ═══ */
 setLang('en');
-/* Open the page named in the URL hash (a shared deep link) before the intro reveals */
+/* Open the page named in the URL hash (a shared deep link). */
 if(_currentHashPage()!=='home')_swapPage(_currentHashPage());
 // Init map lazily — wait for layout + leaflet to finish loading
 window.addEventListener('load',()=>{
@@ -2777,45 +2528,6 @@ window.addEventListener('load',()=>{
   else{const tryInit=setInterval(()=>{if(typeof L!=='undefined'){clearInterval(tryInit);initMap();}},150);setTimeout(()=>clearInterval(tryInit),5000);}
 });
 
-let _introPlaying=false;
-
-(function runIntro(){
-  const curtain=document.getElementById('curtain');
-  const seen=sessionStorage.getItem('etuga.intro.seen');
-  if(reduceMotion||seen){
-    curtain.classList.remove('is-closed');
-    curtain.classList.add('is-open');
-    return;
-  }
-  _introPlaying=true;
-  document.documentElement.style.overflow='hidden';
-  requestAnimationFrame(()=>curtain.classList.add('is-intro'));
-  setTimeout(()=>curtain.classList.add('is-fading'),2400);
-  setTimeout(()=>{
-    curtain.classList.remove('is-closed');
-    curtain.classList.add('is-open');
-  },2800);
-  setTimeout(()=>{
-    curtain.classList.remove('is-intro','is-fading');
-    document.documentElement.style.overflow='';
-    sessionStorage.setItem('etuga.intro.seen','1');
-    _introPlaying=false;
-  },3700);
-
-  curtain.addEventListener('click',function skip(){
-    if(!_introPlaying)return;
-    curtain.classList.add('is-fading');
-    curtain.classList.remove('is-closed');
-    curtain.classList.add('is-open');
-    setTimeout(()=>{
-      curtain.classList.remove('is-intro','is-fading');
-      document.documentElement.style.overflow='';
-      sessionStorage.setItem('etuga.intro.seen','1');
-      _introPlaying=false;
-    },600);
-    curtain.removeEventListener('click',skip);
-  });
-})();
 </script>
 </body>
 </html>
